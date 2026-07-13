@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name — Robotics Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F7F8FA;
+    --bg-alt: #EEF1F4;
+    --ink: #12161A;
+    --ink-soft: #52606B;
+    --ink-faint: #8A97A3;
+    --accent: #0EA5A4;
+    --accent-dark: #0B7F7E;
+    --accent-soft: #DCF3F2;
+    --line: #D8DEE4;
+    --line-strong: #B9C2CA;
+    --radius: 3px;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    line-height:1.5;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-position: -1px -1px;
+  }
+
+  a { color: inherit; }
+
+  ::selection { background: var(--accent-soft); color: var(--accent-dark); }
+
+  :focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position: sticky;
+    top:0;
+    z-index: 50;
+    background: rgba(247,248,250,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding: 18px 0;
+  }
+  .logo{
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration:none;
+    color: var(--ink);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .logo::before{
+    content:"";
+    width:8px;height:8px;
+    background: var(--accent);
+    display:inline-block;
+    border-radius: 1px;
+  }
+  .navlinks{
+    display:flex;
+    gap: 28px;
+    list-style:none;
+    margin:0; padding:0;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  .navlinks a{
+    text-decoration:none;
+    color: var(--ink-soft);
+    transition: color .15s ease;
+  }
+  .navlinks a:hover{ color: var(--accent-dark); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding: 96px 0 72px;
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent-dark);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom: 22px;
+  }
+  .eyebrow .cursor{
+    display:inline-block;
+    width:7px; height:14px;
+    background: var(--accent);
+    animation: blink 1.1s steps(1) infinite;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .eyebrow .cursor{ animation:none; opacity:1; }
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  h1{
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(38px, 5.6vw, 68px);
+    line-height: 1.04;
+    margin: 0 0 20px;
+    max-width: 15ch;
+    letter-spacing: -0.01em;
+  }
+  h1 em{
+    font-style: normal;
+    color: var(--accent-dark);
+  }
+
+  .hero-sub{
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 52ch;
+    margin: 0 0 36px;
+  }
+
+  .hero-cta{
+    display:flex;
+    gap:14px;
+    flex-wrap: wrap;
+  }
+  .btn{
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 12px 20px;
+    border-radius: var(--radius);
+    text-decoration:none;
+    letter-spacing: 0.02em;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition: all .15s ease;
+  }
+  .btn-primary{
+    background: var(--ink);
+    color: var(--bg);
+    border: 1px solid var(--ink);
+  }
+  .btn-primary:hover{ background: var(--accent-dark); border-color: var(--accent-dark); }
+  .btn-ghost{
+    color: var(--ink);
+    border: 1px solid var(--line-strong);
+    background: transparent;
+  }
+  .btn-ghost:hover{ border-color: var(--ink); }
+
+  /* ---------- SECTION LABELS ---------- */
+  .section{ padding: 84px 0; border-bottom: 1px solid var(--line); }
+  .section:last-of-type{ border-bottom:none; }
+  .section-head{
+    display:flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 44px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .section-num{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+  }
+  h2{
+    font-family: var(--display);
+    font-size: clamp(26px, 3vw, 34px);
+    font-weight: 600;
+    margin: 6px 0 0;
+    letter-spacing: -0.01em;
+  }
+  .section-note{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-faint);
+    max-width: 30ch;
+    text-align: right;
+  }
+
+  /* ---------- PROJECT GRID ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .card{
+    background: var(--bg);
+    padding: 28px 26px 24px;
+    position: relative;
+    transition: background .15s ease;
+    cursor: pointer;
+  }
+  .card:hover{ background: var(--bg-alt); }
+  .card::before,
+  .card::after{
+    content:"";
+    position:absolute;
+    width: 14px; height:14px;
+    border-color: var(--accent);
+    border-style: solid;
+    opacity:0;
+    transition: opacity .15s ease;
+  }
+  .card::before{
+    top:8px; left:8px;
+    border-width: 2px 0 0 2px;
+  }
+  .card::after{
+    bottom:8px; right:8px;
+    border-width: 0 2px 2px 0;
+  }
+  .card:hover::before, .card:hover::after{ opacity:1; }
+
+  .card-top{
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .card-id{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+  }
+  .status{
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .status-live{ background: var(--accent-soft); color: var(--accent-dark); }
+  .status-progress{ background: #FDECC8; color: #92600A; }
+  .status-archived{ background: var(--bg-alt); color: var(--ink-faint); border: 1px solid var(--line-strong); }
+
+  .card h3{
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 10px;
+    letter-spacing: -0.005em;
+  }
+  .card p{
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0 0 18px;
+  }
+  .spec-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 16px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    border-top: 1px dashed var(--line-strong);
+    padding-top: 16px;
+  }
+  .spec-grid dt{
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
+  }
+  .spec-grid dd{
+    margin:0;
+    color: var(--ink);
+  }
+  .spec-grid > div{ display:contents; }
+
+  /* placeholder image slot */
+  .thumb{
+    aspect-ratio: 16/9;
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom: 18px;
+    background:
+      repeating-linear-gradient(45deg, var(--bg-alt), var(--bg-alt) 6px, var(--bg) 6px, var(--bg) 12px);
+    color: var(--ink-faint);
+    font-family: var(--mono);
+    font-size: 11px;
+    text-align:center;
+    padding: 8px;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 56px;
+  }
+  @media (max-width: 720px){ .about-grid{ grid-template-columns: 1fr; } }
+  .about-grid p{
+    font-size: 16px;
+    color: var(--ink-soft);
+    margin: 0 0 16px;
+    max-width: 56ch;
+  }
+  .skills-title{
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .tag-row{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+  .tag{
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 6px 11px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    color: var(--ink-soft);
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .contact-link{
+    font-family: var(--mono);
+    font-size: 14px;
+    padding: 14px 22px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    text-decoration:none;
+    color: var(--ink);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    transition: all .15s ease;
+  }
+  .contact-link:hover{ border-color: var(--accent); color: var(--accent-dark); }
+
+  footer{
+    padding: 32px 0 48px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    display:flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 640px){
+    .navlinks{ display:none; }
+    .hero{ padding: 64px 0 48px; }
+    .section{ padding: 56px 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="#top" class="logo">YOUR_NAME.BOT</a>
+    <ul class="navlinks">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero wrap">
+    <div class="eyebrow"><span class="cursor"></span> STATUS: ONLINE — <span id="proj-count">6</span> PROJECTS LOGGED</div>
+    <h1>I build things that <em>sense, decide,</em> and move.</h1>
+    <p class="hero-sub">A working log of robotics projects — mechanical builds, control systems, and the occasional thing that fell off a table mid-demo. Replace this line with a one-sentence version of who you are and what you build.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#projects">View projects →</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
+  </section>
+
+  <section class="section wrap" id="projects">
+    <div class="section-head">
+      <div>
+        <div class="section-num">01 / INDEX</div>
+        <h2>Projects</h2>
+      </div>
+      <div class="section-note">Each entry is a build log — swap in real photos, specs, and writeups as you go.</div>
+    </div>
+
+    <div class="grid" id="project-grid"></div>
+  </section>
+
+  <section class="section wrap" id="about">
+    <div class="section-head">
+      <div>
+        <div class="section-num">02 / PROFILE</div>
+        <h2>About</h2>
+      </div>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>Write two or three sentences here about how you got into robotics, what you're currently focused on (mechanical design, embedded firmware, computer vision, control theory — whatever's true), and what kind of projects or roles you're looking for next.</p>
+        <p>Optional second paragraph: a notable win, competition, or lesson learned from a project that didn't go to plan. People remember specifics, not adjectives.</p>
+      </div>
+      <div>
+        <div class="skills-title">Hardware</div>
+        <div class="tag-row">
+          <span class="tag">Arduino</span>
+          <span class="tag">Raspberry Pi</span>
+          <span class="tag">STM32</span>
+          <span class="tag">3D Printing</span>
+          <span class="tag">CAD / SolidWorks</span>
+        </div>
+        <div class="skills-title">Software</div>
+        <div class="tag-row">
+          <span class="tag">Python</span>
+          <span class="tag">C++</span>
+          <span class="tag">ROS / ROS2</span>
+          <span class="tag">OpenCV</span>
+          <span class="tag">PID Control</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="contact" style="border-bottom:none;">
+    <div class="section-head">
+      <div>
+        <div class="section-num">03 / CONTACT</div>
+        <h2>Let's talk robots</h2>
+      </div>
+    </div>
+    <div class="contact">
+      <a class="contact-link" href="mailto:you@example.com">✉ you@example.com</a>
+      <a class="contact-link" href="https://github.com/yourusername" target="_blank" rel="noopener">⌥ GitHub</a>
+      <a class="contact-link" href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener">in LinkedIn</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© <span id="year"></span> Your Name — built with bolts, code, and mild frustration.</span>
+  <span>Last updated: edit me</span>
+</footer>
+
+<script>
+  // ---- EDIT YOUR PROJECTS HERE ----
+  // status: "live" | "progress" | "archived"
+  const projects = [
+    {
+      id: "RB-01",
+      title: "Autonomous Line-Following Rover",
+      status: "live",
+      year: "2025",
+      blurb: "A four-wheeled rover that follows a track using IR sensors and a closed-loop PID controller.",
+      stack: "C++, PID control",
+      sensors: "IR array, encoders",
+      platform: "Arduino Uno",
+      power: "2S LiPo"
+    },
+    {
+      id: "RB-02",
+      title: "6-DOF Robotic Arm",
+      status: "progress",
+      year: "2025–26",
+      blurb: "Desktop pick-and-place arm with inverse kinematics solved in software and a simple gripper end effector.",
+      stack: "Python, IK solver",
+      sensors: "Potentiometer feedback",
+      platform: "Raspberry Pi 4",
+      power: "12V bench supply"
+    },
+    {
+      id: "RB-03",
+      title: "Object-Sorting Vision System",
+      status: "live",
+      year: "2024",
+      blurb: "Conveyor-fed sorter that classifies objects by color and shape using a camera and OpenCV pipeline.",
+      stack: "Python, OpenCV",
+      sensors: "USB camera",
+      platform: "Raspberry Pi 4",
+      power: "5V/3A"
+    },
+    {
+      id: "RB-04",
+      title: "Self-Balancing Two-Wheel Robot",
+      status: "live",
+      year: "2024",
+      blurb: "Inverted-pendulum balancing robot using an IMU and a tuned PID loop to stay upright.",
+      stack: "C++, complementary filter",
+      sensors: "MPU6050 IMU",
+      platform: "STM32",
+      power: "3S LiPo"
+    },
+    {
+      id: "RB-05",
+      title: "Swarm Bots — Distributed Foraging",
+      status: "archived",
+      year: "2023",
+      blurb: "Three small bots coordinating over a local mesh to 'forage' markers in a bounded arena.",
+      stack: "Python, ESP-NOW",
+      sensors: "IR beacon, bump switch",
+      platform: "ESP32",
+      power: "1S LiPo"
+    },
+    {
+      id: "RB-06",
+      title: "Voice-Controlled Home Hub",
+      status: "progress",
+      year: "2026",
+      blurb: "Small robotic base that responds to voice commands to move, fetch sensor readings, and report status.",
+      stack: "Python, speech-to-text",
+      sensors: "Mic array, ultrasonic",
+      platform: "Raspberry Pi 4",
+      power: "USB-C PD"
+    }
+  ];
+
+  const statusLabel = { live: "Completed", progress: "In progress", archived: "Archived" };
+
+  const grid = document.getElementById('project-grid');
+  projects.forEach(p => {
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-top">
+        <span class="card-id">${p.id}</span>
+        <span class="status status-${p.status}">${statusLabel[p.status]}</span>
+      </div>
+      <div class="thumb">PHOTO PLACEHOLDER<br>replace with project image</div>
+      <h3>${p.title}</h3>
+      <p>${p.blurb}</p>
+      <dl class="spec-grid">
+        <div><dt>STACK</dt><dd>${p.stack}</dd></div>
+        <div><dt>SENSORS</dt><dd>${p.sensors}</dd></div>
+        <div><dt>PLATFORM</dt><dd>${p.platform}</dd></div>
+        <div><dt>YEAR</dt><dd>${p.year}</dd></div>
+      </dl>
+    `;
+    grid.appendChild(card);
+  });
+
+  document.getElementById('proj-count').textContent = projects.length;
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
