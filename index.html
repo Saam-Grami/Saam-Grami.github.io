@@ -281,21 +281,45 @@
   // status: "live" | "progress" | "archived"
   // "details" is optional — a longer paragraph (or a few, separated by \n\n) shown only on the project's own page.
   // If you leave "details" out, the project page just reuses "blurb".
+    // ---- EDIT YOUR PROJECTS HERE ----
+  // status: "live" | "progress" | "archived"
   const projects = [
     {
       id: "RB-07",
       title: "DARB",
       status: "live",
       year: "2025",
-      blurb: "A four-wheeled rover that follows a track using IR sensors and a closed-loop PID controller.",
-      stack: "C++, PID control",
-      sensors: "IR array, encoders",
+      blurb: "A deployable drone from a wearable robotic arm backpack.",
+      stack: "C++, Python, PID control",
+      sensors: "RGB Camera, IMU, encoders",
+      platform: "ESP32, Matek H743 WLITE, Open MV H+",
+      power: "4S LiPo"
+    },
+    {
+      id: "RB-01",
+      title: "A2G",
+      status: "progress",
+      year: "2026",
+      blurb: "A collaborative UGV and UAV in determine object masses and search and rescue.",
+      stack: "C++, Python, PID control",
+      sensors: "2D LiDAR, Depth camera, RGB camera, IMU, wheel encoders, height sensor",
       platform: "Arduino Uno",
       power: "2S LiPo"
     },
     {
       id: "RB-01",
-      title: "Autonomous Line-Following Rover",
+      title: "Soilbus",
+      status: "completed",
+      year: "2026",
+      blurb: "Self created ADHOC network for soil probes.",
+      stack: "C++, Python, PID control",
+      sensors: "2D LiDAR, Depth camera, RGB camera, IMU, wheel encoders, height sensor",
+      platform: "Arduino Uno",
+      power: "2S LiPo"
+    },
+    {
+      id: "RB-01",
+      title: "Machine learning follow ambulance",
       status: "live",
       year: "2025",
       blurb: "A four-wheeled rover that follows a track using IR sensors and a closed-loop PID controller.",
@@ -306,7 +330,7 @@
     },
     {
       id: "RB-02",
-      title: "6-DOF Robotic Arm",
+      title: "Robot Synthesis",
       status: "progress",
       year: "2025–26",
       blurb: "Desktop pick-and-place arm with inverse kinematics solved in software and a simple gripper end effector.",
@@ -317,7 +341,7 @@
     },
     {
       id: "RB-03",
-      title: "Object-Sorting Vision System",
+      title: "153s",
       status: "live",
       year: "2024",
       blurb: "Conveyor-fed sorter that classifies objects by color and shape using a camera and OpenCV pipeline.",
@@ -328,7 +352,7 @@
     },
     {
       id: "RB-04",
-      title: "Self-Balancing Two-Wheel Robot",
+      title: "SURP",
       status: "live",
       year: "2024",
       blurb: "Inverted-pendulum balancing robot using an IMU and a tuned PID loop to stay upright.",
@@ -339,7 +363,7 @@
     },
     {
       id: "RB-05",
-      title: "Swarm Bots — Distributed Foraging",
+      title: "Px4 ros2",
       status: "archived",
       year: "2023",
       blurb: "Three small bots coordinating over a local mesh to 'forage' markers in a bounded arena.",
