@@ -19,6 +19,7 @@
     --accent-soft: #DCF3F2;
     --line: #D8DEE4;
     --line-strong: #B9C2CA;
+    --dot: #BFC8D0;
     --radius: 3px;
     --display: 'Space Grotesk', sans-serif;
     --body: 'Inter', sans-serif;
@@ -34,11 +35,20 @@
     color: var(--ink);
     font-family: var(--body);
     line-height:1.5;
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 48px 48px;
-    background-position: -1px -1px;
+  }
+
+  /* Point-cloud dot field — reads as LiDAR returns rather than blueprint paper.
+     Lives on a masked layer so it fades in under the hero and fades back out
+     before the dense text sections, where it would fight readability. */
+  #home-view{ position: relative; }
+  #home-view::before{
+    content:"";
+    position:absolute; left:0; right:0; top:0; height: 2400px;
+    z-index:-1; pointer-events:none;
+    background-image: radial-gradient(circle, var(--dot) 0.9px, transparent 0.9px);
+    background-size: 26px 26px;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 16%, #000 52%, transparent 92%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 16%, #000 52%, transparent 92%);
   }
 
   a { color: inherit; }
