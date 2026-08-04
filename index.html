@@ -321,6 +321,24 @@
   .resume-fallback a{ color: var(--accent-dark); }
   .resume-caption{ font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 12px; }
 
+  /* Portrait. Drop a file named portrait.jpg next to index.html and it appears
+     automatically. Until then the striped placeholder behind it shows through. */
+  .portrait{
+    aspect-ratio: 4/5; border-radius: var(--radius); border: 1px solid var(--line-strong);
+    background-image: url('portrait.jpg');
+    background-size: cover; background-position: center;
+    background-color: var(--bg-alt);
+  }
+  .portrait::before{
+    content: "PORTRAIT PLACEHOLDER — save yours as portrait.jpg";
+    display:flex; align-items:center; justify-content:center; height:100%; padding: 12px;
+    font-family: var(--mono); font-size: 11px; color: var(--ink-faint); text-align:center;
+    background: repeating-linear-gradient(45deg, var(--bg-alt), var(--bg-alt) 6px, var(--bg) 6px, var(--bg) 12px);
+    border-radius: var(--radius);
+  }
+  /* Once the real image loads it covers the placeholder text */
+  .portrait[style*="loaded"]::before, .portrait.loaded::before{ display:none; }
+
   /* ---------- CONTACT ---------- */
   .contact{ display:flex; flex-wrap: wrap; gap: 14px; }
   .contact-link{
@@ -490,7 +508,7 @@
           <p>Before engineering, I served as a Ground Radio Repair Specialist in the Marine Corps Reserve. That work taught me how to read a complex system, troubleshoot under pressure, and keep equipment running. It carries over directly.</p>
         </div>
         <div>
-          <div class="thumb" style="aspect-ratio:4/5;">PORTRAIT PLACEHOLDER<br>or a photo of you with a build</div>
+          <div class="portrait" role="img" aria-label="Portrait of Saam Haghighat-Grami"></div>
         </div>
       </div>
     </section>
@@ -772,6 +790,32 @@
       subtitle: "",
       status: "archived",
       year: "2023",
+      blurb: "TODO — one line on what this is.",
+      details: "",
+      stack: "",
+      sensors: "",
+      platform: "",
+      power: ""
+    },
+    {
+      id: "RB-08",
+      title: "Machine Learning Follow Ambulance",
+      subtitle: "",
+      status: "live",
+      year: "2025",
+      blurb: "TODO — one line on what this is.",
+      details: "",
+      stack: "",
+      sensors: "",
+      platform: "",
+      power: ""
+    },
+    {
+      id: "RB-09",
+      title: "Voice-Controlled Home Hub",
+      subtitle: "",
+      status: "progress",
+      year: "2026",
       blurb: "TODO — one line on what this is.",
       details: "",
       stack: "",
@@ -1144,6 +1188,15 @@
     build();
     draw();
     start();
+  })();
+
+  // Hide the portrait placeholder text once the real portrait.jpg loads
+  (function checkPortrait(){
+    const el = document.querySelector('.portrait');
+    if (!el) return;
+    const img = new Image();
+    img.onload = () => el.classList.add('loaded');
+    img.src = 'portrait.jpg';
   })();
 
   document.getElementById('year').textContent = new Date().getFullYear();
