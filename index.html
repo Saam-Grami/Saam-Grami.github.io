@@ -54,16 +54,61 @@
     background: rgba(247,248,250,0.88);
     backdrop-filter: blur(6px);
     border-bottom: 1px solid var(--line);
+    transition: box-shadow .2s ease, background .2s ease;
   }
-  nav{ display:flex; align-items:center; justify-content: space-between; padding: 18px 0; }
+  header.scrolled{ box-shadow: 0 1px 12px rgba(18,22,26,0.07); background: rgba(247,248,250,0.95); }
+  nav{ display:flex; align-items:center; justify-content: space-between; padding: 18px 0; position: relative; }
   .logo{
     font-family: var(--mono); font-size: 14px; letter-spacing: 0.02em;
-    text-decoration:none; color: var(--ink); display:flex; align-items:center; gap:8px;
+    text-decoration:none; color: var(--ink); display:flex; align-items:center; gap:8px; flex-shrink:0;
   }
   .logo::before{ content:""; width:8px;height:8px; background: var(--accent); display:inline-block; border-radius: 1px; }
-  .navlinks{ display:flex; gap: 28px; list-style:none; margin:0; padding:0; font-family: var(--mono); font-size: 13px; letter-spacing: 0.02em; }
-  .navlinks a{ text-decoration:none; color: var(--ink-soft); transition: color .15s ease; cursor:pointer; }
+  .navlinks{ display:flex; gap: 26px; list-style:none; margin:0; padding:0; font-family: var(--mono); font-size: 13px; letter-spacing: 0.02em; }
+  .navlinks a{
+    text-decoration:none; color: var(--ink-soft); transition: color .15s ease; cursor:pointer;
+    position: relative; padding: 4px 0; display:block; white-space: nowrap;
+  }
+  .navlinks a::after{
+    content:""; position:absolute; left:0; right:0; bottom:-2px; height:2px;
+    background: var(--accent); transform: scaleX(0); transform-origin: left;
+    transition: transform .18s ease;
+  }
   .navlinks a:hover{ color: var(--accent-dark); }
+  .navlinks a:hover::after{ transform: scaleX(1); }
+  .navlinks a.active{ color: var(--ink); }
+  .navlinks a.active::after{ transform: scaleX(1); }
+
+  /* Hamburger — hidden on desktop */
+  .nav-toggle{
+    display:none; background:none; border:1px solid var(--line-strong); border-radius: var(--radius);
+    width: 38px; height: 34px; padding: 0; cursor:pointer; position: relative;
+  }
+  .nav-toggle span{
+    display:block; position:absolute; left: 10px; width: 16px; height: 1.5px; background: var(--ink);
+    transition: transform .2s ease, opacity .2s ease;
+  }
+  .nav-toggle span:nth-child(1){ top: 11px; }
+  .nav-toggle span:nth-child(2){ top: 16px; }
+  .nav-toggle span:nth-child(3){ top: 21px; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(5px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-5px) rotate(-45deg); }
+
+  @media (max-width: 860px){
+    .nav-toggle{ display:block; }
+    .navlinks{
+      display:none; position:absolute; top: calc(100% + 8px); right: 0; left: 0;
+      flex-direction: column; gap: 0; background: var(--bg);
+      border: 1px solid var(--line); border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgba(18,22,26,0.10); overflow: hidden;
+    }
+    .navlinks.open{ display:flex; }
+    .navlinks li{ border-bottom: 1px solid var(--line); }
+    .navlinks li:last-child{ border-bottom: none; }
+    .navlinks a{ padding: 15px 20px; font-size: 14px; }
+    .navlinks a::after{ display:none; }
+    .navlinks a.active{ color: var(--accent-dark); background: var(--accent-soft); }
+  }
 
   /* ---------- HERO ---------- */
   .hero{
@@ -272,7 +317,6 @@
   .detail-nav a:hover{ color: var(--accent-dark); }
 
   @media (max-width: 640px){
-    .navlinks{ display:none; }
     .hero{ padding: 64px 0 48px; }
     .section{ padding: 56px 0; }
   }
@@ -280,17 +324,20 @@
 </head>
 <body>
 
-<header>
+<header id="site-header">
   <nav class="wrap">
-    <a href="#" class="logo" onclick="goHome(event)">YOUR_NAME.BOT</a>
-    <ul class="navlinks">
-      <li><a onclick="goHome(); scrollToId('projects')">Projects</a></li>
-      <li><a onclick="goHome(); scrollToId('experience')">Experience</a></li>
-      <li><a onclick="goHome(); scrollToId('skills')">Skills</a></li>
-      <li><a onclick="goHome(); scrollToId('about')">About</a></li>
-      <li id="nav-blog" class="hidden"><a onclick="goHome(); scrollToId('blog')">Logs</a></li>
-      <li><a onclick="goHome(); scrollToId('resume')">Résumé</a></li>
-      <li><a onclick="goHome(); scrollToId('contact')">Contact</a></li>
+    <a href="#top" class="logo" onclick="goHome(event)">YOUR_NAME.BOT</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navlinks">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="navlinks" id="navlinks">
+      <li><a href="#projects" onclick="navTo(event,'projects')">Projects</a></li>
+      <li><a href="#experience" onclick="navTo(event,'experience')">Experience</a></li>
+      <li><a href="#skills" onclick="navTo(event,'skills')">Skills</a></li>
+      <li><a href="#about" onclick="navTo(event,'about')">About</a></li>
+      <li id="nav-blog" class="hidden"><a href="#blog" onclick="navTo(event,'blog')">Logs</a></li>
+      <li><a href="#resume" onclick="navTo(event,'resume')">Résumé</a></li>
+      <li><a href="#contact" onclick="navTo(event,'contact')">Contact</a></li>
     </ul>
   </nav>
 </header>
@@ -638,6 +685,71 @@
   const homeView = document.getElementById('home-view');
   const detailView = document.getElementById('detail-view');
 
+  // ---------- NAV BEHAVIOR ----------
+  const headerEl = document.getElementById('site-header');
+  const navToggle = document.getElementById('nav-toggle');
+  const navLinksEl = document.getElementById('navlinks');
+
+  function closeMenu(){
+    navLinksEl.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.setAttribute('aria-label', 'Open menu');
+  }
+
+  navToggle.addEventListener('click', () => {
+    const open = navLinksEl.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+
+  // Click outside or press Escape closes the mobile menu
+  document.addEventListener('click', (e) => {
+    if (!navLinksEl.contains(e.target) && !navToggle.contains(e.target)) closeMenu();
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+
+  // Nav click: leave a project page if needed, then scroll with the sticky
+  // header height accounted for so headings don't hide behind it.
+  function navTo(e, id){
+    if (e && e.preventDefault) e.preventDefault();
+    closeMenu();
+    goHome();
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const y = el.getBoundingClientRect().top + window.pageYOffset - headerEl.offsetHeight - 12;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }, 0);
+  }
+
+  // Shadow on the header once you've scrolled off the top
+  window.addEventListener('scroll', () => {
+    headerEl.classList.toggle('scrolled', window.scrollY > 8);
+  }, { passive: true });
+
+  // Highlight whichever section you're currently looking at
+  function initScrollSpy(){
+    const links = Array.from(navLinksEl.querySelectorAll('a'));
+    const map = new Map();
+    links.forEach(a => {
+      const id = a.getAttribute('href').slice(1);
+      const sec = document.getElementById(id);
+      if (sec) map.set(sec, a);
+    });
+    if (!map.size || !('IntersectionObserver' in window)) return;
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          links.forEach(a => a.classList.remove('active'));
+          map.get(entry.target).classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+    map.forEach((a, sec) => obs.observe(sec));
+  }
+
   function renderTimeline(list, elId){
     const el = document.getElementById(elId);
     el.innerHTML = list.map(x => `
@@ -789,6 +901,7 @@
   renderSkills();
   renderBlog();
   numberSections();
+  initScrollSpy();
   route();
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
