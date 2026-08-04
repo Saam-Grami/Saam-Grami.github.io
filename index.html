@@ -1014,12 +1014,12 @@
     const ctx = canvas.getContext('2d');
 
     const MAX_HEIGHT = 2600;   // how far down the page the field extends
-    const LINK_DIST  = 132;    // px — how close two nodes must be to connect
-    const DENSITY    = 17000;  // px² per node; larger = sparser
-    const MAX_NODES  = 95;
+    const LINK_DIST  = 155;    // px — how close two nodes must be to connect
+    const DENSITY    = 9000;   // px² per node; larger = sparser
+    const MAX_NODES  = 240;
     const SPEED      = 0.16;   // px per frame
-    const NODE_COLOR = '#9FAEBC';
-    const LINE_COLOR = '154, 170, 184';  // rgb for rgba() below
+    const NODE_COLOR = '#8D9DAD';
+    const LINE_COLOR = '138, 154, 170';  // rgb for rgba() below
     const ACCENT     = '#0EA5A4';
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1058,7 +1058,7 @@
           const dx = a.x - b.x, dy = a.y - b.y;
           const d2 = dx * dx + dy * dy;
           if (d2 > LINK_DIST * LINK_DIST) continue;
-          const alpha = (1 - Math.sqrt(d2) / LINK_DIST) * 0.42;
+          const alpha = (1 - Math.sqrt(d2) / LINK_DIST) * 0.55;
           ctx.strokeStyle = `rgba(${LINE_COLOR}, ${alpha})`;
           ctx.lineWidth = 1;
           ctx.beginPath();
@@ -1070,7 +1070,7 @@
 
       nodes.forEach(n => {
         ctx.fillStyle = n.accent ? ACCENT : NODE_COLOR;
-        ctx.globalAlpha = n.accent ? 0.5 : 0.75;
+        ctx.globalAlpha = n.accent ? 0.65 : 0.85;
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
         ctx.fill();
