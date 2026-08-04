@@ -185,6 +185,31 @@
   }
   .thumb-lg{ aspect-ratio: 21/9; margin-bottom: 28px; font-size: 12px; }
 
+  /* ---------- TIMELINE (EXPERIENCE / EDUCATION) ---------- */
+  .timeline{ border-top: 1px solid var(--line); }
+  .tl-item{ display:grid; grid-template-columns: 160px 1fr; gap: 28px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+  @media (max-width: 720px){ .tl-item{ grid-template-columns: 1fr; gap: 10px; } }
+  .tl-when{ font-family: var(--mono); font-size: 12px; color: var(--ink-faint); letter-spacing: 0.04em; padding-top: 5px; }
+  .tl-role{ font-family: var(--display); font-size: 18px; font-weight: 600; margin: 0 0 4px; letter-spacing: -0.005em; }
+  .tl-org{ font-family: var(--mono); font-size: 12.5px; color: var(--accent-dark); margin-bottom: 12px; }
+  .tl-points{ margin: 0; padding-left: 18px; font-size: 14.5px; color: var(--ink-soft); }
+  .tl-points li{ margin-bottom: 6px; }
+  .tl-tags{ display:flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .tl-tags span{ font-family: var(--mono); font-size: 10.5px; padding: 4px 8px; border: 1px solid var(--line-strong); border-radius: var(--radius); color: var(--ink-faint); }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .skill-col{ background: var(--bg); padding: 24px 22px; }
+
+  /* ---------- BLOG ---------- */
+  .post-list{ border-top: 1px solid var(--line); }
+  .post{ display:grid; grid-template-columns: 130px 1fr; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--line); text-decoration:none; }
+  @media (max-width: 720px){ .post{ grid-template-columns: 1fr; gap: 6px; } }
+  .post-date{ font-family: var(--mono); font-size: 12px; color: var(--ink-faint); padding-top: 4px; }
+  .post-title{ font-family: var(--display); font-size: 17px; font-weight: 600; margin: 0 0 5px; transition: color .15s ease; }
+  .post:hover .post-title{ color: var(--accent-dark); }
+  .post-excerpt{ font-size: 14px; color: var(--ink-soft); margin: 0; max-width: 62ch; }
+
   /* ---------- ABOUT ---------- */
   .about-grid{ display:grid; grid-template-columns: 1.2fr 1fr; gap: 56px; }
   @media (max-width: 720px){ .about-grid{ grid-template-columns: 1fr; } }
@@ -260,7 +285,10 @@
     <a href="#" class="logo" onclick="goHome(event)">YOUR_NAME.BOT</a>
     <ul class="navlinks">
       <li><a onclick="goHome(); scrollToId('projects')">Projects</a></li>
+      <li><a onclick="goHome(); scrollToId('experience')">Experience</a></li>
+      <li><a onclick="goHome(); scrollToId('skills')">Skills</a></li>
       <li><a onclick="goHome(); scrollToId('about')">About</a></li>
+      <li id="nav-blog" class="hidden"><a onclick="goHome(); scrollToId('blog')">Logs</a></li>
       <li><a onclick="goHome(); scrollToId('resume')">Résumé</a></li>
       <li><a onclick="goHome(); scrollToId('contact')">Contact</a></li>
     </ul>
@@ -306,7 +334,7 @@
     <section class="section wrap" id="projects">
       <div class="section-head">
         <div>
-          <div class="section-num">01 / INDEX</div>
+          <div class="section-num" data-label="INDEX"></div>
           <h2>Projects</h2>
         </div>
         <div class="section-note">Click a project title to open its full page.</div>
@@ -314,10 +342,41 @@
       <div class="grid" id="project-grid"></div>
     </section>
 
+    <section class="section wrap" id="experience">
+      <div class="section-head">
+        <div>
+          <div class="section-num" data-label="EXPERIENCE"></div>
+          <h2>Experience</h2>
+        </div>
+      </div>
+      <div class="timeline" id="experience-list"></div>
+    </section>
+
+    <section class="section wrap" id="education">
+      <div class="section-head">
+        <div>
+          <div class="section-num" data-label="EDUCATION"></div>
+          <h2>Education</h2>
+        </div>
+      </div>
+      <div class="timeline" id="education-list"></div>
+    </section>
+
+    <section class="section wrap" id="skills">
+      <div class="section-head">
+        <div>
+          <div class="section-num" data-label="SKILLS"></div>
+          <h2>Skills</h2>
+        </div>
+        <div class="section-note">Things I've actually shipped with, not just read about.</div>
+      </div>
+      <div class="skills-grid" id="skills-grid"></div>
+    </section>
+
     <section class="section wrap" id="about">
       <div class="section-head">
         <div>
-          <div class="section-num">02 / PROFILE</div>
+          <div class="section-num" data-label="PROFILE"></div>
           <h2>About</h2>
         </div>
       </div>
@@ -327,30 +386,26 @@
           <p>Optional second paragraph: a notable win, competition, or lesson learned from a project that didn't go to plan. People remember specifics, not adjectives.</p>
         </div>
         <div>
-          <div class="skills-title">Hardware</div>
-          <div class="tag-row">
-            <span class="tag">Arduino</span>
-            <span class="tag">Raspberry Pi</span>
-            <span class="tag">STM32</span>
-            <span class="tag">3D Printing</span>
-            <span class="tag">CAD / SolidWorks</span>
-          </div>
-          <div class="skills-title">Software</div>
-          <div class="tag-row">
-            <span class="tag">Python</span>
-            <span class="tag">C++</span>
-            <span class="tag">ROS / ROS2</span>
-            <span class="tag">OpenCV</span>
-            <span class="tag">PID Control</span>
-          </div>
+          <div class="thumb" style="aspect-ratio:4/5;">PORTRAIT PLACEHOLDER<br>or a photo of you with a build</div>
         </div>
       </div>
+    </section>
+
+    <section class="section wrap hidden" id="blog">
+      <div class="section-head">
+        <div>
+          <div class="section-num" data-label="LOGS"></div>
+          <h2>Build logs</h2>
+        </div>
+        <div class="section-note">Notes from the workbench.</div>
+      </div>
+      <div class="post-list" id="post-list"></div>
     </section>
 
     <section class="section wrap" id="resume">
       <div class="section-head">
         <div>
-          <div class="section-num">03 / RÉSUMÉ</div>
+          <div class="section-num" data-label="RÉSUMÉ"></div>
           <h2>Résumé</h2>
         </div>
         <div class="section-note">Read it below or download the PDF</div>
@@ -384,7 +439,7 @@
     <section class="section wrap" id="contact" style="border-bottom:none;">
       <div class="section-head">
         <div>
-          <div class="section-num">04 / CONTACT</div>
+          <div class="section-num" data-label="CONTACT"></div>
           <h2>Let's talk robots</h2>
         </div>
       </div>
@@ -406,6 +461,71 @@
 </footer>
 
 <script>
+  // ---- BLOG TOGGLE ----
+  // Set to true when you actually have posts to show. False hides the whole
+  // section and its nav link, and the other sections renumber themselves.
+  const SHOW_BLOG = false;
+
+  // ---- EDIT YOUR EXPERIENCE HERE ----
+  const experience = [
+    {
+      when: "Jun 2026 — Present",
+      role: "Role title",
+      org: "Organization / Lab",
+      points: [
+        "What you owned — the system, subsystem, or problem.",
+        "A result with a number in it: accuracy, time saved, range, uptime."
+      ],
+      tags: ["ROS2", "C++"]
+    },
+    {
+      when: "Summer 2025",
+      role: "Role title",
+      org: "Organization / Lab",
+      points: [
+        "What you built and who used it.",
+        "Something that broke and what you changed."
+      ],
+      tags: ["Python", "OpenCV"]
+    }
+  ];
+
+  // ---- EDIT YOUR EDUCATION HERE ----
+  const education = [
+    {
+      when: "2023 — 2027",
+      role: "B.S. Degree Name",
+      org: "University Name",
+      points: [
+        "Relevant coursework: Control Systems, Embedded Systems, Linear Algebra, Robotics.",
+        "GPA / honors / notable design course — delete this line if not useful."
+      ],
+      tags: []
+    }
+  ];
+
+  // ---- EDIT YOUR SKILLS HERE ----
+  const skills = [
+    { group: "Languages",      items: ["C++", "Python", "MATLAB"] },
+    { group: "Robotics",       items: ["ROS / ROS2", "PX4", "Gazebo", "SLAM"] },
+    { group: "Control",        items: ["PID", "State estimation", "Kalman filter"] },
+    { group: "Vision",         items: ["OpenCV", "Depth cameras", "Camera calibration"] },
+    { group: "Hardware",       items: ["STM32", "ESP32", "Arduino", "Raspberry Pi"] },
+    { group: "Mechanical",     items: ["SolidWorks", "3D printing", "Tolerancing"] },
+    { group: "Comms",          items: ["I2C", "SPI", "UART", "MAVLink", "ESP-NOW"] },
+    { group: "Tools",          items: ["Git", "Linux", "Oscilloscope", "KiCad"] }
+  ];
+
+  // ---- EDIT YOUR POSTS HERE (only shown when SHOW_BLOG = true) ----
+  const posts = [
+    {
+      date: "2026-07-14",
+      title: "Why the A2G height sensor kept lying to me",
+      excerpt: "A short writeup of a bug that took three weeks and one oscilloscope to find.",
+      url: "#"
+    }
+  ];
+
   // ---- EDIT YOUR PROJECTS HERE ----
   // status: "live" | "progress" | "archived"
   // "details" is optional — a longer paragraph (or a few, separated by \n\n) shown only on the project's own page.
@@ -518,6 +638,59 @@
   const homeView = document.getElementById('home-view');
   const detailView = document.getElementById('detail-view');
 
+  function renderTimeline(list, elId){
+    const el = document.getElementById(elId);
+    el.innerHTML = list.map(x => `
+      <div class="tl-item">
+        <div class="tl-when">${x.when}</div>
+        <div>
+          <h3 class="tl-role">${x.role}</h3>
+          <div class="tl-org">${x.org}</div>
+          ${x.points && x.points.length ? `<ul class="tl-points">${x.points.map(p => `<li>${p}</li>`).join('')}</ul>` : ''}
+          ${x.tags && x.tags.length ? `<div class="tl-tags">${x.tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderSkills(){
+    document.getElementById('skills-grid').innerHTML = skills.map(s => `
+      <div class="skill-col">
+        <div class="skills-title">${s.group}</div>
+        <div class="tag-row" style="margin-bottom:0;">${s.items.map(i => `<span class="tag">${i}</span>`).join('')}</div>
+      </div>
+    `).join('');
+  }
+
+  function renderBlog(){
+    const section = document.getElementById('blog');
+    const navItem = document.getElementById('nav-blog');
+    if (!SHOW_BLOG || !posts.length) {
+      section.classList.add('hidden');
+      navItem.classList.add('hidden');
+      return;
+    }
+    section.classList.remove('hidden');
+    navItem.classList.remove('hidden');
+    document.getElementById('post-list').innerHTML = posts.map(p => `
+      <a class="post" href="${p.url}">
+        <div class="post-date">${p.date}</div>
+        <div>
+          <h3 class="post-title">${p.title}</h3>
+          <p class="post-excerpt">${p.excerpt}</p>
+        </div>
+      </a>
+    `).join('');
+  }
+
+  // Numbers the visible sections in order, so hiding the blog doesn't leave a gap.
+  function numberSections(){
+    const nums = homeView.querySelectorAll('.section:not(.hidden) .section-num');
+    nums.forEach((el, i) => {
+      el.textContent = String(i + 1).padStart(2, '0') + ' / ' + (el.dataset.label || '');
+    });
+  }
+
   function renderGrid(){
     gridEl.innerHTML = '';
     projects.forEach(p => {
@@ -611,6 +784,11 @@
 
   window.addEventListener('hashchange', route);
   renderGrid();
+  renderTimeline(experience, 'experience-list');
+  renderTimeline(education, 'education-list');
+  renderSkills();
+  renderBlog();
+  numberSections();
   route();
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
