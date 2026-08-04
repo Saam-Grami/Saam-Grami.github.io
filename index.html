@@ -198,7 +198,10 @@
 
   /* ---------- PROJECT GRID ---------- */
   .grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
-  .card{ background: var(--bg); padding: 28px 26px 24px; position: relative; transition: background .15s ease; }
+  .card{
+    background: var(--bg); padding: 28px 26px 24px; position: relative;
+    transition: background .15s ease; display:block; text-decoration:none; color: inherit; cursor:pointer;
+  }
   .card:hover{ background: var(--bg-alt); }
   .card::before, .card::after{ content:""; position:absolute; width: 14px; height:14px; border-color: var(--accent); border-style: solid; opacity:0; transition: opacity .15s ease; }
   .card::before{ top:8px; left:8px; border-width: 2px 0 0 2px; }
@@ -212,9 +215,14 @@
   .status-progress{ background: #FDECC8; color: #92600A; }
   .status-archived{ background: var(--bg-alt); color: var(--ink-faint); border: 1px solid var(--line-strong); }
 
-  .card h3{ font-family: var(--display); font-size: 20px; font-weight: 600; margin: 0 0 10px; letter-spacing: -0.005em; }
-  .card-title-link{ text-decoration:none; color: var(--ink); border-bottom: 1px solid transparent; transition: border-color .15s ease, color .15s ease; }
-  .card-title-link:hover{ color: var(--accent-dark); border-bottom-color: var(--accent-dark); }
+  .card h3{
+    font-family: var(--display); font-size: 20px; font-weight: 600; margin: 0 0 10px;
+    letter-spacing: -0.005em; transition: color .15s ease;
+    display:flex; align-items:center; justify-content: space-between; gap: 12px;
+  }
+  .card h3 .arrow{ font-size: 15px; color: var(--ink-faint); opacity: 0; transform: translateX(-4px); transition: all .15s ease; }
+  .card:hover h3{ color: var(--accent-dark); }
+  .card:hover h3 .arrow{ opacity: 1; transform: translateX(0); color: var(--accent-dark); }
   .card p{ font-size: 14px; color: var(--ink-soft); margin: 0 0 18px; }
 
   .spec-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; font-family: var(--mono); font-size: 11.5px; border-top: 1px dashed var(--line-strong); padding-top: 16px; }
@@ -312,8 +320,12 @@
   .detail-spec-grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px 24px; border-top: 1px solid var(--line); padding-top: 24px; }
   .detail-spec-grid dt{ font-family: var(--mono); font-size: 10.5px; color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
   .detail-spec-grid dd{ margin:0; font-family: var(--mono); font-size: 14px; color: var(--ink); }
-  .detail-nav{ display:flex; justify-content: space-between; margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 13px; }
-  .detail-nav a{ text-decoration:none; color: var(--ink-soft); }
+  .detail-nav{
+    display:flex; justify-content: space-between; gap: 16px; margin-bottom: 30px;
+    padding-bottom: 18px; border-bottom: 1px solid var(--line);
+    font-family: var(--mono); font-size: 13px;
+  }
+  .detail-nav a{ text-decoration:none; color: var(--ink-soft); transition: color .15s ease; }
   .detail-nav a:hover{ color: var(--accent-dark); }
 
   @media (max-width: 640px){
@@ -806,15 +818,16 @@
   function renderGrid(){
     gridEl.innerHTML = '';
     projects.forEach(p => {
-      const card = document.createElement('article');
+      const card = document.createElement('a');
       card.className = 'card';
+      card.href = `#project-${encodeURIComponent(p.id)}`;
       card.innerHTML = `
         <div class="card-top">
           <span class="card-id">${p.id}</span>
           <span class="status status-${p.status}">${statusLabel[p.status]}</span>
         </div>
         <div class="thumb">PHOTO PLACEHOLDER<br>replace with project image</div>
-        <h3><a class="card-title-link" href="#project-${encodeURIComponent(p.id)}">${p.title}</a></h3>
+        <h3>${p.title}<span class="arrow">→</span></h3>
         <p>${p.blurb}</p>
         <dl class="spec-grid">
           <div><dt>STACK</dt><dd>${p.stack}</dd></div>
@@ -840,6 +853,10 @@
 
     detailView.innerHTML = `
       <a class="back-link" href="#" onclick="goHome(event)">← Back to all projects</a>
+      <div class="detail-nav">
+        <a href="#project-${encodeURIComponent(prev.id)}">← ${prev.title}</a>
+        <a href="#project-${encodeURIComponent(next.id)}">${next.title} →</a>
+      </div>
       <div class="detail-id">${p.id}</div>
       <div class="detail-head">
         <h1 class="detail-title">${p.title}</h1>
@@ -856,10 +873,6 @@
         <div><dt>Year</dt><dd>${p.year}</dd></div>
         <div><dt>Status</dt><dd>${statusLabel[p.status]}</dd></div>
       </dl>
-      <div class="detail-nav">
-        <a href="#project-${encodeURIComponent(prev.id)}">← ${prev.title}</a>
-        <a href="#project-${encodeURIComponent(next.id)}">${next.title} →</a>
-      </div>
     `;
 
     homeView.classList.add('hidden');
