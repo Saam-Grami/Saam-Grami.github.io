@@ -176,6 +176,17 @@
   .tag-row{ display:flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
   .tag{ font-family: var(--mono); font-size: 12px; padding: 6px 11px; border: 1px solid var(--line-strong); border-radius: var(--radius); color: var(--ink-soft); }
 
+  /* ---------- RESUME ---------- */
+  .resume-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items:start; }
+  @media (max-width: 720px){ .resume-grid{ grid-template-columns: 1fr; gap: 32px; } }
+  .resume-grid p{ font-size: 16px; color: var(--ink-soft); margin: 0 0 24px; max-width: 52ch; }
+  .resume-list{ list-style:none; margin:0; padding:0; }
+  .resume-list li{ display:flex; gap: 16px; padding: 12px 0; border-bottom: 1px dashed var(--line-strong); font-size: 14px; }
+  .resume-list li:last-child{ border-bottom:none; }
+  .resume-list .yr{ font-family: var(--mono); font-size: 12px; color: var(--ink-faint); min-width: 76px; flex-shrink:0; padding-top:2px; }
+  .resume-list .what{ color: var(--ink); }
+  .resume-list .where{ display:block; color: var(--ink-soft); font-size: 13px; margin-top: 2px; }
+
   /* ---------- CONTACT ---------- */
   .contact{ display:flex; flex-wrap: wrap; gap: 14px; }
   .contact-link{
@@ -224,6 +235,7 @@
     <ul class="navlinks">
       <li><a onclick="goHome(); scrollToId('projects')">Projects</a></li>
       <li><a onclick="goHome(); scrollToId('about')">About</a></li>
+      <li><a onclick="goHome(); scrollToId('resume')">Résumé</a></li>
       <li><a onclick="goHome(); scrollToId('contact')">Contact</a></li>
     </ul>
   </nav>
@@ -288,10 +300,34 @@
       </div>
     </section>
 
+    <section class="section wrap" id="resume">
+      <div class="section-head">
+        <div>
+          <div class="section-num">03 / RÉSUMÉ</div>
+          <h2>Résumé</h2>
+        </div>
+        <div class="section-note">PDF — updated Aug 2026</div>
+      </div>
+      <div class="resume-grid">
+        <div>
+          <p>One or two sentences on what you're looking for — role type, timing, location. Full history, coursework, and references are in the PDF.</p>
+          <a class="btn btn-primary" href="Saam%20Haghighat-Grami%20Resume.pdf" target="_blank" rel="noopener" download>↓ Download résumé (PDF)</a>
+        </div>
+        <div>
+          <div class="skills-title">Highlights</div>
+          <ul class="resume-list">
+            <li><span class="yr">2026</span><span class="what">Role or award here<span class="where">Organization</span></span></li>
+            <li><span class="yr">2025</span><span class="what">Role or award here<span class="where">Organization</span></span></li>
+            <li><span class="yr">2024</span><span class="what">Degree or program<span class="where">School</span></span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <section class="section wrap" id="contact" style="border-bottom:none;">
       <div class="section-head">
         <div>
-          <div class="section-num">03 / CONTACT</div>
+          <div class="section-num">04 / CONTACT</div>
           <h2>Let's talk robots</h2>
         </div>
       </div>
