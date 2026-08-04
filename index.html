@@ -251,7 +251,7 @@
   .timeline{ border-top: 1px solid var(--line); }
   .tl-item{ display:grid; grid-template-columns: 160px 1fr; gap: 28px; padding: 26px 0; border-bottom: 1px solid var(--line); }
   @media (max-width: 720px){ .tl-item{ grid-template-columns: 1fr; gap: 10px; } }
-  .tl-when{ font-family: var(--mono); font-size: 12px; color: var(--ink-faint); letter-spacing: 0.04em; padding-top: 5px; }
+  .tl-when{ font-family: var(--mono); font-size: 12px; color: var(--ink-faint); letter-spacing: 0.04em; padding-top: 5px; white-space: pre-line; line-height: 1.5; }
   .tl-role{ font-family: var(--display); font-size: 18px; font-weight: 600; margin: 0 0 4px; letter-spacing: -0.005em; }
   .tl-org{ font-family: var(--mono); font-size: 12.5px; color: var(--accent-dark); margin-bottom: 12px; }
   .tl-points{ margin: 0; padding-left: 18px; font-size: 14.5px; color: var(--ink-soft); }
@@ -312,6 +312,14 @@
   .resume-list .what{ color: var(--ink); }
   .resume-list .where{ display:block; color: var(--ink-soft); font-size: 13px; margin-top: 2px; }
 
+  .doc-tabs{ display:flex; gap:8px; margin-bottom: 14px; }
+  .doc-tab{
+    font-family: var(--mono); font-size: 12px; padding: 8px 16px; cursor:pointer;
+    background: transparent; border: 1px solid var(--line-strong); border-radius: var(--radius);
+    color: var(--ink-soft); transition: all .15s ease;
+  }
+  .doc-tab:hover{ border-color: var(--accent); color: var(--accent-dark); }
+  .doc-tab.active{ background: var(--ink); border-color: var(--ink); color: var(--bg); }
   .resume-embed{ margin-top: 48px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--bg-alt); overflow:hidden; }
   .resume-embed object, .resume-embed iframe{ display:block; width:100%; height: 900px; border:0; }
   @media (max-width: 720px){ .resume-embed object, .resume-embed iframe{ height: 520px; } }
@@ -421,19 +429,19 @@
 
     <div class="wrap linkbar-wrap">
       <div class="linkbar">
-        <a href="https://github.com/yourusername" target="_blank" rel="noopener">
+        <a href="https://github.com/Saam-Grami" target="_blank" rel="noopener">
           <span class="lb-label">GitHub</span>
-          <span class="lb-value">@yourusername</span>
+          <span class="lb-value">Saam-Grami</span>
         </a>
         <a href="https://www.linkedin.com/in/saam-haghighat-grami/" target="_blank" rel="noopener">
           <span class="lb-label">LinkedIn</span>
           <span class="lb-value">saam-haghighat-grami</span>
         </a>
-        <a href="mailto:you@example.com">
+        <a href="mailto:saam.haghighat.grami@gmail.com">
           <span class="lb-label">Email</span>
-          <span class="lb-value">you@example.com</span>
+          <span class="lb-value">saam.haghighat.grami@gmail.com</span>
         </a>
-        <a href="Saam%20Haghighat-Grami%20Resume.pdf" target="_blank" rel="noopener">
+        <a href="Saam_Haghighat-Grami_Resume.pdf" target="_blank" rel="noopener">
           <span class="lb-label">Résumé</span>
           <span class="lb-value">PDF</span>
         </a>
@@ -535,7 +543,7 @@
       <div class="resume-grid">
         <div>
           <p>I am looking for robotics roles in perception, autonomy, and embedded systems — internships or full-time positions starting after I graduate in 2026. The full résumé is embedded below, and downloadable if you'd rather keep a copy.</p>
-          <a class="btn btn-primary" href="Saam%20Haghighat-Grami%20Resume.pdf" target="_blank" rel="noopener" download>↓ Download résumé (PDF)</a>
+          <a class="btn btn-primary" id="doc-download" href="#" target="_blank" rel="noopener" download>↓ Download résumé (PDF)</a>
         </div>
         <div>
           <div class="skills-title">Highlights</div>
@@ -548,15 +556,19 @@
         </div>
       </div>
 
+      <div class="doc-tabs hidden" id="doc-tabs">
+        <button class="doc-tab active" id="tab-resume" type="button">Résumé</button>
+        <button class="doc-tab" id="tab-cv" type="button">CV</button>
+      </div>
       <div class="resume-embed">
-        <object data="Saam%20Haghighat-Grami%20Resume.pdf#view=FitH" type="application/pdf" aria-label="Résumé of Saam Haghighat-Grami">
+        <object id="doc-embed" data="" type="application/pdf" aria-label="Résumé of Saam Haghighat-Grami">
           <div class="resume-fallback">
             This browser can't show PDFs inline.<br>
-            <a href="Saam%20Haghighat-Grami%20Resume.pdf" target="_blank" rel="noopener">Open the résumé in a new tab →</a>
+            <a id="doc-fallback-link" href="#" target="_blank" rel="noopener">Open the document in a new tab →</a>
           </div>
         </object>
       </div>
-      <div class="resume-caption">Saam Haghighat-Grami — Résumé, updated Aug 2026</div>
+      <div class="resume-caption" id="doc-caption">Saam Haghighat-Grami — Résumé</div>
     </section>
 
     <section class="section wrap" id="contact" style="border-bottom:none;">
@@ -567,8 +579,8 @@
         </div>
       </div>
       <div class="contact">
-        <a class="contact-link" href="mailto:you@example.com">✉ you@example.com</a>
-        <a class="contact-link" href="https://github.com/yourusername" target="_blank" rel="noopener">⌥ GitHub</a>
+        <a class="contact-link" href="mailto:saam.haghighat.grami@gmail.com">✉ saam.haghighat.grami@gmail.com</a>
+        <a class="contact-link" href="https://github.com/Saam-Grami" target="_blank" rel="noopener">⌥ GitHub</a>
         <a class="contact-link" href="https://www.linkedin.com/in/saam-haghighat-grami/" target="_blank" rel="noopener">in LinkedIn</a>
       </div>
     </section>
@@ -589,6 +601,13 @@
   // section and its nav link, and the other sections renumber themselves.
   const SHOW_BLOG = false;
 
+  // ---- CV TOGGLE ----
+  // Set to true once you have a CV file. It adds a Résumé / CV switch above the
+  // viewer. False shows the résumé alone with no tabs.
+  const SHOW_CV   = false;
+  const RESUME_FILE = 'Saam_Haghighat-Grami_Resume.pdf';
+  const CV_FILE     = 'Saam_Haghighat-Grami_CV.pdf';
+
   // ---- EDIT YOUR PUBLICATIONS HERE ----
   // Leave the array empty and the whole section hides itself.
   // kind: "Journal" | "Conference" | "Poster" | "Preprint" | "Workshop" — free text, shown as a pill.
@@ -601,78 +620,89 @@
   // ---- EDIT YOUR EXPERIENCE HERE ----
   const experience = [
     {
-      when: "Jan 2026 — Present",
-      role: "Undergraduate Researcher — Trajectory Prediction",
+      when: "Jun 2026 — Aug 2026",
+      role: "Undergraduate Researcher — SURP",
       org: "Kennesaw State University · advised by Dr. Matt Marshall",
       points: [
-        "Researching uncertainty-aware trajectory prediction for robotic debris interception.",
-        "Building edge-deployed detection and forecasting systems on NVIDIA Jetson hardware.",
-        "Predicting future movement while accounting for uncertainty, rather than committing to a single prediction."
+        "Developed a real-time, edge-deployed system that detects, tracks, and predicts the trajectories of floating river debris.",
+        "Used neural networks to address the deficiency of linear Kalman-filter motion predictors in turbulent riverine conditions.",
+        "Implemented a class-conditioned LSPIV–LSTM–DNN architecture with a Gaussian uncertainty head for calibrated multi-step forecasts."
       ],
-      tags: ["Machine learning", "Computer vision", "NVIDIA Jetson", "Python"]
+      tags: ["PyTorch", "YOLO", "ByteTrack", "LSTM-DNN", "Jetson Orin Nano", "TensorRT"]
     },
     {
-      when: "Aug 2025 — Present",
-      role: "Undergraduate Researcher — AgriSys Lab",
-      org: "Kennesaw State University · advised by Dr. Muhammad Hassan Tanveer",
+      when: "Nov 2025 — Present",
+      role: "Robotic Software Architect — A2G",
+      org: "AgriSys Lab, Kennesaw State University · Dr. Muhammad Hassan Tanveer",
       points: [
-        "Developing A2G, a collaborative aerial-ground search and rescue system.",
-        "Built SoilBus, a self-forming ad hoc soil probe network for precision agriculture.",
-        "Work spans multi-robot coordination, embedded networking, and onboard sensing."
+        "Designing a UGV–UAV collaborative search-and-rescue system: the UAV surveys the environment while the UGV clears obstacles blocking access to points of interest.",
+        "Leading the machine learning and computer vision pipeline that estimates obstacle mass from sensor-fused SLAM point clouds.",
+        "Mass estimates determine which obstacles the UGV's manipulator can safely move."
       ],
-      tags: ["UAV–UGV", "ESP32", "ESP-NOW", "Sensor networks"]
+      tags: ["ROS2", "NAV2", "SLAM", "OpenCV", "Segmentation"]
     },
     {
-      when: "Jun 2026 — Jul 2026",
-      role: "Summer Undergraduate Research Program Fellow",
-      org: "Office of Undergraduate Research, Kennesaw State University",
+      when: "Aug 2025 — Dec 2025",
+      role: "Lead Software Developer — SoilBus",
+      org: "AgriSys Lab, Kennesaw State University",
       points: [
-        "Developed a system for predicting debris movement on moving waterways.",
-        "Combined object tracking, LSPIV data, and neural network models to learn motion patterns.",
-        "Conducted field work at Rottenwood Creek."
+        "Built a self-offloading soil-monitoring mesh network: probes auto-discover neighboring nodes and relay data to any node without a central hub.",
+        "Used an LSTM to process NPK, EC, pH, temperature, moisture, and light-level readings across the network.",
+        "Validated routing across 5 physical nodes, holding performance to a simulated 26 nodes before degradation."
       ],
-      tags: ["Deep learning", "Optical flow", "LSPIV", "Object tracking"]
+      tags: ["C++", "ESP32", "Ad hoc networking", "LSTM"]
     },
     {
       when: "May 2025 — Aug 2025",
-      role: "Engineering Intern (COOP)",
-      org: "EOSYS · Marietta, Georgia",
+      role: "COOP Engineering Intern",
+      org: "EOSYS — Industrial and Manufacturing System Integrator · Marietta, GA",
       points: [
-        "Created Human Machine Interfaces and programmed Programmable Logic Controllers.",
-        "Worked from Piping and Instrumentation Drawings on industrial control systems."
+        "Created a Human Machine Interface display creator for P&IDs.",
+        "Designed and modified PLCs."
       ],
-      tags: ["PLC", "HMI", "P&ID", "Industrial automation"]
+      tags: ["PLC", "HMI", "Ladder Logic", "TIA Portal"]
     },
     {
       when: "Aug 2022 — Present",
-      role: "Ground Electronics Transmission Systems Maintainer",
-      org: "United States Marine Corps Reserve · Marietta, Georgia",
+      role: "Ground Radio Repair Specialist",
+      org: "United States Marine Corps Reserve · Marietta, GA",
       points: [
-        "Troubleshoot, maintain, and repair ground radio equipment for the communications section (S6), Headquarters Regiment, 4th CRR.",
-        "Keep tactical communications equipment operational under field conditions."
+        "Troubleshoot, maintain, and operate USMC radio systems in time-sensitive situations.",
+        "Squad Leader of Marines, 4th Combat Readiness Regiment.",
+        "Active security clearance."
       ],
-      tags: ["RF systems", "Electronics repair", "Troubleshooting"]
+      tags: ["RF systems", "Electronics repair", "Leadership"]
     }
   ];
 
   // ---- EDIT YOUR EDUCATION HERE ----
   const education = [
     {
-      when: "2022 — 2026",
+      when: "Jan 2022 — May 2022,\nJan 2024 — Present",
       role: "B.S. Mechatronics Engineering",
-      org: "Kennesaw State University — Southern Polytechnic College of Engineering and Engineering Technology",
+      org: "Kennesaw State University",
       points: [
-        "Coursework and project work across engineering design, control, and embedded systems."
+        "CGPA: 4.00",
+        "Coursework: Machine Learning, Control Systems, Microcontrollers, PLCs, Robot Synthesis, Mobile Robotics."
       ],
       tags: []
     },
     {
-      when: "May 2023 — Oct 2023",
-      role: "Ground Electronics Transmission Systems Maintainer, Radio Repair",
+      when: "Aug 2022 — Oct 2023",
+      role: "Ground Radio Repair School",
       org: "Marine Corps Communication-Electronics School (MCCES)",
       points: [
-        "Hands-on training in tactical communications, air control, and electronic warfare systems.",
-        "Deploying, maintaining, and securing field communications networks. Final grade: A."
+        "CGPA: 4.00",
+        "Holds an active security clearance."
+      ],
+      tags: []
+    },
+    {
+      when: "Aug 2020 — Dec 2021",
+      role: "General Education",
+      org: "Chattahoochee Technical College",
+      points: [
+        "CGPA: 3.80"
       ],
       tags: []
     }
@@ -680,14 +710,14 @@
 
   // ---- EDIT YOUR SKILLS HERE ----
   const skills = [
-    { group: "Languages",       items: ["Python", "C++", "C"] },
-    { group: "Robotics",        items: ["ROS2", "PX4", "UAV–UGV coordination", "Autonomous navigation"] },
-    { group: "Perception & ML", items: ["Deep learning", "Object tracking", "Optical flow", "LSPIV", "OpenCV"] },
-    { group: "Embedded",        items: ["ESP32", "ESP-NOW", "NVIDIA Jetson", "Arduino", "Microcontrollers"] },
-    { group: "Industrial",      items: ["PLC programming", "HMI design", "P&ID"] },
-    { group: "Electronics",     items: ["Circuit design", "RF / radio systems", "Diagnostics & repair"] },
-    { group: "Mechanical",      items: ["CAD", "3D printing", "Mechanical design"] },
-    { group: "Tools",           items: ["Git", "Linux", "Oscilloscope"] }
+    { group: "Languages",       items: ["C++", "Python", "MATLAB", "PLC", "Ladder Logic"] },
+    { group: "Frameworks",      items: ["ROS2", "NAV2", "TensorFlow", "PyTorch", "OpenCV"] },
+    { group: "Machine Learning",items: ["LSTM-DNN", "YOLO", "ByteTrack", "Segmentation", "Gaussian NLL"] },
+    { group: "Embedded",        items: ["ESP32", "Jetson Orin Nano", "Raspberry Pi 5", "TensorRT", "Matek H743"] },
+    { group: "CAD",             items: ["SolidWorks", "Onshape"] },
+    { group: "Developer Tools", items: ["Arduino IDE", "VS Code", "Linux", "TIA Portal"] },
+    { group: "Robotics",        items: ["SLAM", "LSPIV", "ArduPilot", "UAV–UGV coordination"] },
+    { group: "Coursework",      items: ["Machine Learning", "Control Systems", "Microcontrollers", "Mobile Robotics"] }
   ];
 
   // ---- EDIT YOUR POSTS HERE (only shown when SHOW_BLOG = true) ----
@@ -708,56 +738,55 @@
     {
       id: "RB-01",
       title: "DARB",
-      subtitle: "Dynamic Assistive Robotic Backpack",
+      subtitle: "Drone Arm Robotic Backpack · personal project",
       status: "progress",
       year: "2025–26",
-      blurb: "A wearable robotic arm system that receives and secures a drone in flight.",
-      details: "DARB is a wearable robotic arm system I designed and built independently, as a proof of concept for aerial vehicle capture and interaction.\n\nThe platform is a backpack-mounted manipulator capable of receiving and securing a drone. Building it meant working across mechanical design, embedded systems, and flight control at the same time, since the arm and the aircraft have to agree on where they are relative to each other before anything can be captured.\n\nThe goal is to investigate how UAVs and wearable robotics can be integrated for dynamic, human-centered applications.",
-      stack: "C++, Python, PID control",
-      sensors: "RGB camera, IMU, encoders",
-      platform: "ESP32, Matek H743 WLITE, OpenMV H+",
+      blurb: "A wearable robotic arm that retrieves a drone in flight, with the drone aligning itself using computer vision.",
+      details: "DARB is a drone docking system built around a robotic arm attached to a mobile, human-wearable platform. I invented and built it independently.\n\nThe custom drone uses computer vision to align with IR LEDs mounted on the wearable platform, and the arm retrieves it mid-flight. The drone will also be able to launch and release from the arm. The whole sequence is autonomously operated.\n\nThe project runs across mechanical design, embedded systems, and flight control at once, since the arm and the aircraft have to agree on where they are relative to each other before a capture is possible.",
+      stack: "ArduPilot, Arduino IDE, TensorFlow, computer vision",
+      sensors: "OpenMV, IR LED array, stepper encoders",
+      platform: "ESP32, Matek H743 WLITE",
       power: "4S LiPo"
     },
     {
       id: "RB-02",
       title: "A2G",
-      subtitle: "Mass Estimation Autonomous Pathfinding (MEAP)",
+      subtitle: "UAV and UGV collaborative search and rescue",
       status: "progress",
-      year: "2026",
-      blurb: "A coordinated UAV–UGV search and rescue system that estimates obstacle mass to plan a route through debris.",
-      details: "A2G is a coordinated UAV–UGV search and rescue system for navigating debris-filled environments, developed in Dr. Muhammad Hassan Tanveer's AgriSys Lab.\n\nThe system combines machine learning with onboard sensor data to estimate an obstacle's density, volume, and mass. The UGV uses that estimate to decide whether it can safely clear the obstacle and open a shorter path to the object of interest, then retrieves the object and returns it to the starting area.\n\nThe interesting problem here is not navigation on its own — it is deciding what is worth moving, and committing to that decision with incomplete information.",
-      stack: "C++, Python, machine learning",
-      sensors: "2D LiDAR, depth camera, RGB camera, IMU, wheel encoders, height sensor",
-      platform: "Arduino Uno",
-      power: "2S LiPo"
+      year: "2025–26",
+      blurb: "A UAV surveys the environment while a UGV clears obstacles blocking access to points of interest.",
+      details: "A2G is a UGV–UAV collaborative search-and-rescue system. The UAV surveys the environment while the UGV clears obstacles blocking access to points of interest using an onboard manipulator.\n\nI lead the machine learning and computer vision pipeline that estimates obstacle mass from sensor-fused SLAM point clouds. That estimate determines which obstacles the manipulator can safely move, and it runs alongside the UAV's flight motion rather than after it.\n\nThe interesting problem is not navigation on its own — it is deciding what is worth moving, and committing to that decision with incomplete information.",
+      stack: "ROS2, NAV2, OpenCV, SLAM, segmentation",
+      sensors: "RGB camera, LiDAR, depth camera",
+      platform: "Raspberry Pi 5",
+      power: "—"
     },
     {
       id: "RB-03",
       title: "SoilBus",
-      subtitle: "Ad hoc soil sensor network for precision agriculture",
+      subtitle: "Soil monitoring probe network",
       status: "live",
       year: "2025",
-      blurb: "A self-forming ESP-NOW probe network where any node can relay and offload the whole network's data.",
-      details: "SoilBus is an ad hoc soil sensor network built for precision agriculture, developed in the AgriSys Lab.\n\nMy contribution was the self-forming probe network. Using ESP32s and ESP-NOW, each probe identifies its local and network neighbors, so the network organizes itself after deployment instead of being configured by hand.\n\nCollected data can be relayed and offloaded through any single node. That removes the need to physically walk to each probe in a field, which is the part that makes the system practical rather than just functional.",
-      stack: "C++, ESP-NOW",
-      sensors: "Soil probes",
+      blurb: "A self-offloading mesh network where probes auto-discover neighbors and relay data to any node, with no central hub.",
+      details: "SoilBus is a self-offloading soil-monitoring mesh network built for farmers. Probes auto-discover neighboring nodes and relay sensor data to any node, so there is no central hub to install or maintain.\n\nAn LSTM processes incoming NPK, EC, pH, temperature, and moisture readings alongside light-level data across the network.\n\nI validated communication and routing across 5 physical nodes, with performance holding up to a simulated 26 nodes before degradation. Self-healing is not yet implemented.",
+      stack: "C++, Arduino IDE, ad hoc networking, LSTM",
+      sensors: "7-in-1 soil sensor, DHT-22, lux sensor",
       platform: "ESP32",
       power: "Battery-powered nodes"
     },
     {
       id: "RB-04",
-      title: "Debris Path Prediction",
-      subtitle: "Summer Undergraduate Research Program",
+      title: "River Debris Trajectory Prediction",
+      subtitle: "Uncertainty-aware forecasting · SURP",
       status: "live",
       year: "2026",
-      blurb: "Deep learning and optical flow used to predict where debris on a waterway will travel next.",
-      details: "I developed a machine learning and computer vision system for predicting the movement of objects in waterways.\n\nThe pipeline combines object tracking, LSPIV (Large Scale Particle Image Velocimetry) data, and neural network models to learn motion patterns and forecast future debris locations. The aim is more accurate movement prediction for autonomous monitoring and decision-making in dynamic water environments.\n\nField work was conducted at Rottenwood Creek, funded by the Summer Undergraduate Research Program through Kennesaw State University's Office of Undergraduate Research.",
-      stack: "Python, deep learning, optical flow",
+      blurb: "A real-time edge system that detects, tracks, and forecasts the paths of floating river debris with calibrated uncertainty.",
+      details: "I developed a real-time, edge-deployed system that detects, tracks, and predicts the trajectories of floating river debris.\n\nLinear Kalman-filter motion predictors break down in turbulent riverine conditions, so I used neural networks instead: a class-conditioned LSPIV–LSTM–DNN architecture with a Gaussian uncertainty head, producing calibrated multi-step trajectory forecasts over YOLO and ByteTrack detections. The point is that the system reports how confident it is, rather than committing to a single prediction it cannot justify.\n\nThe full pipeline runs on an NVIDIA Jetson Orin Nano. Conducted as SURP research under Dr. Matt Marshall.",
+      stack: "PyTorch, Python, TensorRT, OpenCV",
       sensors: "RGB camera, LSPIV",
-      platform: "NVIDIA Jetson",
-      power: "Field power supply"
-    }
-,
+      platform: "NVIDIA Jetson Orin Nano, Raspberry Pi 5",
+      power: "—"
+    },
     {
       id: "RB-05",
       title: "Robot Synthesis",
@@ -923,6 +952,37 @@
     `).join('');
   }
 
+  function renderDocs(){
+    const embed    = document.getElementById('doc-embed');
+    const fallback = document.getElementById('doc-fallback-link');
+    const download = document.getElementById('doc-download');
+    const caption  = document.getElementById('doc-caption');
+    const tabs     = document.getElementById('doc-tabs');
+    const tabR     = document.getElementById('tab-resume');
+    const tabC     = document.getElementById('tab-cv');
+
+    function show(which){
+      const file  = which === 'cv' ? CV_FILE : RESUME_FILE;
+      const label = which === 'cv' ? 'CV' : 'Résumé';
+      embed.setAttribute('data', encodeURI(file) + '#view=FitH');
+      fallback.href  = encodeURI(file);
+      download.href  = encodeURI(file);
+      download.textContent = `↓ Download ${label.toLowerCase()} (PDF)`;
+      caption.textContent  = `Saam Haghighat-Grami — ${label}`;
+      if (tabR && tabC){
+        tabR.classList.toggle('active', which !== 'cv');
+        tabC.classList.toggle('active', which === 'cv');
+      }
+    }
+
+    if (SHOW_CV){
+      tabs.classList.remove('hidden');
+      tabR.addEventListener('click', () => show('resume'));
+      tabC.addEventListener('click', () => show('cv'));
+    }
+    show('resume');
+  }
+
   function renderPublications(){
     const section = document.getElementById('publications');
     if (!publications.length) { section.classList.add('hidden'); return; }
@@ -1078,6 +1138,7 @@
   renderTimeline(experience, 'experience-list');
   renderTimeline(education, 'education-list');
   renderSkills();
+  renderDocs();
   renderPublications();
   renderBlog();
   numberSections();
