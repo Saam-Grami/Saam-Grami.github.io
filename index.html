@@ -739,19 +739,14 @@
       platform: "NVIDIA Jetson",
       power: "Field power supply"
     }
-
-    // ---- PROJECTS BELOW NEED YOUR INPUT ----
-    // These were in the file from the template and I have no real information
-    // about them, so I left the descriptions blank rather than invent any.
-    // Fill them in or delete the whole block.
-    /*
-    ,{
+,
+    {
       id: "RB-05",
       title: "Robot Synthesis",
       subtitle: "",
       status: "progress",
       year: "2025–26",
-      blurb: "",
+      blurb: "TODO — one line on what this is.",
       details: "",
       stack: "",
       sensors: "",
@@ -764,7 +759,7 @@
       subtitle: "",
       status: "live",
       year: "2024",
-      blurb: "",
+      blurb: "TODO — one line on what this is.",
       details: "",
       stack: "",
       sensors: "",
@@ -777,15 +772,17 @@
       subtitle: "",
       status: "archived",
       year: "2023",
-      blurb: "",
+      blurb: "TODO — one line on what this is.",
       details: "",
       stack: "",
       sensors: "",
       platform: "",
       power: ""
     }
-    */
   ];
+
+  // Empty spec fields render as an em dash rather than a blank gap.
+  const val = v => (v && String(v).trim()) ? v : '—';
 
   const statusLabel = { live: "Completed", progress: "In progress", archived: "Archived" };
 
@@ -901,7 +898,7 @@
           <div>
             <h3 class="pub-title">${p.title}${p.kind ? `<span class="pub-kind">${p.kind}</span>` : ''}</h3>
             <p class="pub-authors">${authors}</p>
-            <div class="pub-venue">${p.venue}${p.year ? ` · ${p.year}` : ''}</div>
+            <div class="pub-venue">${p.venue}${p.year ? ` · ${val(p.year)}` : ''}</div>
             ${links.length ? `<div class="pub-links">${links.map(l => `<a href="${l.url}" target="_blank" rel="noopener">${l.label} ↗</a>`).join('')}</div>` : ''}
           </div>
         </div>
@@ -954,10 +951,10 @@
         ${p.subtitle ? `<div class="card-sub">${p.subtitle}</div>` : ''}
         <p>${p.blurb}</p>
         <dl class="spec-grid">
-          <div><dt>STACK</dt><dd>${p.stack}</dd></div>
-          <div><dt>SENSORS</dt><dd>${p.sensors}</dd></div>
-          <div><dt>PLATFORM</dt><dd>${p.platform}</dd></div>
-          <div><dt>YEAR</dt><dd>${p.year}</dd></div>
+          <div><dt>STACK</dt><dd>${val(p.stack)}</dd></div>
+          <div><dt>SENSORS</dt><dd>${val(p.sensors)}</dd></div>
+          <div><dt>PLATFORM</dt><dd>${val(p.platform)}</dd></div>
+          <div><dt>YEAR</dt><dd>${val(p.year)}</dd></div>
         </dl>
       `;
       gridEl.appendChild(card);
@@ -987,15 +984,15 @@
         <span class="status status-${p.status}">${statusLabel[p.status]}</span>
       </div>
       ${p.subtitle ? `<div class="detail-sub">${p.subtitle}</div>` : ''}
-      <div class="detail-meta">${p.year} · ${p.platform}</div>
+      <div class="detail-meta">${val(p.year)} · ${val(p.platform)}</div>
       <div class="thumb thumb-lg">PHOTO / VIDEO PLACEHOLDER<br>replace with real project media</div>
       <div class="detail-body">${bodyText}</div>
       <dl class="detail-spec-grid">
-        <div><dt>Stack</dt><dd>${p.stack}</dd></div>
-        <div><dt>Sensors</dt><dd>${p.sensors}</dd></div>
-        <div><dt>Platform</dt><dd>${p.platform}</dd></div>
-        <div><dt>Power</dt><dd>${p.power}</dd></div>
-        <div><dt>Year</dt><dd>${p.year}</dd></div>
+        <div><dt>Stack</dt><dd>${val(p.stack)}</dd></div>
+        <div><dt>Sensors</dt><dd>${val(p.sensors)}</dd></div>
+        <div><dt>Platform</dt><dd>${val(p.platform)}</dd></div>
+        <div><dt>Power</dt><dd>${val(p.power)}</dd></div>
+        <div><dt>Year</dt><dd>${val(p.year)}</dd></div>
         <div><dt>Status</dt><dd>${statusLabel[p.status]}</dd></div>
       </dl>
     `;
