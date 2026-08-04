@@ -250,6 +250,27 @@
   .tl-tags{ display:flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
   .tl-tags span{ font-family: var(--mono); font-size: 10.5px; padding: 4px 8px; border: 1px solid var(--line-strong); border-radius: var(--radius); color: var(--ink-faint); }
 
+  /* ---------- PUBLICATIONS ---------- */
+  .pub-list{ border-top: 1px solid var(--line); }
+  .pub-item{ display:grid; grid-template-columns: 46px 1fr; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--line); }
+  @media (max-width: 720px){ .pub-item{ grid-template-columns: 1fr; gap: 8px; } }
+  .pub-num{ font-family: var(--mono); font-size: 12px; color: var(--ink-faint); padding-top: 4px; }
+  .pub-title{ font-family: var(--display); font-size: 17px; font-weight: 600; margin: 0 0 7px; line-height: 1.35; max-width: 60ch; }
+  .pub-authors{ font-size: 13.5px; color: var(--ink-soft); margin: 0 0 6px; max-width: 68ch; }
+  .pub-authors .me{ color: var(--ink); font-weight: 600; }
+  .pub-venue{ font-family: var(--mono); font-size: 12px; color: var(--accent-dark); margin-bottom: 12px; }
+  .pub-kind{
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 20px; background: var(--bg-alt); color: var(--ink-faint);
+    border: 1px solid var(--line-strong); margin-left: 8px; white-space: nowrap;
+  }
+  .pub-links{ display:flex; flex-wrap: wrap; gap: 8px; }
+  .pub-links a{
+    font-family: var(--mono); font-size: 11.5px; padding: 5px 10px; border: 1px solid var(--line-strong);
+    border-radius: var(--radius); text-decoration:none; color: var(--ink-soft); transition: all .15s ease;
+  }
+  .pub-links a:hover{ border-color: var(--accent); color: var(--accent-dark); }
+
   /* ---------- SKILLS ---------- */
   .skills-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
   .skill-col{ background: var(--bg); padding: 24px 22px; }
@@ -421,6 +442,17 @@
       <div class="timeline" id="education-list"></div>
     </section>
 
+    <section class="section wrap hidden" id="publications">
+      <div class="section-head">
+        <div>
+          <div class="section-num" data-label="PUBLICATIONS"></div>
+          <h2>Publications</h2>
+        </div>
+        <div class="section-note">Papers, posters, and preprints.</div>
+      </div>
+      <div class="pub-list" id="pub-list"></div>
+    </section>
+
     <section class="section wrap" id="skills">
       <div class="section-head">
         <div>
@@ -524,6 +556,26 @@
   // Set to true when you actually have posts to show. False hides the whole
   // section and its nav link, and the other sections renumber themselves.
   const SHOW_BLOG = false;
+
+  // ---- EDIT YOUR PUBLICATIONS HERE ----
+  // Leave the array empty and the whole section hides itself.
+  // kind: "Journal" | "Conference" | "Poster" | "Preprint" | "Workshop" — free text, shown as a pill.
+  // Your own name is bolded automatically — set MY_NAME below to match how it's written.
+  const MY_NAME = "S. Haghighat-Grami";
+  const publications = [
+    {
+      title: "Paper title goes here",
+      authors: "A. Author, S. Haghighat-Grami, B. Author",
+      venue: "Conference or Journal Name",
+      year: "2026",
+      kind: "Conference",
+      links: [
+        { label: "PDF", url: "#" },
+        { label: "DOI", url: "#" },
+        { label: "Code", url: "#" }
+      ]
+    }
+  ];
 
   // ---- EDIT YOUR EXPERIENCE HERE ----
   const experience = [
@@ -786,6 +838,33 @@
     `).join('');
   }
 
+  function renderPublications(){
+    const section = document.getElementById('publications');
+    if (!publications.length) { section.classList.add('hidden'); return; }
+    section.classList.remove('hidden');
+
+    // Newest first, then number them 1..n from the top
+    const sorted = publications.slice().sort((a, b) => String(b.year).localeCompare(String(a.year)));
+
+    document.getElementById('pub-list').innerHTML = sorted.map((p, i) => {
+      const authors = MY_NAME && p.authors.includes(MY_NAME)
+        ? p.authors.split(MY_NAME).join(`<span class="me">${MY_NAME}</span>`)
+        : p.authors;
+      const links = (p.links || []).filter(l => l.url && l.url !== '#');
+      return `
+        <div class="pub-item">
+          <div class="pub-num">[${i + 1}]</div>
+          <div>
+            <h3 class="pub-title">${p.title}${p.kind ? `<span class="pub-kind">${p.kind}</span>` : ''}</h3>
+            <p class="pub-authors">${authors}</p>
+            <div class="pub-venue">${p.venue}${p.year ? ` · ${p.year}` : ''}</div>
+            ${links.length ? `<div class="pub-links">${links.map(l => `<a href="${l.url}" target="_blank" rel="noopener">${l.label} ↗</a>`).join('')}</div>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
   function renderBlog(){
     const section = document.getElementById('blog');
     const navItem = document.getElementById('nav-blog');
@@ -912,6 +991,7 @@
   renderTimeline(experience, 'experience-list');
   renderTimeline(education, 'education-list');
   renderSkills();
+  renderPublications();
   renderBlog();
   numberSections();
   initScrollSpy();
