@@ -187,6 +187,15 @@
   .resume-list .what{ color: var(--ink); }
   .resume-list .where{ display:block; color: var(--ink-soft); font-size: 13px; margin-top: 2px; }
 
+  .resume-embed{ margin-top: 48px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--bg-alt); overflow:hidden; }
+  .resume-embed object, .resume-embed iframe{ display:block; width:100%; height: 900px; border:0; }
+  @media (max-width: 720px){ .resume-embed object, .resume-embed iframe{ height: 520px; } }
+  .resume-fallback{
+    padding: 40px 24px; text-align:center; font-family: var(--mono); font-size: 13px; color: var(--ink-soft); line-height:1.7;
+  }
+  .resume-fallback a{ color: var(--accent-dark); }
+  .resume-caption{ font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 12px; }
+
   /* ---------- CONTACT ---------- */
   .contact{ display:flex; flex-wrap: wrap; gap: 14px; }
   .contact-link{
@@ -247,7 +256,7 @@
     <section class="hero">
       <div class="wrap">
         <div class="eyebrow"><span class="cursor"></span> STATUS: ONLINE — <span id="proj-count">0</span> PROJECTS LOGGED</div>
-        <h1>I build things that <em>sense, decide,</em> and move.</h1>
+        <h1> <em>Autonomous, Collaborative, and Mobile</em> Robotics</h1>
         <p class="hero-sub">A working log of robotics projects — mechanical builds, control systems, and the occasional thing that fell off a table mid-demo. Replace this line with a one-sentence version of who you are and what you build.</p>
         <div class="hero-cta">
           <a class="btn btn-primary" onclick="scrollToId('projects')">View projects →</a>
@@ -306,11 +315,11 @@
           <div class="section-num">03 / RÉSUMÉ</div>
           <h2>Résumé</h2>
         </div>
-        <div class="section-note">PDF — updated Aug 2026</div>
+        <div class="section-note">Read it below or download the PDF</div>
       </div>
       <div class="resume-grid">
         <div>
-          <p>One or two sentences on what you're looking for — role type, timing, location. Full history, coursework, and references are in the PDF.</p>
+          <p>One or two sentences on what you're looking for — role type, timing, location. The full résumé is embedded below, and downloadable if you'd rather keep a copy.</p>
           <a class="btn btn-primary" href="Saam%20Haghighat-Grami%20Resume.pdf" target="_blank" rel="noopener" download>↓ Download résumé (PDF)</a>
         </div>
         <div>
@@ -322,6 +331,16 @@
           </ul>
         </div>
       </div>
+
+      <div class="resume-embed">
+        <object data="Saam%20Haghighat-Grami%20Resume.pdf#view=FitH" type="application/pdf" aria-label="Résumé of Saam Haghighat-Grami">
+          <div class="resume-fallback">
+            This browser can't show PDFs inline.<br>
+            <a href="Saam%20Haghighat-Grami%20Resume.pdf" target="_blank" rel="noopener">Open the résumé in a new tab →</a>
+          </div>
+        </object>
+      </div>
+      <div class="resume-caption">Saam Haghighat-Grami — Résumé, updated Aug 2026</div>
     </section>
 
     <section class="section wrap" id="contact" style="border-bottom:none;">
