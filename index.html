@@ -331,27 +331,40 @@
   }
   .doc-tab:hover{ border-color: var(--accent); color: var(--accent-dark); }
   .doc-tab.active{ background: var(--ink); border-color: var(--ink); color: var(--bg); }
-  .resume-embed{
+  /* The résumé is written as real HTML instead of an embedded PDF, so it
+     scrolls with the page, works on phones, and is readable by search engines.
+     The PDF is still there as a download. Content comes from the same
+     experience / education / skills arrays used further up the page. */
+  .resume-paper{
     margin-top: 48px; border: 1px solid var(--line-strong); border-radius: var(--radius);
-    background: var(--bg-alt); overflow:hidden; position: relative;
+    background: #FFFFFF; padding: 48px 52px 44px;
   }
-  .resume-embed iframe{ display:block; width:100%; height: 900px; border:0; }
-  @media (max-width: 720px){ .resume-embed iframe{ height: 520px; } }
-
-  /* Transparent layer so page scroll keeps working until you click into the PDF */
-  .embed-shield{
-    position:absolute; inset:0; cursor:pointer; background: transparent;
-    display:flex; align-items:flex-end; justify-content:center; padding-bottom: 18px;
+  @media (max-width: 720px){ .resume-paper{ padding: 32px 24px 28px; } }
+  .rp-name{ font-family: var(--display); font-size: 28px; font-weight: 600; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .rp-tagline{ font-size: 15px; color: var(--ink-soft); margin: 0 0 14px; }
+  .rp-contact{
+    font-family: var(--mono); font-size: 12px; color: var(--ink-soft);
+    display:flex; flex-wrap: wrap; gap: 6px 18px; padding-bottom: 26px; border-bottom: 2px solid var(--ink);
   }
-  .embed-shield span{
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
-    background: rgba(18,22,26,0.78); color: #F3F6F7; padding: 7px 14px; border-radius: 20px;
+  .rp-contact a{ color: var(--ink-soft); text-decoration:none; }
+  .rp-contact a:hover{ color: var(--accent-dark); }
+  .rp-section{ margin-top: 32px; }
+  .rp-h{
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-faint); padding-bottom: 8px; margin-bottom: 18px; border-bottom: 1px solid var(--line);
   }
-  .embed-shield.off{ display:none; }
-  .resume-fallback{
-    padding: 40px 24px; text-align:center; font-family: var(--mono); font-size: 13px; color: var(--ink-soft); line-height:1.7;
-  }
-  .resume-fallback a{ color: var(--accent-dark); }
+  .rp-entry{ margin-bottom: 22px; }
+  .rp-entry:last-child{ margin-bottom: 0; }
+  .rp-row{ display:flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  .rp-role{ font-family: var(--display); font-size: 16px; font-weight: 600; margin: 0; }
+  .rp-when{ font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); white-space: pre-line; text-align: right; }
+  @media (max-width: 560px){ .rp-when{ text-align: left; } }
+  .rp-org{ font-family: var(--mono); font-size: 12px; color: var(--accent-dark); margin: 3px 0 8px; }
+  .rp-points{ margin: 0; padding-left: 17px; font-size: 14px; color: var(--ink-soft); }
+  .rp-points li{ margin-bottom: 4px; }
+  .rp-skills{ display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px 32px; }
+  .rp-skill-row{ font-size: 14px; color: var(--ink-soft); }
+  .rp-skill-row b{ font-family: var(--mono); font-size: 11.5px; color: var(--ink); font-weight: 500; }
   .resume-caption{ font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 12px; }
 
   /* Portrait. Drop a file named portrait.jpg next to index.html and it appears
@@ -567,7 +580,7 @@
       </div>
       <div class="resume-grid">
         <div>
-          <p>I am looking for robotics roles in perception, autonomy, and embedded systems — internships or full-time positions starting after I graduate in 2026. The full résumé is embedded below, and downloadable if you'd rather keep a copy.</p>
+          <p>I am looking for robotics roles in perception, autonomy, and embedded systems — internships or full-time positions starting after I graduate in 2026. The full résumé is written out below, and downloadable as a PDF if you'd rather keep a copy.</p>
           <a class="btn btn-primary" id="doc-download" href="#" target="_blank" rel="noopener" download>↓ Download résumé (PDF)</a>
         </div>
         <div>
@@ -585,13 +598,7 @@
         <button class="doc-tab active" id="tab-resume" type="button">Résumé</button>
         <button class="doc-tab" id="tab-cv" type="button">CV</button>
       </div>
-      <div class="resume-embed">
-        <iframe id="doc-embed" src="" title="Résumé of Saam Haghighat-Grami" loading="lazy"></iframe>
-        <div class="embed-shield" id="embed-shield"><span>Click to scroll inside the PDF</span></div>
-      </div>
-      <div class="resume-fallback" style="padding:12px 0 0; text-align:left;">
-        <a id="doc-fallback-link" href="#" target="_blank" rel="noopener">Open in a new tab →</a>
-      </div>
+      <div class="resume-paper" id="resume-paper"></div>
       <div class="resume-caption" id="doc-caption">Saam Haghighat-Grami — Résumé</div>
     </section>
 
@@ -994,9 +1001,64 @@
     `).join('');
   }
 
+  // ---- RÉSUMÉ HEADER — edit your name / contact line here ----
+  const RESUME_HEADER = {
+    name: "Saam Haghighat-Grami",
+    tagline: "Mechatronics Engineering · Robotics — autonomy, perception, embedded systems",
+    contact: [
+      { label: "saam.haghighat.grami@gmail.com", url: "mailto:saam.haghighat.grami@gmail.com" },
+      { label: "github.com/Saam-Grami",          url: "https://github.com/Saam-Grami" },
+      { label: "linkedin.com/in/saam-haghighat-grami", url: "https://www.linkedin.com/in/saam-haghighat-grami/" },
+      { label: "Marietta, GA" }
+    ]
+  };
+
+  // Builds the on-page résumé out of the same data used by the Experience,
+  // Education, and Skills sections — edit those arrays and this updates too.
+  function renderResumePaper(){
+    const el = document.getElementById('resume-paper');
+    if (!el) return;
+
+    const entry = x => `
+      <div class="rp-entry">
+        <div class="rp-row">
+          <h4 class="rp-role">${x.role}</h4>
+          <div class="rp-when">${x.when}</div>
+        </div>
+        <div class="rp-org">${x.org}</div>
+        ${x.points && x.points.length ? `<ul class="rp-points">${x.points.map(p => `<li>${p}</li>`).join('')}</ul>` : ''}
+      </div>`;
+
+    const contact = RESUME_HEADER.contact.map(c =>
+      c.url ? `<a href="${c.url}" target="_blank" rel="noopener">${c.label}</a>` : `<span>${c.label}</span>`
+    ).join('');
+
+    el.innerHTML = `
+      <h3 class="rp-name">${RESUME_HEADER.name}</h3>
+      <p class="rp-tagline">${RESUME_HEADER.tagline}</p>
+      <div class="rp-contact">${contact}</div>
+
+      <div class="rp-section">
+        <div class="rp-h">Education</div>
+        ${education.map(entry).join('')}
+      </div>
+
+      <div class="rp-section">
+        <div class="rp-h">Experience</div>
+        ${experience.map(entry).join('')}
+      </div>
+
+      <div class="rp-section">
+        <div class="rp-h">Skills</div>
+        <div class="rp-skills">
+          ${skills.map(s => `<div class="rp-skill-row"><b>${s.group}</b><br>${s.items.join(' · ')}</div>`).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  // Wires the download button (and the Résumé / CV switch when SHOW_CV is on).
   function renderDocs(){
-    const embed    = document.getElementById('doc-embed');
-    const fallback = document.getElementById('doc-fallback-link');
     const download = document.getElementById('doc-download');
     const caption  = document.getElementById('doc-caption');
     const tabs     = document.getElementById('doc-tabs');
@@ -1006,11 +1068,9 @@
     function show(which){
       const file  = which === 'cv' ? CV_FILE : RESUME_FILE;
       const label = which === 'cv' ? 'CV' : 'Résumé';
-      embed.src = encodeURI(file) + '#view=FitH';
-      fallback.href  = encodeURI(file);
-      download.href  = encodeURI(file);
+      download.href = encodeURI(file);
       download.textContent = `↓ Download ${label.toLowerCase()} (PDF)`;
-      caption.textContent  = `Saam Haghighat-Grami — ${label}`;
+      caption.textContent  = `${RESUME_HEADER.name} — ${label}`;
       if (tabR && tabC){
         tabR.classList.toggle('active', which !== 'cv');
         tabC.classList.toggle('active', which === 'cv');
@@ -1022,17 +1082,8 @@
       tabR.addEventListener('click', () => show('resume'));
       tabC.addEventListener('click', () => show('cv'));
     }
-
-    // Click the shield to hand scrolling to the PDF; click anywhere else to take it back
-    const shield = document.getElementById('embed-shield');
-    if (shield){
-      shield.addEventListener('click', () => shield.classList.add('off'));
-      document.addEventListener('click', (e) => {
-        if (!document.querySelector('.resume-embed').contains(e.target)) shield.classList.remove('off');
-      });
-    }
-
     show('resume');
+    renderResumePaper();
   }
 
   function renderPublications(){
