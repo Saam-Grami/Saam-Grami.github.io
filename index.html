@@ -331,10 +331,26 @@
   }
   .doc-tab:hover{ border-color: var(--accent); color: var(--accent-dark); }
   .doc-tab.active{ background: var(--ink); border-color: var(--ink); color: var(--bg); }
-  /* The résumé is written as real HTML instead of an embedded PDF, so it
-     scrolls with the page, works on phones, and is readable by search engines.
-     The PDF is still there as a download. Content comes from the same
-     experience / education / skills arrays used further up the page. */
+  /* The résumé PDF is rendered page-by-page onto canvases and laid out in the
+     normal document flow. That means the page scrolls the way it always does —
+     no embedded PDF plugin to swallow the mouse wheel, and it works on iOS,
+     where inline PDF iframes don't. If the PDF can't be loaded, the written-out
+     HTML résumé below takes over automatically. */
+  .resume-doc{ margin-top: 48px; }
+  .pdf-pages{ display:flex; flex-direction: column; gap: 20px; }
+  .pdf-pages canvas{
+    display:block; width:100%; height:auto;
+    border: 1px solid var(--line-strong); border-radius: var(--radius);
+    background: #FFFFFF; box-shadow: 0 2px 14px rgba(18,22,26,0.06);
+  }
+  .pdf-status{
+    padding: 60px 24px; text-align:center; font-family: var(--mono); font-size: 12.5px;
+    color: var(--ink-faint); border: 1px dashed var(--line-strong); border-radius: var(--radius);
+    background: var(--bg-alt); line-height: 1.8;
+  }
+  .pdf-status a{ color: var(--accent-dark); }
+
+  /* Written-out résumé — normally hidden, shown only if the PDF fails to load. */
   .resume-paper{
     margin-top: 48px; border: 1px solid var(--line-strong); border-radius: var(--radius);
     background: #FFFFFF; padding: 48px 52px 44px;
@@ -580,7 +596,7 @@
       </div>
       <div class="resume-grid">
         <div>
-          <p>I am looking for robotics roles in perception, autonomy, and embedded systems — internships or full-time positions starting after I graduate in 2026. The full résumé is written out below, and downloadable as a PDF if you'd rather keep a copy.</p>
+          <p>I am looking for robotics roles in perception, autonomy, and embedded systems — internships or full-time positions starting after I graduate in 2026. The full résumé is shown below, and downloadable as a PDF if you'd rather keep a copy.</p>
           <a class="btn btn-primary" id="doc-download" href="#" target="_blank" rel="noopener" download>↓ Download résumé (PDF)</a>
         </div>
         <div>
@@ -598,7 +614,11 @@
         <button class="doc-tab active" id="tab-resume" type="button">Résumé</button>
         <button class="doc-tab" id="tab-cv" type="button">CV</button>
       </div>
-      <div class="resume-paper" id="resume-paper"></div>
+      <div class="resume-doc" id="resume-doc">
+        <div class="pdf-pages" id="pdf-pages"></div>
+        <div class="pdf-status" id="pdf-status">Loading résumé…</div>
+      </div>
+      <div class="resume-paper hidden" id="resume-paper"></div>
       <div class="resume-caption" id="doc-caption">Saam Haghighat-Grami — Résumé</div>
     </section>
 
@@ -743,11 +763,11 @@
   const skills = [
     { group: "Languages",       items: ["C++", "Python", "MATLAB", "PLC", "Ladder Logic"] },
     { group: "Frameworks",      items: ["ROS2", "NAV2", "TensorFlow", "PyTorch", "OpenCV"] },
-    { group: "Machine Learning",items: ["LSTM-DNN", "YOLO", "ByteTrack", "Segmentation", "Gaussian NLL"] },
-    { group: "Embedded",        items: ["ESP32", "Jetson Orin Nano", "Raspberry Pi 5", "TensorRT", "Matek H743"] },
+    { group: "Perception & ML", items: ["LSTM-DNN", "YOLO", "ByteTrack", "Segmentation", "LSPIV", "Gaussian NLL"] },
+    { group: "Embedded",        items: ["ESP32", "Jetson Orin Nano", "Raspberry Pi 5", "OpenMV", "TensorRT", "Matek H743"] },
     { group: "CAD",             items: ["SolidWorks", "Onshape"] },
     { group: "Developer Tools", items: ["Arduino IDE", "VS Code", "Linux", "TIA Portal"] },
-    { group: "Robotics",        items: ["SLAM", "LSPIV", "ArduPilot", "UAV–UGV coordination"] },
+    { group: "Robotics",        items: ["SLAM", "ArduPilot", "UAV–UGV coordination"] },
     { group: "Coursework",      items: ["Machine Learning", "Control Systems", "Microcontrollers", "Mobile Robotics"] }
   ];
 
@@ -1057,7 +1077,95 @@
     `;
   }
 
-  // Wires the download button (and the Résumé / CV switch when SHOW_CV is on).
+  // ---- RÉSUMÉ PDF VIEWER ----
+  // Renders each page of the PDF onto a canvas and stacks them in normal page
+  // flow. Native scrolling, works on phones. If the file is missing or the
+  // renderer can't load, the written-out HTML résumé is shown instead.
+  const PDFJS_URL    = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+  const PDFJS_WORKER = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  let pdfLibPromise = null;
+  function loadPdfLib(){
+    if (pdfLibPromise) return pdfLibPromise;
+    pdfLibPromise = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = PDFJS_URL;
+      s.onload = () => {
+        if (!window.pdfjsLib) return reject(new Error('pdf.js missing'));
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
+        resolve(window.pdfjsLib);
+      };
+      s.onerror = () => reject(new Error('pdf.js failed to load'));
+      document.head.appendChild(s);
+    });
+    return pdfLibPromise;
+  }
+
+  function fallbackToHtmlResume(file){
+    document.getElementById('resume-doc').classList.add('hidden');
+    const paper = document.getElementById('resume-paper');
+    paper.classList.remove('hidden');
+    renderResumePaper();
+    console.warn('Résumé PDF could not be displayed — showing the written-out version. Expected file:', file);
+  }
+
+  async function renderPdf(file){
+    const host   = document.getElementById('pdf-pages');
+    const status = document.getElementById('pdf-status');
+    const doc    = document.getElementById('resume-doc');
+    if (!host) return;
+
+    doc.classList.remove('hidden');
+    document.getElementById('resume-paper').classList.add('hidden');
+    host.innerHTML = '';
+    status.classList.remove('hidden');
+    status.textContent = 'Loading résumé…';
+
+    let pdf;
+    try {
+      const lib = await loadPdfLib();
+      pdf = await lib.getDocument(encodeURI(file)).promise;
+    } catch (err) {
+      // Opening index.html straight off the disk (file://) blocks this for
+      // security reasons — it works normally once the site is hosted.
+      if (location.protocol === 'file:') {
+        status.innerHTML = 'Browsers block reading local files, so the PDF can\'t render while you\'re opening this page from your disk.<br>It will work once the site is hosted. <a href="' + encodeURI(file) + '" target="_blank" rel="noopener">Open the PDF directly →</a>';
+        return;
+      }
+      fallbackToHtmlResume(file);
+      return;
+    }
+
+    const dpr   = Math.min(window.devicePixelRatio || 1, 2);
+    const width = host.clientWidth || 900;
+
+    for (let n = 1; n <= pdf.numPages; n++){
+      const page     = await pdf.getPage(n);
+      const base     = page.getViewport({ scale: 1 });
+      const viewport = page.getViewport({ scale: (width / base.width) * dpr });
+
+      const canvas = document.createElement('canvas');
+      canvas.width  = Math.round(viewport.width);
+      canvas.height = Math.round(viewport.height);
+      canvas.setAttribute('role', 'img');
+      canvas.setAttribute('aria-label', `Résumé page ${n} of ${pdf.numPages}`);
+      host.appendChild(canvas);
+
+      await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+    }
+
+    status.classList.add('hidden');
+  }
+
+  // Re-render at the new width when the window is resized, so pages stay sharp
+  let pdfResizeTimer, pdfCurrentFile = null;
+  window.addEventListener('resize', () => {
+    if (!pdfCurrentFile) return;
+    clearTimeout(pdfResizeTimer);
+    pdfResizeTimer = setTimeout(() => renderPdf(pdfCurrentFile), 300);
+  });
+
+  // Wires the download button and the Résumé / CV switch when SHOW_CV is on.
   function renderDocs(){
     const download = document.getElementById('doc-download');
     const caption  = document.getElementById('doc-caption');
@@ -1075,6 +1183,8 @@
         tabR.classList.toggle('active', which !== 'cv');
         tabC.classList.toggle('active', which === 'cv');
       }
+      pdfCurrentFile = file;
+      renderPdf(file);
     }
 
     if (SHOW_CV){
@@ -1083,7 +1193,6 @@
       tabC.addEventListener('click', () => show('cv'));
     }
     show('resume');
-    renderResumePaper();
   }
 
   function renderPublications(){
