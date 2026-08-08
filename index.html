@@ -350,37 +350,6 @@
   }
   .pdf-status a{ color: var(--accent-dark); }
 
-  /* Written-out résumé — normally hidden, shown only if the PDF fails to load. */
-  .resume-paper{
-    margin-top: 48px; border: 1px solid var(--line-strong); border-radius: var(--radius);
-    background: #FFFFFF; padding: 48px 52px 44px;
-  }
-  @media (max-width: 720px){ .resume-paper{ padding: 32px 24px 28px; } }
-  .rp-name{ font-family: var(--display); font-size: 28px; font-weight: 600; margin: 0 0 6px; letter-spacing: -0.01em; }
-  .rp-tagline{ font-size: 15px; color: var(--ink-soft); margin: 0 0 14px; }
-  .rp-contact{
-    font-family: var(--mono); font-size: 12px; color: var(--ink-soft);
-    display:flex; flex-wrap: wrap; gap: 6px 18px; padding-bottom: 26px; border-bottom: 2px solid var(--ink);
-  }
-  .rp-contact a{ color: var(--ink-soft); text-decoration:none; }
-  .rp-contact a:hover{ color: var(--accent-dark); }
-  .rp-section{ margin-top: 32px; }
-  .rp-h{
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--ink-faint); padding-bottom: 8px; margin-bottom: 18px; border-bottom: 1px solid var(--line);
-  }
-  .rp-entry{ margin-bottom: 22px; }
-  .rp-entry:last-child{ margin-bottom: 0; }
-  .rp-row{ display:flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
-  .rp-role{ font-family: var(--display); font-size: 16px; font-weight: 600; margin: 0; }
-  .rp-when{ font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); white-space: pre-line; text-align: right; }
-  @media (max-width: 560px){ .rp-when{ text-align: left; } }
-  .rp-org{ font-family: var(--mono); font-size: 12px; color: var(--accent-dark); margin: 3px 0 8px; }
-  .rp-points{ margin: 0; padding-left: 17px; font-size: 14px; color: var(--ink-soft); }
-  .rp-points li{ margin-bottom: 4px; }
-  .rp-skills{ display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px 32px; }
-  .rp-skill-row{ font-size: 14px; color: var(--ink-soft); }
-  .rp-skill-row b{ font-family: var(--mono); font-size: 11.5px; color: var(--ink); font-weight: 500; }
   .resume-caption{ font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 12px; }
 
   /* Portrait. Drop a file named portrait.jpg next to index.html and it appears
@@ -618,7 +587,6 @@
         <div class="pdf-pages" id="pdf-pages"></div>
         <div class="pdf-status" id="pdf-status">Loading résumé…</div>
       </div>
-      <div class="resume-paper hidden" id="resume-paper"></div>
       <div class="resume-caption" id="doc-caption">Saam Haghighat-Grami — Résumé</div>
     </section>
 
@@ -1021,62 +989,6 @@
     `).join('');
   }
 
-  // ---- RÉSUMÉ HEADER — edit your name / contact line here ----
-  const RESUME_HEADER = {
-    name: "Saam Haghighat-Grami",
-    tagline: "Mechatronics Engineering · Robotics — autonomy, perception, embedded systems",
-    contact: [
-      { label: "saam.haghighat.grami@gmail.com", url: "mailto:saam.haghighat.grami@gmail.com" },
-      { label: "github.com/Saam-Grami",          url: "https://github.com/Saam-Grami" },
-      { label: "linkedin.com/in/saam-haghighat-grami", url: "https://www.linkedin.com/in/saam-haghighat-grami/" },
-      { label: "Marietta, GA" }
-    ]
-  };
-
-  // Builds the on-page résumé out of the same data used by the Experience,
-  // Education, and Skills sections — edit those arrays and this updates too.
-  function renderResumePaper(){
-    const el = document.getElementById('resume-paper');
-    if (!el) return;
-
-    const entry = x => `
-      <div class="rp-entry">
-        <div class="rp-row">
-          <h4 class="rp-role">${x.role}</h4>
-          <div class="rp-when">${x.when}</div>
-        </div>
-        <div class="rp-org">${x.org}</div>
-        ${x.points && x.points.length ? `<ul class="rp-points">${x.points.map(p => `<li>${p}</li>`).join('')}</ul>` : ''}
-      </div>`;
-
-    const contact = RESUME_HEADER.contact.map(c =>
-      c.url ? `<a href="${c.url}" target="_blank" rel="noopener">${c.label}</a>` : `<span>${c.label}</span>`
-    ).join('');
-
-    el.innerHTML = `
-      <h3 class="rp-name">${RESUME_HEADER.name}</h3>
-      <p class="rp-tagline">${RESUME_HEADER.tagline}</p>
-      <div class="rp-contact">${contact}</div>
-
-      <div class="rp-section">
-        <div class="rp-h">Education</div>
-        ${education.map(entry).join('')}
-      </div>
-
-      <div class="rp-section">
-        <div class="rp-h">Experience</div>
-        ${experience.map(entry).join('')}
-      </div>
-
-      <div class="rp-section">
-        <div class="rp-h">Skills</div>
-        <div class="rp-skills">
-          ${skills.map(s => `<div class="rp-skill-row"><b>${s.group}</b><br>${s.items.join(' · ')}</div>`).join('')}
-        </div>
-      </div>
-    `;
-  }
-
   // ---- RÉSUMÉ PDF VIEWER ----
   // Renders each page of the PDF onto a canvas and stacks them in normal page
   // flow. Native scrolling, works on phones. If the file is missing or the
@@ -1101,14 +1013,6 @@
     return pdfLibPromise;
   }
 
-  function fallbackToHtmlResume(file){
-    document.getElementById('resume-doc').classList.add('hidden');
-    const paper = document.getElementById('resume-paper');
-    paper.classList.remove('hidden');
-    renderResumePaper();
-    console.warn('Résumé PDF could not be displayed — showing the written-out version. Expected file:', file);
-  }
-
   async function renderPdf(file){
     const host   = document.getElementById('pdf-pages');
     const status = document.getElementById('pdf-status');
@@ -1116,7 +1020,6 @@
     if (!host) return;
 
     doc.classList.remove('hidden');
-    document.getElementById('resume-paper').classList.add('hidden');
     host.innerHTML = '';
     status.classList.remove('hidden');
     status.textContent = 'Loading résumé…';
@@ -1126,13 +1029,15 @@
       const lib = await loadPdfLib();
       pdf = await lib.getDocument(encodeURI(file)).promise;
     } catch (err) {
+      const link = '<a href="' + encodeURI(file) + '" target="_blank" rel="noopener">Open the PDF directly →</a>';
       // Opening index.html straight off the disk (file://) blocks this for
       // security reasons — it works normally once the site is hosted.
       if (location.protocol === 'file:') {
-        status.innerHTML = 'Browsers block reading local files, so the PDF can\'t render while you\'re opening this page from your disk.<br>It will work once the site is hosted. <a href="' + encodeURI(file) + '" target="_blank" rel="noopener">Open the PDF directly →</a>';
-        return;
+        status.innerHTML = 'Browsers block reading local files, so the PDF can\'t render while you\'re opening this page from your disk.<br>It will work once the site is hosted. ' + link;
+      } else {
+        status.innerHTML = 'The résumé PDF couldn\'t be displayed here.<br>' + link;
+        console.warn('Résumé render failed. Expected file:', file, err);
       }
-      fallbackToHtmlResume(file);
       return;
     }
 
@@ -1178,7 +1083,7 @@
       const label = which === 'cv' ? 'CV' : 'Résumé';
       download.href = encodeURI(file);
       download.textContent = `↓ Download ${label.toLowerCase()} (PDF)`;
-      caption.textContent  = `${RESUME_HEADER.name} — ${label}`;
+      caption.textContent  = `Saam Haghighat-Grami — ${label}`;
       if (tabR && tabC){
         tabR.classList.toggle('active', which !== 'cv');
         tabC.classList.toggle('active', which === 'cv');
