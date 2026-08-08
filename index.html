@@ -247,6 +247,17 @@
   }
   .thumb-lg{ aspect-ratio: 21/9; margin-bottom: 28px; font-size: 12px; }
 
+  /* Real project media. .has-media swaps the striped placeholder for your photo. */
+  .thumb.has-media{
+    background: var(--bg-alt) center/cover no-repeat;
+    border: 1px solid var(--line-strong);
+  }
+  video.thumb-media{
+    display:block; width:100%; aspect-ratio: 21/9; object-fit: cover;
+    border: 1px solid var(--line-strong); border-radius: var(--radius);
+    margin-bottom: 28px; background: var(--bg-alt);
+  }
+
   /* ---------- TIMELINE (EXPERIENCE / EDUCATION) ---------- */
   .timeline{ border-top: 1px solid var(--line); }
   .tl-item{ display:grid; grid-template-columns: 160px 1fr; gap: 28px; padding: 26px 0; border-bottom: 1px solid var(--line); }
@@ -320,9 +331,23 @@
   }
   .doc-tab:hover{ border-color: var(--accent); color: var(--accent-dark); }
   .doc-tab.active{ background: var(--ink); border-color: var(--ink); color: var(--bg); }
-  .resume-embed{ margin-top: 48px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--bg-alt); overflow:hidden; }
-  .resume-embed object, .resume-embed iframe{ display:block; width:100%; height: 900px; border:0; }
-  @media (max-width: 720px){ .resume-embed object, .resume-embed iframe{ height: 520px; } }
+  .resume-embed{
+    margin-top: 48px; border: 1px solid var(--line-strong); border-radius: var(--radius);
+    background: var(--bg-alt); overflow:hidden; position: relative;
+  }
+  .resume-embed iframe{ display:block; width:100%; height: 900px; border:0; }
+  @media (max-width: 720px){ .resume-embed iframe{ height: 520px; } }
+
+  /* Transparent layer so page scroll keeps working until you click into the PDF */
+  .embed-shield{
+    position:absolute; inset:0; cursor:pointer; background: transparent;
+    display:flex; align-items:flex-end; justify-content:center; padding-bottom: 18px;
+  }
+  .embed-shield span{
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+    background: rgba(18,22,26,0.78); color: #F3F6F7; padding: 7px 14px; border-radius: 20px;
+  }
+  .embed-shield.off{ display:none; }
   .resume-fallback{
     padding: 40px 24px; text-align:center; font-family: var(--mono); font-size: 13px; color: var(--ink-soft); line-height:1.7;
   }
@@ -561,12 +586,11 @@
         <button class="doc-tab" id="tab-cv" type="button">CV</button>
       </div>
       <div class="resume-embed">
-        <object id="doc-embed" data="" type="application/pdf" aria-label="Résumé of Saam Haghighat-Grami">
-          <div class="resume-fallback">
-            This browser can't show PDFs inline.<br>
-            <a id="doc-fallback-link" href="#" target="_blank" rel="noopener">Open the document in a new tab →</a>
-          </div>
-        </object>
+        <iframe id="doc-embed" src="" title="Résumé of Saam Haghighat-Grami" loading="lazy"></iframe>
+        <div class="embed-shield" id="embed-shield"><span>Click to scroll inside the PDF</span></div>
+      </div>
+      <div class="resume-fallback" style="padding:12px 0 0; text-align:left;">
+        <a id="doc-fallback-link" href="#" target="_blank" rel="noopener">Open in a new tab →</a>
       </div>
       <div class="resume-caption" id="doc-caption">Saam Haghighat-Grami — Résumé</div>
     </section>
@@ -741,6 +765,8 @@
       subtitle: "Drone Arm Robotic Backpack · personal project",
       status: "progress",
       year: "2025–26",
+      image: "",   // e.g. "media/rb-01.jpg" — shown on the card and as the video poster
+      video: "",   // e.g. "media/rb-01.mp4" — loops on the project page; leave "" for image only
       blurb: "A wearable robotic arm that retrieves a drone in flight, with the drone aligning itself using computer vision.",
       details: "DARB is a drone docking system built around a robotic arm attached to a mobile, human-wearable platform. I invented and built it independently.\n\nThe custom drone uses computer vision to align with IR LEDs mounted on the wearable platform, and the arm retrieves it mid-flight. The drone will also be able to launch and release from the arm. The whole sequence is autonomously operated.\n\nThe project runs across mechanical design, embedded systems, and flight control at once, since the arm and the aircraft have to agree on where they are relative to each other before a capture is possible.",
       stack: "ArduPilot, Arduino IDE, TensorFlow, computer vision",
@@ -754,6 +780,8 @@
       subtitle: "UAV and UGV collaborative search and rescue",
       status: "progress",
       year: "2025–26",
+      image: "",   // e.g. "media/rb-02.jpg" — shown on the card and as the video poster
+      video: "",   // e.g. "media/rb-02.mp4" — loops on the project page; leave "" for image only
       blurb: "A UAV surveys the environment while a UGV clears obstacles blocking access to points of interest.",
       details: "A2G is a UGV–UAV collaborative search-and-rescue system. The UAV surveys the environment while the UGV clears obstacles blocking access to points of interest using an onboard manipulator.\n\nI lead the machine learning and computer vision pipeline that estimates obstacle mass from sensor-fused SLAM point clouds. That estimate determines which obstacles the manipulator can safely move, and it runs alongside the UAV's flight motion rather than after it.\n\nThe interesting problem is not navigation on its own — it is deciding what is worth moving, and committing to that decision with incomplete information.",
       stack: "ROS2, NAV2, OpenCV, SLAM, segmentation",
@@ -767,6 +795,8 @@
       subtitle: "Soil monitoring probe network",
       status: "live",
       year: "2025",
+      image: "",   // e.g. "media/rb-03.jpg" — shown on the card and as the video poster
+      video: "",   // e.g. "media/rb-03.mp4" — loops on the project page; leave "" for image only
       blurb: "A self-offloading mesh network where probes auto-discover neighbors and relay data to any node, with no central hub.",
       details: "SoilBus is a self-offloading soil-monitoring mesh network built for farmers. Probes auto-discover neighboring nodes and relay sensor data to any node, so there is no central hub to install or maintain.\n\nAn LSTM processes incoming NPK, EC, pH, temperature, and moisture readings alongside light-level data across the network.\n\nI validated communication and routing across 5 physical nodes, with performance holding up to a simulated 26 nodes before degradation. Self-healing is not yet implemented.",
       stack: "C++, Arduino IDE, ad hoc networking, LSTM",
@@ -780,6 +810,8 @@
       subtitle: "Uncertainty-aware forecasting · SURP",
       status: "live",
       year: "2026",
+      image: "",   // e.g. "media/rb-04.jpg" — shown on the card and as the video poster
+      video: "",   // e.g. "media/rb-04.mp4" — loops on the project page; leave "" for image only
       blurb: "A real-time edge system that detects, tracks, and forecasts the paths of floating river debris with calibrated uncertainty.",
       details: "I developed a real-time, edge-deployed system that detects, tracks, and predicts the trajectories of floating river debris.\n\nLinear Kalman-filter motion predictors break down in turbulent riverine conditions, so I used neural networks instead: a class-conditioned LSPIV–LSTM–DNN architecture with a Gaussian uncertainty head, producing calibrated multi-step trajectory forecasts over YOLO and ByteTrack detections. The point is that the system reports how confident it is, rather than committing to a single prediction it cannot justify.\n\nThe full pipeline runs on an NVIDIA Jetson Orin Nano. Conducted as SURP research under Dr. Matt Marshall.",
       stack: "PyTorch, Python, TensorRT, OpenCV",
@@ -793,6 +825,8 @@
       subtitle: "",
       status: "progress",
       year: "2025–26",
+      image: "",   // e.g. "media/rb-05.jpg" — shown on the card and as the video poster
+      video: "",   // e.g. "media/rb-05.mp4" — loops on the project page; leave "" for image only
       blurb: "TODO — one line on what this is.",
       details: "",
       stack: "",
@@ -806,6 +840,8 @@
       subtitle: "",
       status: "live",
       year: "2024",
+      image: "",   // e.g. "media/rb-06.jpg" — shown on the card and as the video poster
+      video: "",   // e.g. "media/rb-06.mp4" — loops on the project page; leave "" for image only
       blurb: "TODO — one line on what this is.",
       details: "",
       stack: "",
@@ -819,6 +855,8 @@
       subtitle: "",
       status: "archived",
       year: "2023",
+      image: "",   // e.g. "media/rb-07.jpg" — shown on the card and as the video poster
+      video: "",   // e.g. "media/rb-07.mp4" — loops on the project page; leave "" for image only
       blurb: "TODO — one line on what this is.",
       details: "",
       stack: "",
@@ -832,6 +870,8 @@
       subtitle: "",
       status: "live",
       year: "2025",
+      image: "",   // e.g. "media/rb-08.jpg" — shown on the card and as the video poster
+      video: "",   // e.g. "media/rb-08.mp4" — loops on the project page; leave "" for image only
       blurb: "TODO — one line on what this is.",
       details: "",
       stack: "",
@@ -845,6 +885,8 @@
       subtitle: "",
       status: "progress",
       year: "2026",
+      image: "",   // e.g. "media/rb-09.jpg" — shown on the card and as the video poster
+      video: "",   // e.g. "media/rb-09.mp4" — loops on the project page; leave "" for image only
       blurb: "TODO — one line on what this is.",
       details: "",
       stack: "",
@@ -964,7 +1006,7 @@
     function show(which){
       const file  = which === 'cv' ? CV_FILE : RESUME_FILE;
       const label = which === 'cv' ? 'CV' : 'Résumé';
-      embed.setAttribute('data', encodeURI(file) + '#view=FitH');
+      embed.src = encodeURI(file) + '#view=FitH';
       fallback.href  = encodeURI(file);
       download.href  = encodeURI(file);
       download.textContent = `↓ Download ${label.toLowerCase()} (PDF)`;
@@ -980,6 +1022,16 @@
       tabR.addEventListener('click', () => show('resume'));
       tabC.addEventListener('click', () => show('cv'));
     }
+
+    // Click the shield to hand scrolling to the PDF; click anywhere else to take it back
+    const shield = document.getElementById('embed-shield');
+    if (shield){
+      shield.addEventListener('click', () => shield.classList.add('off'));
+      document.addEventListener('click', (e) => {
+        if (!document.querySelector('.resume-embed').contains(e.target)) shield.classList.remove('off');
+      });
+    }
+
     show('resume');
   }
 
@@ -1039,6 +1091,25 @@
     });
   }
 
+  // Card thumbnail: your real photo if you've set one, striped placeholder if not.
+  function cardThumb(p){
+    return p.image
+      ? `<div class="thumb has-media" style="background-image:url('${p.image}')"></div>`
+      : `<div class="thumb">PHOTO PLACEHOLDER<br>replace with project image</div>`;
+  }
+
+  // Project page media: looping video wins, then a still image, then the placeholder.
+  // muted + playsinline are required or mobile browsers refuse to autoplay.
+  function detailMedia(p){
+    if (p.video) {
+      return `<video class="thumb-media" autoplay loop muted playsinline preload="metadata"${p.image ? ` poster="${p.image}"` : ''}>
+        <source src="${p.video}" type="video/mp4">
+      </video>`;
+    }
+    if (p.image) return `<div class="thumb thumb-lg has-media" style="background-image:url('${p.image}')"></div>`;
+    return `<div class="thumb thumb-lg">PHOTO / VIDEO PLACEHOLDER<br>replace with real project media</div>`;
+  }
+
   function renderGrid(){
     gridEl.innerHTML = '';
     projects.forEach(p => {
@@ -1050,7 +1121,7 @@
           <span class="card-id">${p.id}</span>
           <span class="status status-${p.status}">${statusLabel[p.status]}</span>
         </div>
-        <div class="thumb">PHOTO PLACEHOLDER<br>replace with project image</div>
+        ${cardThumb(p)}
         <h3>${p.title}<span class="arrow">→</span></h3>
         ${p.subtitle ? `<div class="card-sub">${p.subtitle}</div>` : ''}
         <p>${p.blurb}</p>
@@ -1089,7 +1160,7 @@
       </div>
       ${p.subtitle ? `<div class="detail-sub">${p.subtitle}</div>` : ''}
       <div class="detail-meta">${val(p.year)} · ${val(p.platform)}</div>
-      <div class="thumb thumb-lg">PHOTO / VIDEO PLACEHOLDER<br>replace with real project media</div>
+      ${detailMedia(p)}
       <div class="detail-body">${bodyText}</div>
       <dl class="detail-spec-grid">
         <div><dt>Stack</dt><dd>${val(p.stack)}</dd></div>
