@@ -1262,8 +1262,10 @@
   // muted + playsinline are required or mobile browsers refuse to autoplay.
   function detailMedia(p){
     if (p.video) {
+      const ext  = (p.video.split('.').pop() || 'mp4').toLowerCase();
+      const type = ext === 'webm' ? 'video/webm' : ext === 'ogv' ? 'video/ogg' : 'video/mp4';
       return `<video class="thumb-media" autoplay loop muted playsinline preload="metadata"${p.image ? ` poster="${p.image}"` : ''}>
-        <source src="${p.video}" type="video/mp4">
+        <source src="${p.video}" type="${type}">
       </video>`;
     }
     if (p.image) return `<div class="thumb thumb-lg has-media" style="background-image:url('${p.image}')"></div>`;
