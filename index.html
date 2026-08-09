@@ -102,7 +102,8 @@
   .nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
   .nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-5px) rotate(-45deg); }
 
-  @media (max-width: 860px){
+  /* Nav got longer with Coursework added, so the hamburger takes over sooner */
+  @media (max-width: 940px){
     .nav-toggle{ display:block; }
     .navlinks{
       display:none; position:absolute; top: calc(100% + 8px); right: 0; left: 0;
@@ -292,6 +293,28 @@
   .tl-tags{ display:flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
   .tl-tags span{ font-family: var(--mono); font-size: 10.5px; padding: 4px 8px; border: 1px solid var(--line-strong); border-radius: var(--radius); color: var(--ink-faint); }
 
+  /* ---------- COURSEWORK ---------- */
+  /* Same two-column rhythm as the timeline, but the left column holds media
+     instead of dates. The right side reuses .tl-role / .tl-org / .tl-points /
+     .tl-tags so a class row reads exactly like an education row. */
+  .cw-list{ border-top: 1px solid var(--line); }
+  .cw-item{
+    display:grid; grid-template-columns: 260px 1fr; gap: 28px;
+    padding: 26px 0; border-bottom: 1px solid var(--line); align-items:start;
+  }
+  @media (max-width: 720px){ .cw-item{ grid-template-columns: 1fr; gap: 16px; } }
+  .cw-media{
+    display:block; width:100%; aspect-ratio: 4/3; object-fit: cover;
+    border: 1px solid var(--line-strong); border-radius: var(--radius);
+    background: var(--bg-alt) center/cover no-repeat;
+  }
+  .cw-media-ph{
+    display:flex; align-items:center; justify-content:center; text-align:center; padding: 10px;
+    border-style: dashed; font-family: var(--mono); font-size: 11px; color: var(--ink-faint);
+    background: repeating-linear-gradient(45deg, var(--bg-alt), var(--bg-alt) 6px, var(--bg) 6px, var(--bg) 12px);
+  }
+  .cw-when{ font-family: var(--mono); font-size: 11px; color: var(--ink-faint); margin-top: 8px; letter-spacing: 0.04em; }
+
   /* ---------- PUBLICATIONS ---------- */
   .pub-list{ border-top: 1px solid var(--line); }
   .pub-item{ display:grid; grid-template-columns: 46px 1fr; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--line); }
@@ -356,8 +379,8 @@
   /* The résumé PDF is rendered page-by-page onto canvases and laid out in the
      normal document flow. That means the page scrolls the way it always does —
      no embedded PDF plugin to swallow the mouse wheel, and it works on iOS,
-     where inline PDF iframes don't. If the PDF can't be loaded, the written-out
-     HTML résumé below takes over automatically. */
+     where inline PDF iframes don't. If the PDF can't be loaded, a link to the
+     file is shown instead. */
   .resume-doc{ margin-top: 48px; }
   .pdf-pages{ display:flex; flex-direction: column; gap: 20px; }
   .pdf-pages canvas{
@@ -447,6 +470,7 @@
     <ul class="navlinks" id="navlinks">
       <li><a href="#projects" onclick="navTo(event,'projects')">Projects</a></li>
       <li><a href="#experience" onclick="navTo(event,'experience')">Experience</a></li>
+      <li><a href="#coursework" onclick="navTo(event,'coursework')">Coursework</a></li>
       <li><a href="#skills" onclick="navTo(event,'skills')">Skills</a></li>
       <li><a href="#about" onclick="navTo(event,'about')">About</a></li>
       <li id="nav-blog" class="hidden"><a href="#blog" onclick="navTo(event,'blog')">Logs</a></li>
@@ -522,6 +546,17 @@
         </div>
       </div>
       <div class="timeline" id="education-list"></div>
+    </section>
+
+    <section class="section wrap" id="coursework">
+      <div class="section-head">
+        <div>
+          <div class="section-num" data-label="COURSEWORK"></div>
+          <h2>Coursework</h2>
+        </div>
+        <div class="section-note">Classes with something built at the end of them.</div>
+      </div>
+      <div class="cw-list" id="coursework-list"></div>
     </section>
 
     <section class="section wrap hidden" id="publications">
@@ -723,8 +758,7 @@
       role: "B.S. Mechatronics Engineering",
       org: "Kennesaw State University",
       points: [
-        "CGPA: 4.00",
-        "Coursework: Machine Learning, Control Systems, Microcontrollers, PLCs, Robot Synthesis, Mobile Robotics."
+        "CGPA: 4.00"
       ],
       tags: []
     },
@@ -749,6 +783,71 @@
     }
   ];
 
+  // ---- EDIT YOUR COURSEWORK HERE ----
+  // image: "media/cw-ml.jpg"  — still shown in the left column
+  // video: "media/cw-ml.mp4"  — loops in place of the image; image becomes its poster
+  // Leave both "" and the striped placeholder shows instead.
+  const coursework = [
+    {
+      title: "Machine Learning",
+      org: "Kennesaw State University",
+      when: "Spring 2026",
+      image: "",
+      video: "",
+      points: [
+        "TODO — one line on what you built or what stuck with you."
+      ],
+      tags: ["PyTorch", "Python"]
+    },
+    {
+      title: "Mobile Robotics",
+      org: "Kennesaw State University",
+      when: "Fall 2025",
+      image: "",
+      video: "",
+      points: [
+        "TODO — one line."
+      ],
+      tags: ["ROS2", "SLAM"]
+    },
+    {
+      title: "Robot Synthesis",
+      org: "Kennesaw State University",
+      when: "",
+      image: "",
+      video: "",
+      points: [],
+      tags: ["Kinematics"]
+    },
+    {
+      title: "Control Systems",
+      org: "Kennesaw State University",
+      when: "",
+      image: "",
+      video: "",
+      points: [],
+      tags: ["MATLAB"]
+    },
+    {
+      title: "Microcontrollers",
+      org: "Kennesaw State University",
+      when: "",
+      image: "",
+      video: "",
+      points: [],
+      tags: ["C", "Embedded"]
+    },
+    {
+      title: "PLCs",
+      org: "Kennesaw State University",
+      when: "",
+      image: "",
+      video: "",
+      points: [],
+      tags: ["Ladder Logic", "TIA Portal"]
+    }
+  ];
+
   // ---- EDIT YOUR SKILLS HERE ----
   const skills = [
     { group: "Languages",       items: ["C++", "Python", "MATLAB", "PLC", "Ladder Logic"] },
@@ -757,8 +856,7 @@
     { group: "Embedded",        items: ["ESP32", "Jetson Orin Nano", "Raspberry Pi 5", "OpenMV", "TensorRT", "Matek H743"] },
     { group: "CAD",             items: ["SolidWorks", "Onshape"] },
     { group: "Developer Tools", items: ["Arduino IDE", "VS Code", "Linux", "TIA Portal"] },
-    { group: "Robotics",        items: ["SLAM", "ArduPilot", "UAV–UGV coordination"] },
-    { group: "Coursework",      items: ["Machine Learning", "Control Systems", "Microcontrollers", "Mobile Robotics"] }
+    { group: "Robotics",        items: ["SLAM", "ArduPilot", "UAV–UGV coordination"] }
   ];
 
   // ---- EDIT YOUR POSTS HERE (only shown when SHOW_BLOG = true) ----
@@ -1008,6 +1106,41 @@
           <div class="tl-org">${x.org}</div>
           ${x.points && x.points.length ? `<ul class="tl-points">${x.points.map(p => `<li>${p}</li>`).join('')}</ul>` : ''}
           ${x.tags && x.tags.length ? `<div class="tl-tags">${x.tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ---------- COURSEWORK ----------
+  // Left column media: video wins, then a still image, then the placeholder.
+  // muted + playsinline are required or mobile browsers refuse to autoplay.
+  function courseMedia(c){
+    if (c.video){
+      const ext  = (c.video.split('.').pop() || 'mp4').toLowerCase();
+      const type = ext === 'webm' ? 'video/webm' : ext === 'ogv' ? 'video/ogg' : 'video/mp4';
+      return `<video class="cw-media" autoplay loop muted playsinline preload="metadata"${c.image ? ` poster="${c.image}"` : ''}>
+        <source src="${c.video}" type="${type}">
+      </video>`;
+    }
+    if (c.image) return `<div class="cw-media" style="background-image:url('${c.image}')"></div>`;
+    return `<div class="cw-media cw-media-ph">PHOTO PLACEHOLDER</div>`;
+  }
+
+  function renderCoursework(){
+    const section = document.getElementById('coursework');
+    if (!coursework.length){ section.classList.add('hidden'); return; }
+    section.classList.remove('hidden');
+    document.getElementById('coursework-list').innerHTML = coursework.map(c => `
+      <div class="cw-item">
+        <div>
+          ${courseMedia(c)}
+          ${c.when ? `<div class="cw-when">${c.when}</div>` : ''}
+        </div>
+        <div>
+          <h3 class="tl-role">${c.title}</h3>
+          ${c.org ? `<div class="tl-org">${c.org}</div>` : ''}
+          ${c.points && c.points.length ? `<ul class="tl-points">${c.points.map(p => `<li>${p}</li>`).join('')}</ul>` : ''}
+          ${c.tags && c.tags.length ? `<div class="tl-tags">${c.tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}
         </div>
       </div>
     `).join('');
@@ -1326,6 +1459,7 @@
   renderGrid();
   renderTimeline(experience, 'experience-list');
   renderTimeline(education, 'education-list');
+  renderCoursework();
   renderSkills();
   renderDocs();
   renderPublications();
