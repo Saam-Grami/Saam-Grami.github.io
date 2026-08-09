@@ -832,8 +832,8 @@
       subtitle: "Uncertainty-aware forecasting · SURP",
       status: "live",
       year: "2026",
-      image: "",   // e.g. "media/rb-04.jpg" — shown on the card and as the video poster
-      video: "",   // e.g. "media/rb-04.mp4" — loops on the project page; leave "" for image only
+      image: "media/rb-04.png",   // e.g. "media/rb-04.jpg" — shown on the card and as the video poster
+      video: "media/rb-04.mp4",   // e.g. "media/rb-04.mp4" — loops on the project page; leave "" for image only
       repo: "",    // e.g. "https://github.com/Saam-Grami/river-debris"
       blurb: "A real-time edge system that detects, tracks, and forecasts the paths of floating river debris with calibrated uncertainty.",
       details: "I developed a real-time, edge-deployed system that detects, tracks, and predicts the trajectories of floating river debris.\n\nLinear Kalman-filter motion predictors break down in turbulent riverine conditions, so I used neural networks instead: a class-conditioned LSPIV–LSTM–DNN architecture with a Gaussian uncertainty head, producing calibrated multi-step trajectory forecasts over YOLO and ByteTrack detections. The point is that the system reports how confident it is, rather than committing to a single prediction it cannot justify.\n\nThe full pipeline runs on an NVIDIA Jetson Orin Nano. Conducted as SURP research under Dr. Matt Marshall.",
