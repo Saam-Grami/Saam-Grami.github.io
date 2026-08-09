@@ -252,13 +252,8 @@
     background: var(--bg-alt) center/cover no-repeat;
     border: 1px solid var(--line-strong);
   }
-/* No fixed aspect ratio — the video sizes itself from its own dimensions, so
-     square, portrait, and ultrawide clips all display uncropped. max-height
-     stops a very tall video from taking over the screen; anything that hits
-     that cap gets letterboxed against the panel color instead of being cut. */
   video.thumb-media{
-    display:block; width:100%; height:auto;
-    max-height: 72vh; object-fit: contain;
+    display:block; width:100%; aspect-ratio: 21/9; object-fit: cover;
     border: 1px solid var(--line-strong); border-radius: var(--radius);
     margin-bottom: 28px; background: var(--bg-alt);
   }
