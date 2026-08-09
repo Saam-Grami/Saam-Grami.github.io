@@ -252,12 +252,16 @@
     background: var(--bg-alt) center/cover no-repeat;
     border: 1px solid var(--line-strong);
   }
+/* No fixed aspect ratio — the video sizes itself from its own dimensions, so
+     square, portrait, and ultrawide clips all display uncropped. max-height
+     stops a very tall video from taking over the screen; anything that hits
+     that cap gets letterboxed against the panel color instead of being cut. */
   video.thumb-media{
-    display:block; width:100%; aspect-ratio: 21/9; object-fit: cover;
+    display:block; width:100%; height:auto;
+    max-height: 72vh; object-fit: contain;
     border: 1px solid var(--line-strong); border-radius: var(--radius);
     margin-bottom: 28px; background: var(--bg-alt);
   }
-
   /* Repo links. On a card this is a <span>, not an <a> — the whole card is
      already a link and nesting one inside another is invalid HTML, so the click
      is handled in JS instead. On the project page it's a real anchor. */
