@@ -351,6 +351,13 @@
     background: var(--bg-alt) center/cover no-repeat;
   }
   .tl-photo-cap{ font-family: var(--mono); font-size: 10.5px; color: var(--ink-faint); margin-top: 6px; max-width: 160px; line-height: 1.45; }
+  /* Stands in until the file exists, and names the file it's waiting for. */
+  .tl-photo-ph{
+    display:flex; align-items:center; justify-content:center; text-align:center; padding: 8px;
+    border-style: dashed; font-family: var(--mono); font-size: 9.5px; color: var(--ink-faint);
+    word-break: break-all; line-height: 1.4;
+    background: repeating-linear-gradient(45deg, var(--bg-alt), var(--bg-alt) 6px, var(--bg) 6px, var(--bg) 12px);
+  }
   .tl-role{ font-family: var(--display); font-size: 18px; font-weight: 600; margin: 0 0 4px; letter-spacing: -0.005em; }
   .tl-org{ font-family: var(--mono); font-size: 12.5px; color: var(--accent-dark); margin-bottom: 12px; }
   .tl-points{ margin: 0; padding-left: 18px; font-size: 14.5px; color: var(--ink-soft); }
@@ -764,8 +771,8 @@
       when: "Jun 2026 — Aug 2026",
       role: "Undergraduate Researcher — SURP",
       org: "Kennesaw State University · advised by Dr. Matt Marshall",
-      image: "",     // e.g. "media/exp-surp.jpg" — small photo under the dates
-      caption: "",   // optional one-line caption under that photo
+      image: "media/exp-river-debris.jpg",   // save your photo with this exact name
+      caption: "", // optional one-line caption under the photo
       points: [
         "Developed a real-time, edge-deployed system that detects, tracks, and predicts the trajectories of floating river debris.",
         "Used neural networks to address the deficiency of linear Kalman-filter motion predictors in turbulent riverine conditions.",
@@ -777,8 +784,8 @@
       when: "Jan 2026 — Present",
       role: "Robotic Software Architect — A2G",
       org: "AgriSys Lab, Kennesaw State University · Dr. Muhammad Hassan Tanveer",
-      image: "",     // e.g. "media/exp-surp.jpg" — small photo under the dates
-      caption: "",   // optional one-line caption under that photo
+      image: "media/exp-a2g.jpg",   // save your photo with this exact name
+      caption: "", // optional one-line caption under the photo
       points: [
         "Designing a UGV–UAV collaborative search-and-rescue system: the UAV surveys the environment while the UGV clears obstacles blocking access to points of interest.",
         "Leading the machine learning and computer vision pipeline that estimates obstacle mass from sensor-fused SLAM point clouds.",
@@ -790,8 +797,8 @@
       when: "Aug 2025 — Dec 2025",
       role: "Lead Software Developer — SoilBus",
       org: "AgriSys Lab, Kennesaw State University",
-      image: "",     // e.g. "media/exp-surp.jpg" — small photo under the dates
-      caption: "",   // optional one-line caption under that photo
+      image: "media/exp-soilbus.jpg",   // save your photo with this exact name
+      caption: "", // optional one-line caption under the photo
       points: [
         "Built a self-offloading soil-monitoring mesh network: probes auto-discover neighboring nodes and relay data to any node without a central hub.",
         "Used an LSTM to process NPK, EC, pH, temperature, moisture, and light-level readings across the network.",
@@ -803,8 +810,8 @@
       when: "May 2025 — Aug 2025",
       role: "COOP Engineering Intern",
       org: "EOSYS — Industrial and Manufacturing System Integrator · Marietta, GA",
-      image: "",     // e.g. "media/exp-surp.jpg" — small photo under the dates
-      caption: "",   // optional one-line caption under that photo
+      image: "media/exp-eosys.jpg",   // save your photo with this exact name
+      caption: "", // optional one-line caption under the photo
       points: [
         "Created a Human Machine Interface display creator for P&IDs.",
         "Designed and modified PLCs."
@@ -815,8 +822,8 @@
       when: "Aug 2022 — Present",
       role: "Ground Radio Repair Specialist",
       org: "United States Marine Corps Reserve · Marietta, GA",
-      image: "",     // e.g. "media/exp-surp.jpg" — small photo under the dates
-      caption: "",   // optional one-line caption under that photo
+      image: "media/exp-usmc.jpg",   // save your photo with this exact name
+      caption: "", // optional one-line caption under the photo
       points: [
         "Troubleshoot, maintain, and operate USMC radio systems in time-sensitive situations.",
         "Squad Leader of Marines, 4th Combat Readiness Regiment.",
@@ -832,8 +839,8 @@
       when: "Jan 2022 — May 2022,\nJan 2024 — Present",
       role: "B.S. Mechatronics Engineering",
       org: "Kennesaw State University",
-      image: "",     // e.g. "media/exp-surp.jpg" — small photo under the dates
-      caption: "",   // optional one-line caption under that photo
+      image: "media/edu-ksu.jpg",   // save your photo with this exact name
+      caption: "", // optional one-line caption under the photo
       points: [
         "CGPA: 4.00"
       ],
@@ -843,8 +850,8 @@
       when: "Aug 2022 — Oct 2023",
       role: "Ground Radio Repair School",
       org: "Marine Corps Communication-Electronics School (MCCES)",
-      image: "",     // e.g. "media/exp-surp.jpg" — small photo under the dates
-      caption: "",   // optional one-line caption under that photo
+      image: "media/edu-mcces.jpg",   // save your photo with this exact name
+      caption: "", // optional one-line caption under the photo
       points: [
         "CGPA: 4.00",
         "Holds an active security clearance."
@@ -855,8 +862,8 @@
       when: "Aug 2020 — Dec 2021",
       role: "General Education",
       org: "Chattahoochee Technical College",
-      image: "",     // e.g. "media/exp-surp.jpg" — small photo under the dates
-      caption: "",   // optional one-line caption under that photo
+      image: "media/edu-chattahoochee.jpg",   // save your photo with this exact name
+      caption: "", // optional one-line caption under the photo
       points: [
         "CGPA: 3.80"
       ],
@@ -1016,22 +1023,6 @@
       power: "—"
     },
     {
-      id: "RB-03",
-      title: "SoilBus",
-      subtitle: "Soil monitoring probe network",
-      status: "live",
-      year: "2025",
-      cover: "",            // e.g. "media/rb-03.jpg" — card image in the projects grid
-      media: [],            // e.g. ["media/rb-03-01.mp4", "media/rb-03-02.jpg"]
-      repo: "",    // e.g. "https://github.com/Saam-Grami/soilbus"
-      blurb: "A self-offloading mesh network where probes auto-discover neighbors and relay data to any node, with no central hub.",
-      details: "SoilBus is a self-offloading soil-monitoring mesh network built for farmers. Probes auto-discover neighboring nodes and relay sensor data to any node, so there is no central hub to install or maintain.\n\nAn LSTM processes incoming NPK, EC, pH, temperature, and moisture readings alongside light-level data across the network.\n\nI validated communication and routing across 5 physical nodes, with performance holding up to a simulated 26 nodes before degradation. Self-healing is not yet implemented.",
-      stack: "C++, Arduino IDE, ad hoc networking, LSTM",
-      sensors: "7-in-1 soil sensor, DHT-22, lux sensor",
-      platform: "ESP32",
-      power: "Battery-powered nodes"
-    },
-    {
       id: "RB-04",
       title: "River Debris Trajectory Prediction",
       subtitle: "Uncertainty-aware forecasting · SURP",
@@ -1049,6 +1040,22 @@
       sensors: "RGB camera, LSPIV",
       platform: "NVIDIA Jetson Orin Nano, Raspberry Pi 5",
       power: "—"
+    },
+    {
+      id: "RB-03",
+      title: "SoilBus",
+      subtitle: "Soil monitoring probe network",
+      status: "live",
+      year: "2025",
+      cover: "",            // e.g. "media/rb-03.jpg" — card image in the projects grid
+      media: [],            // e.g. ["media/rb-03-01.mp4", "media/rb-03-02.jpg"]
+      repo: "",    // e.g. "https://github.com/Saam-Grami/soilbus"
+      blurb: "A self-offloading mesh network where probes auto-discover neighbors and relay data to any node, with no central hub.",
+      details: "SoilBus is a self-offloading soil-monitoring mesh network built for farmers. Probes auto-discover neighboring nodes and relay sensor data to any node, so there is no central hub to install or maintain.\n\nAn LSTM processes incoming NPK, EC, pH, temperature, and moisture readings alongside light-level data across the network.\n\nI validated communication and routing across 5 physical nodes, with performance holding up to a simulated 26 nodes before degradation. Self-healing is not yet implemented.",
+      stack: "C++, Arduino IDE, ad hoc networking, LSTM",
+      sensors: "7-in-1 soil sensor, DHT-22, lux sensor",
+      platform: "ESP32",
+      power: "Battery-powered nodes"
     },
     // {
     //   id: "RB-05",
@@ -1209,13 +1216,22 @@
   }
 
   // Optional photo under the dates in an experience or education row.
-  // Set image: "media/exp-surp.jpg" on the entry. Leave it out and nothing
-  // renders — no placeholder, no gap.
+  // Renders as a real <img> so a file that isn't there yet falls back to a
+  // dashed box naming the filename it wants — no guessing what to save it as.
   function timelinePhoto(x){
     if (!x.image) return '';
     const alt = x.caption || `${x.role}${x.org ? ' — ' + x.org : ''}`;
-    return `<div class="tl-photo" role="img" aria-label="${alt}" style="background-image:url('${x.image}')"></div>`
+    return `<img class="tl-photo" src="${x.image}" alt="${alt}" onerror="tlPhotoMissing(this)">`
       + (x.caption ? `<div class="tl-photo-cap">${x.caption}</div>` : '');
+  }
+
+  // Shows the expected filename in place of a photo that hasn't been added yet.
+  function tlPhotoMissing(el){
+    const name = (el.getAttribute('src') || '').split('/').pop();
+    const box = document.createElement('div');
+    box.className = 'tl-photo tl-photo-ph';
+    box.textContent = name;
+    el.replaceWith(box);
   }
 
   function renderTimeline(list, elId){
