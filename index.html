@@ -845,9 +845,10 @@
       image: "media/edu-ksu.jpg",   // save your photo with this exact name
       caption: "", // optional one-line caption under the photo
       points: [
-        "CGPA: 4.00"
+        "CGPA: 4.00",
+        "President's List every semester enrolled — awarded for a 4.00 term GPA."
       ],
-      tags: []
+      tags: ["Spring 2022", "Spring 2024", "Fall 2024", "Spring 2025", "Fall 2025", "Spring 2026"]
     },
     {
       when: "Aug 2022 — Oct 2023",
@@ -1051,12 +1052,12 @@
       subtitle: "Soil monitoring probe network",
       status: "live",
       year: "2025",
-      cover: "media/rb-03-01.jpg",            // e.g. "media/rb-03.jpg" — card image in the projects grid
-      media: [
+      cover: "media/rb-03-01.jpg",   // card image in the projects grid
+      media: [              // shown inside the project page, in this order
         "media/rb-03-02.jpg",
         "media/rb-03-03.jpg",
-        "media/rb-03-04.jpg",
-      ],            // e.g. ["media/rb-03-01.mp4", "media/rb-03-02.jpg"]
+        "media/rb-03-04.jpg"
+      ],
       repo: "",    // e.g. "https://github.com/Saam-Grami/soilbus"
       blurb: "A self-offloading mesh network where probes auto-discover neighbors and relay data to any node, with no central hub.",
       details: "SoilBus is a self-offloading soil-monitoring mesh network built for farmers. Probes auto-discover neighboring nodes and relay sensor data to any node, so there is no central hub to install or maintain.\n\nAn LSTM processes incoming NPK, EC, pH, temperature, and moisture readings alongside light-level data across the network.\n\nI validated communication and routing across 5 physical nodes, with performance holding up to a simulated 26 nodes before degradation. Self-healing is not yet implemented.",
