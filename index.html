@@ -293,6 +293,13 @@
     background: rgba(9,13,15,0.6); padding: 4px 9px; border-radius: 20px;
   }
   .gal-caption{ font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); margin-top: 10px; }
+  /* Shown in place of a photo or clip whose file can't be found, so a typo in a
+     path is visible instead of silently rendering nothing. */
+  .gal-missing{
+    padding: 60px 24px; text-align:center; font-family: var(--mono); font-size: 12px;
+    color: var(--ink-faint); line-height: 1.9; width: 100%;
+  }
+  .gal-missing code{ color: var(--accent-dark); font-size: 12.5px; word-break: break-all; }
   .gal-thumbs{ display:flex; gap: 8px; margin-top: 10px; overflow-x: auto; padding-bottom: 4px; }
   .gal-thumb{
     flex: 0 0 auto; width: 82px; height: 56px; padding: 0; cursor:pointer; position: relative;
@@ -334,6 +341,16 @@
   .tl-item{ display:grid; grid-template-columns: 160px 1fr; gap: 28px; padding: 26px 0; border-bottom: 1px solid var(--line); }
   @media (max-width: 720px){ .tl-item{ grid-template-columns: 1fr; gap: 10px; } }
   .tl-when{ font-family: var(--mono); font-size: 12px; color: var(--ink-faint); letter-spacing: 0.04em; padding-top: 5px; white-space: pre-line; line-height: 1.5; }
+  /* Optional small photo below the dates. Capped in width so it stays a
+     supporting detail rather than competing with the role description. On
+     narrow screens the two columns collapse into one, so it caps there too. */
+  .tl-photo{
+    display:block; width:100%; max-width: 160px; margin-top: 14px;
+    aspect-ratio: 4/3; object-fit: cover;
+    border: 1px solid var(--line-strong); border-radius: var(--radius);
+    background: var(--bg-alt) center/cover no-repeat;
+  }
+  .tl-photo-cap{ font-family: var(--mono); font-size: 10.5px; color: var(--ink-faint); margin-top: 6px; max-width: 160px; line-height: 1.45; }
   .tl-role{ font-family: var(--display); font-size: 18px; font-weight: 600; margin: 0 0 4px; letter-spacing: -0.005em; }
   .tl-org{ font-family: var(--mono); font-size: 12.5px; color: var(--accent-dark); margin-bottom: 12px; }
   .tl-points{ margin: 0; padding-left: 18px; font-size: 14.5px; color: var(--ink-soft); }
@@ -747,6 +764,8 @@
       when: "Jun 2026 — Aug 2026",
       role: "Undergraduate Researcher — SURP",
       org: "Kennesaw State University · advised by Dr. Matt Marshall",
+      image: "",     // e.g. "media/exp-surp.jpg" — small photo under the dates
+      caption: "",   // optional one-line caption under that photo
       points: [
         "Developed a real-time, edge-deployed system that detects, tracks, and predicts the trajectories of floating river debris.",
         "Used neural networks to address the deficiency of linear Kalman-filter motion predictors in turbulent riverine conditions.",
@@ -758,6 +777,8 @@
       when: "Jan 2026 — Present",
       role: "Robotic Software Architect — A2G",
       org: "AgriSys Lab, Kennesaw State University · Dr. Muhammad Hassan Tanveer",
+      image: "",     // e.g. "media/exp-surp.jpg" — small photo under the dates
+      caption: "",   // optional one-line caption under that photo
       points: [
         "Designing a UGV–UAV collaborative search-and-rescue system: the UAV surveys the environment while the UGV clears obstacles blocking access to points of interest.",
         "Leading the machine learning and computer vision pipeline that estimates obstacle mass from sensor-fused SLAM point clouds.",
@@ -769,6 +790,8 @@
       when: "Aug 2025 — Dec 2025",
       role: "Lead Software Developer — SoilBus",
       org: "AgriSys Lab, Kennesaw State University",
+      image: "",     // e.g. "media/exp-surp.jpg" — small photo under the dates
+      caption: "",   // optional one-line caption under that photo
       points: [
         "Built a self-offloading soil-monitoring mesh network: probes auto-discover neighboring nodes and relay data to any node without a central hub.",
         "Used an LSTM to process NPK, EC, pH, temperature, moisture, and light-level readings across the network.",
@@ -780,6 +803,8 @@
       when: "May 2025 — Aug 2025",
       role: "COOP Engineering Intern",
       org: "EOSYS — Industrial and Manufacturing System Integrator · Marietta, GA",
+      image: "",     // e.g. "media/exp-surp.jpg" — small photo under the dates
+      caption: "",   // optional one-line caption under that photo
       points: [
         "Created a Human Machine Interface display creator for P&IDs.",
         "Designed and modified PLCs."
@@ -790,6 +815,8 @@
       when: "Aug 2022 — Present",
       role: "Ground Radio Repair Specialist",
       org: "United States Marine Corps Reserve · Marietta, GA",
+      image: "",     // e.g. "media/exp-surp.jpg" — small photo under the dates
+      caption: "",   // optional one-line caption under that photo
       points: [
         "Troubleshoot, maintain, and operate USMC radio systems in time-sensitive situations.",
         "Squad Leader of Marines, 4th Combat Readiness Regiment.",
@@ -805,6 +832,8 @@
       when: "Jan 2022 — May 2022,\nJan 2024 — Present",
       role: "B.S. Mechatronics Engineering",
       org: "Kennesaw State University",
+      image: "",     // e.g. "media/exp-surp.jpg" — small photo under the dates
+      caption: "",   // optional one-line caption under that photo
       points: [
         "CGPA: 4.00"
       ],
@@ -814,6 +843,8 @@
       when: "Aug 2022 — Oct 2023",
       role: "Ground Radio Repair School",
       org: "Marine Corps Communication-Electronics School (MCCES)",
+      image: "",     // e.g. "media/exp-surp.jpg" — small photo under the dates
+      caption: "",   // optional one-line caption under that photo
       points: [
         "CGPA: 4.00",
         "Holds an active security clearance."
@@ -824,6 +855,8 @@
       when: "Aug 2020 — Dec 2021",
       role: "General Education",
       org: "Chattahoochee Technical College",
+      image: "",     // e.g. "media/exp-surp.jpg" — small photo under the dates
+      caption: "",   // optional one-line caption under that photo
       points: [
         "CGPA: 3.80"
       ],
@@ -968,7 +1001,7 @@
       subtitle: "UAV and UGV collaborative search and rescue",
       status: "progress",
       year: "2025–26",
-      cover: "media/rb-02-01.jpg",     // card image in the projects grid
+      cover: "media/rb-02.jpg",     // card image in the projects grid
       media: [              // shown inside the project page, in this order
         "media/rb-02-01.jpg",
         "media/rb-02.mp4",
@@ -1017,22 +1050,22 @@
       platform: "NVIDIA Jetson Orin Nano, Raspberry Pi 5",
       power: "—"
     },
-    // {
-    //   id: "RB-05",
-    //   title: "Robot Synthesis",
-    //   subtitle: "",
-    //   status: "progress",
-    //   year: "2025–26",
-    //   cover: "",            // e.g. "media/rb-05.jpg" — card image in the projects grid
-    //   media: [],            // e.g. ["media/rb-05-01.mp4", "media/rb-05-02.jpg"]
-    //   repo: "",    // e.g. "https://github.com/Saam-Grami/robot-synthesis"
-    //   blurb: "TODO — one line on what this is.",
-    //   details: "",
-    //   stack: "",
-    //   sensors: "",
-    //   platform: "",
-    //   power: ""
-    // },
+    {
+      id: "RB-05",
+      title: "Robot Synthesis",
+      subtitle: "",
+      status: "progress",
+      year: "2025–26",
+      cover: "",            // e.g. "media/rb-05.jpg" — card image in the projects grid
+      media: [],            // e.g. ["media/rb-05-01.mp4", "media/rb-05-02.jpg"]
+      repo: "",    // e.g. "https://github.com/Saam-Grami/robot-synthesis"
+      blurb: "TODO — one line on what this is.",
+      details: "",
+      stack: "",
+      sensors: "",
+      platform: "",
+      power: ""
+    },
     // {
     //   id: "RB-06",
     //   title: "153s",
@@ -1176,11 +1209,21 @@
     map.forEach((a, sec) => obs.observe(sec));
   }
 
+  // Optional photo under the dates in an experience or education row.
+  // Set image: "media/exp-surp.jpg" on the entry. Leave it out and nothing
+  // renders — no placeholder, no gap.
+  function timelinePhoto(x){
+    if (!x.image) return '';
+    const alt = x.caption || `${x.role}${x.org ? ' — ' + x.org : ''}`;
+    return `<div class="tl-photo" role="img" aria-label="${alt}" style="background-image:url('${x.image}')"></div>`
+      + (x.caption ? `<div class="tl-photo-cap">${x.caption}</div>` : '');
+  }
+
   function renderTimeline(list, elId){
     const el = document.getElementById(elId);
     el.innerHTML = list.map(x => `
       <div class="tl-item">
-        <div class="tl-when">${x.when}</div>
+        <div class="tl-when">${x.when}${timelinePhoto(x)}</div>
         <div>
           <h3 class="tl-role">${x.role}</h3>
           <div class="tl-org">${x.org}</div>
@@ -1259,6 +1302,30 @@
     return pdfLibPromise;
   }
 
+  // Checks whether the file is actually there before blaming the renderer.
+  // Returns 'ok', 'missing' (404 — wrong name or wrong folder), 'blocked'
+  // (opened from disk, or the server refused), or 'unknown'.
+  async function probeFile(url){
+    if (location.protocol === 'file:') return 'blocked';
+    try {
+      const res = await fetch(encodeURI(url), { method: 'HEAD' });
+      if (res.status === 404) return 'missing';
+      return res.ok ? 'ok' : 'unknown';
+    } catch (err) {
+      return 'blocked';
+    }
+  }
+
+  // Last resort when pdf.js can't run: hand the file to the browser's own PDF
+  // viewer. Desktop browsers handle this fine. iOS Safari shows only the first
+  // page, which is why the canvas renderer is the primary path.
+  function embedFallback(file){
+    return `<object data="${encodeURI(file)}" type="application/pdf" width="100%" height="900">
+        <p>Your browser can't display the PDF inline.
+        <a href="${encodeURI(file)}" target="_blank" rel="noopener">Open it in a new tab →</a></p>
+      </object>`;
+  }
+
   async function renderPdf(file){
     const host   = document.getElementById('pdf-pages');
     const status = document.getElementById('pdf-status');
@@ -1270,48 +1337,72 @@
     status.classList.remove('hidden');
     status.textContent = 'Loading résumé…';
 
+    const link  = `<a href="${encodeURI(file)}" target="_blank" rel="noopener">Open the PDF directly →</a>`;
+    const where = `<br><span style="opacity:.75">Looking for: <code>${file}</code></span>`;
+
+    // 1. Is the file where we think it is?
+    const state = await probeFile(file);
+    if (state === 'missing'){
+      status.innerHTML = `That PDF isn't at the path the page expects.${where}<br>`
+        + `Check the spelling, the capitalisation, and that it sits in the same folder as index.html.`;
+      console.warn('Résumé 404. Expected file:', file);
+      return;
+    }
+    if (state === 'blocked' && location.protocol === 'file:'){
+      // Browsers refuse to read local files over file:// for security reasons.
+      status.innerHTML = `Browsers block reading local files, so the PDF can't render while you're opening this page straight from your disk.`
+        + `<br>It works once the site is hosted. ${link}`;
+      return;
+    }
+
+    // 2. Try the canvas renderer.
     let pdf;
     try {
       const lib = await loadPdfLib();
       pdf = await lib.getDocument(encodeURI(file)).promise;
     } catch (err) {
-      const link = '<a href="' + encodeURI(file) + '" target="_blank" rel="noopener">Open the PDF directly →</a>';
-      // Opening index.html straight off the disk (file://) blocks this for
-      // security reasons — it works normally once the site is hosted.
-      if (location.protocol === 'file:') {
-        status.innerHTML = 'Browsers block reading local files, so the PDF can\'t render while you\'re opening this page from your disk.<br>It will work once the site is hosted. ' + link;
-      } else {
-        status.innerHTML = 'The résumé PDF couldn\'t be displayed here.<br>' + link;
-        console.warn('Résumé render failed. Expected file:', file, err);
-      }
+      // Usually the CDN being blocked by a network filter or an ad blocker.
+      // The file itself is fine, so hand it to the browser's own viewer.
+      console.warn('pdf.js unavailable, falling back to <object>:', err);
+      status.classList.add('hidden');
+      host.innerHTML = embedFallback(file);
       return;
     }
 
-    const dpr   = Math.min(window.devicePixelRatio || 1, 2);
-    const width = host.clientWidth || 900;
+    // 3. Draw every page.
+    try {
+      const dpr   = Math.min(window.devicePixelRatio || 1, 2);
+      const width = host.clientWidth || document.getElementById('resume').clientWidth || 900;
 
-    for (let n = 1; n <= pdf.numPages; n++){
-      const page     = await pdf.getPage(n);
-      const base     = page.getViewport({ scale: 1 });
-      const viewport = page.getViewport({ scale: (width / base.width) * dpr });
+      for (let n = 1; n <= pdf.numPages; n++){
+        const page     = await pdf.getPage(n);
+        const base     = page.getViewport({ scale: 1 });
+        const viewport = page.getViewport({ scale: (width / base.width) * dpr });
 
-      const canvas = document.createElement('canvas');
-      canvas.width  = Math.round(viewport.width);
-      canvas.height = Math.round(viewport.height);
-      canvas.setAttribute('role', 'img');
-      canvas.setAttribute('aria-label', `Résumé page ${n} of ${pdf.numPages}`);
-      host.appendChild(canvas);
+        const canvas = document.createElement('canvas');
+        canvas.width  = Math.round(viewport.width);
+        canvas.height = Math.round(viewport.height);
+        canvas.setAttribute('role', 'img');
+        canvas.setAttribute('aria-label', `Résumé page ${n} of ${pdf.numPages}`);
+        host.appendChild(canvas);
 
-      await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+        await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+      }
+      status.classList.add('hidden');
+    } catch (err){
+      console.warn('Page render failed, falling back to <object>:', err);
+      status.classList.add('hidden');
+      host.innerHTML = embedFallback(file);
     }
-
-    status.classList.add('hidden');
   }
 
-  // Re-render at the new width when the window is resized, so pages stay sharp
-  let pdfResizeTimer, pdfCurrentFile = null;
+  // Re-render at the new width so pages stay sharp. Width only — phones fire a
+  // resize every time the address bar hides during a scroll, and re-rendering
+  // the whole PDF on each of those makes the section flicker.
+  let pdfResizeTimer, pdfCurrentFile = null, pdfLastWidth = window.innerWidth;
   window.addEventListener('resize', () => {
-    if (!pdfCurrentFile) return;
+    if (!pdfCurrentFile || window.innerWidth === pdfLastWidth) return;
+    pdfLastWidth = window.innerWidth;
     clearTimeout(pdfResizeTimer);
     pdfResizeTimer = setTimeout(() => renderPdf(pdfCurrentFile), 300);
   });
@@ -1491,8 +1582,8 @@
 
     // muted + playsinline are required or mobile browsers refuse to autoplay
     frame.innerHTML = m.type === 'video'
-      ? `<video src="${m.src}" autoplay loop muted playsinline controls preload="metadata"${m.poster ? ` poster="${m.poster}"` : ''}></video>`
-      : `<img src="${m.src}" alt="">`;
+      ? `<video src="${m.src}" autoplay loop muted playsinline controls preload="metadata"${m.poster ? ` poster="${m.poster}"` : ''} onerror="galMissing(this)"></video>`
+      : `<img src="${m.src}" alt="" onerror="galMissing(this)">`;
 
     const count = document.getElementById('gal-count');
     if (count) count.textContent = `${gal.i + 1} / ${items.length}`;
@@ -1500,6 +1591,18 @@
   }
 
   function galStep(d){ galShow(gal.i + d); }
+
+  // Called when a file in the media list fails to load. Names the exact path it
+  // tried, which is almost always a typo, a missing extension, or a case
+  // mismatch (Photo.JPG vs photo.jpg — this matters once the site is hosted).
+  function galMissing(el){
+    const src = el.getAttribute('src') || '';
+    const box = document.createElement('div');
+    box.className = 'gal-missing';
+    box.innerHTML = `Couldn't load <code>${src}</code><br>Check the filename, the extension, and the letter case.`;
+    el.replaceWith(box);
+    console.warn('Gallery file not found:', src);
+  }
 
   // Arrow keys, but only while a project page is open and there's more than one item
   document.addEventListener('keydown', e => {
