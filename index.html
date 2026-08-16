@@ -343,12 +343,15 @@
   .tl-when{ font-family: var(--mono); font-size: 12px; color: var(--ink-faint); letter-spacing: 0.04em; padding-top: 5px; white-space: pre-line; line-height: 1.5; }
   /* Optional small photo below the dates. Capped in width so it stays a
      supporting detail rather than competing with the role description. On
-     narrow screens the two columns collapse into one, so it caps there too. */
+     narrow screens the two columns collapse into one, so it caps there too.
+     Square box, and `contain` rather than `cover` — most of these are school
+     and unit logos, and cropping a logo's edges off looks like a mistake. Wide
+     or tall images sit centred with padding either side instead. */
   .tl-photo{
     display:block; width:100%; max-width: 160px; margin-top: 14px;
-    aspect-ratio: 4/3; object-fit: cover;
+    aspect-ratio: 1/1; object-fit: contain; padding: 8px;
     border: 1px solid var(--line-strong); border-radius: var(--radius);
-    background: var(--bg-alt) center/cover no-repeat;
+    background: #FFFFFF;
   }
   .tl-photo-cap{ font-family: var(--mono); font-size: 10.5px; color: var(--ink-faint); margin-top: 6px; max-width: 160px; line-height: 1.45; }
   /* Stands in until the file exists, and names the file it's waiting for. */
@@ -862,7 +865,7 @@
       when: "Aug 2020 — Dec 2021",
       role: "General Education",
       org: "Chattahoochee Technical College",
-      image: "media/edu-chattahoochee.png",   // save your photo with this exact name
+      image: "media/edu-chattahoochee.jpg",   // save your photo with this exact name
       caption: "", // optional one-line caption under the photo
       points: [
         "CGPA: 3.80"
