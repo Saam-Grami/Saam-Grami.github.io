@@ -395,6 +395,17 @@
   }
   .cw-when{ font-family: var(--mono); font-size: 11px; color: var(--ink-faint); margin-top: 8px; letter-spacing: 0.04em; }
 
+  /* A class with a document attached becomes a link to its own page. */
+  a.cw-item{ text-decoration:none; color: inherit; cursor:pointer; }
+  a.cw-item .tl-role{ transition: color .15s ease; }
+  a.cw-item:hover .tl-role{ color: var(--accent-dark); }
+  .cw-doc{
+    font-family: var(--mono); font-size: 11px; color: var(--ink-faint);
+    border: 1px solid var(--line-strong); border-radius: var(--radius);
+    padding: 4px 9px; margin-top: 14px; display:inline-block; transition: all .15s ease;
+  }
+  a.cw-item:hover .cw-doc{ border-color: var(--accent); color: var(--accent-dark); }
+
   /* ---------- PUBLICATIONS ---------- */
   .pub-list{ border-top: 1px solid var(--line); }
   .pub-item{ display:grid; grid-template-columns: 46px 1fr; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--line); }
@@ -884,6 +895,8 @@
   // image: "media/cw-ml.jpg"  — still shown in the left column
   // video: "media/cw-ml.mp4"  — loops in place of the image; image becomes its poster
   // Leave both "" and the striped placeholder shows instead.
+  // doc:   "media/report.pdf" — gives the class its own page with the PDF
+  //                             rendered inline. Leave "" for no page.
   const coursework = [
     {
       title: "Machine Learning",
@@ -891,6 +904,7 @@
       when: "Spring 2026",
       image: "media/course-ml.png",
       video: "",
+      doc: "",
       points: [
         "Final project: a CNN that turns a single camera frame into a steering command for a ROSbot chasing an ambulance in Gazebo. Labels were derived from three-point arc geometry rather than recorded by hand."
       ],
@@ -902,6 +916,7 @@
       when: "Fall 2025",
       image: "media/course-mobile-robots.png",
       video: "",
+      doc: "",
       points: [
         "TODO — one line."
       ],
@@ -913,6 +928,7 @@
       when: "Spring 2026",
       image: "media/course-robot-synth.jpg",
       video: "",
+      doc: "media/robot-synthesis.pdf",   // opens its own page; leave "" for no page
       points: [],
       tags: ["Kinematics", "DH Convention"]
     },
@@ -922,6 +938,7 @@
       when: "Spring 2025",
       image: "media/course-modeling-and-feedback.png",
       video: "",
+      doc: "",
       points: [],
       tags: ["MATLAB", "Control Theory", "PID", "Transfer Functions"]
     },
@@ -931,6 +948,7 @@
       when: "Spring 2025",
       image: "media/course-mcu.jpg",
       video: "",
+      doc: "",
       points: [],
       tags: ["C", "Embedded"]
     }
@@ -940,6 +958,7 @@
     //   when: "",
     //   image: "",
     //   video: "",
+    //   doc: "",
     //   points: [],
     //   tags: ["Ladder Logic", "TIA Portal"]
     // }
@@ -1282,12 +1301,18 @@
     return `<div class="cw-media cw-media-ph">PHOTO PLACEHOLDER</div>`;
   }
 
+  // A stable URL fragment from the title, so #course-robot-synthesis is
+  // shareable and survives reordering the array.
+  function courseSlug(title){
+    return String(title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  }
+
   function renderCoursework(){
     const section = document.getElementById('coursework');
     if (!coursework.length){ section.classList.add('hidden'); return; }
     section.classList.remove('hidden');
-    document.getElementById('coursework-list').innerHTML = coursework.map(c => `
-      <div class="cw-item">
+    document.getElementById('coursework-list').innerHTML = coursework.map(c => {
+      const body = `
         <div>
           ${courseMedia(c)}
           ${c.when ? `<div class="cw-when">${c.when}</div>` : ''}
@@ -1297,9 +1322,45 @@
           ${c.org ? `<div class="tl-org">${c.org}</div>` : ''}
           ${c.points && c.points.length ? `<ul class="tl-points">${c.points.map(p => `<li>${p}</li>`).join('')}</ul>` : ''}
           ${c.tags && c.tags.length ? `<div class="tl-tags">${c.tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}
-        </div>
+          ${c.doc ? `<div class="cw-doc">Read the report →</div>` : ''}
+        </div>`;
+      // Only classes with a document get their own page.
+      return c.doc
+        ? `<a class="cw-item" href="#course-${courseSlug(c.title)}">${body}</a>`
+        : `<div class="cw-item">${body}</div>`;
+    }).join('');
+  }
+
+  // Coursework document page. Same layout language as a project page, with the
+  // PDF rendered inline instead of a media gallery.
+  function renderCourseDetail(slug){
+    const c = coursework.find(x => courseSlug(x.title) === slug);
+    if (!c || !c.doc){ goHome(); return; }
+
+    document.title = `${c.title} — Saam Haghighat-Grami`;
+    detailView.innerHTML = `
+      <a class="back-link" href="#coursework" onclick="navTo(event,'coursework')">← Back to coursework</a>
+      <div class="detail-id">COURSEWORK</div>
+      <div class="detail-head"><h1 class="detail-title">${c.title}</h1></div>
+      ${c.org ? `<div class="detail-sub">${c.org}</div>` : ''}
+      ${c.when ? `<div class="detail-meta">${c.when}</div>` : ''}
+      ${c.points && c.points.length
+        ? `<div class="detail-body"><ul class="tl-points">${c.points.map(p => `<li>${p}</li>`).join('')}</ul></div>` : ''}
+      ${c.tags && c.tags.length
+        ? `<div class="tl-tags" style="margin-bottom:28px;">${c.tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}
+      <a class="detail-repo" href="${encodeURI(c.doc)}" target="_blank" rel="noopener" download>↓ Download PDF</a>
+      <div class="resume-doc" style="margin-top:0;">
+        <div class="pdf-pages" id="course-pdf-pages"></div>
+        <div class="pdf-status" id="course-pdf-status">Loading document…</div>
       </div>
-    `).join('');
+    `;
+
+    homeView.classList.add('hidden');
+    detailView.classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+
+    coursePdfFile = c.doc;
+    renderPdfInto(c.doc, document.getElementById('course-pdf-pages'), document.getElementById('course-pdf-status'));
   }
 
   function renderSkills(){
@@ -1311,8 +1372,8 @@
     `).join('');
   }
 
-  // ---- RÉSUMÉ PDF VIEWER ----
-  // Renders each page of the PDF onto a canvas and stacks them in normal page
+  // ---- PDF VIEWER ----
+  // Renders each page of a PDF onto a canvas and stacks them in normal page
   // flow. Native scrolling, works on phones. If the file is missing or the
   // renderer can't load, a link to the PDF is shown instead.
   const PDFJS_URL    = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
@@ -1359,16 +1420,14 @@
       </object>`;
   }
 
-  async function renderPdf(file){
-    const host   = document.getElementById('pdf-pages');
-    const status = document.getElementById('pdf-status');
-    const doc    = document.getElementById('resume-doc');
-    if (!host) return;
+  // Takes the target elements as arguments so the same renderer serves the
+  // résumé, the CV, and any coursework document.
+  async function renderPdfInto(file, host, status){
+    if (!host || !status) return;
 
-    doc.classList.remove('hidden');
     host.innerHTML = '';
     status.classList.remove('hidden');
-    status.textContent = 'Loading résumé…';
+    status.textContent = 'Loading document…';
 
     const link  = `<a href="${encodeURI(file)}" target="_blank" rel="noopener">Open the PDF directly →</a>`;
     const where = `<br><span style="opacity:.75">Looking for: <code>${file}</code></span>`;
@@ -1377,8 +1436,8 @@
     const state = await probeFile(file);
     if (state === 'missing'){
       status.innerHTML = `That PDF isn't at the path the page expects.${where}<br>`
-        + `Check the spelling, the capitalisation, and that it sits in the same folder as index.html.`;
-      console.warn('Résumé 404. Expected file:', file);
+        + `Check the spelling, the capitalisation, and that the path is relative to index.html.`;
+      console.warn('PDF 404. Expected file:', file);
       return;
     }
     if (state === 'blocked' && location.protocol === 'file:'){
@@ -1405,7 +1464,7 @@
     // 3. Draw every page.
     try {
       const dpr   = Math.min(window.devicePixelRatio || 1, 2);
-      const width = host.clientWidth || document.getElementById('resume').clientWidth || 900;
+      const width = host.clientWidth || 900;
 
       for (let n = 1; n <= pdf.numPages; n++){
         const page     = await pdf.getPage(n);
@@ -1416,7 +1475,7 @@
         canvas.width  = Math.round(viewport.width);
         canvas.height = Math.round(viewport.height);
         canvas.setAttribute('role', 'img');
-        canvas.setAttribute('aria-label', `Résumé page ${n} of ${pdf.numPages}`);
+        canvas.setAttribute('aria-label', `Page ${n} of ${pdf.numPages}`);
         host.appendChild(canvas);
 
         await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
@@ -1429,15 +1488,29 @@
     }
   }
 
+  // The résumé section still calls renderPdf(file) — this keeps that working.
+  function renderPdf(file){
+    document.getElementById('resume-doc').classList.remove('hidden');
+    return renderPdfInto(file, document.getElementById('pdf-pages'), document.getElementById('pdf-status'));
+  }
+
   // Re-render at the new width so pages stay sharp. Width only — phones fire a
   // resize every time the address bar hides during a scroll, and re-rendering
   // the whole PDF on each of those makes the section flicker.
-  let pdfResizeTimer, pdfCurrentFile = null, pdfLastWidth = window.innerWidth;
+  let pdfResizeTimer, pdfCurrentFile = null, coursePdfFile = null, pdfLastWidth = window.innerWidth;
   window.addEventListener('resize', () => {
-    if (!pdfCurrentFile || window.innerWidth === pdfLastWidth) return;
+    if (window.innerWidth === pdfLastWidth) return;
     pdfLastWidth = window.innerWidth;
     clearTimeout(pdfResizeTimer);
-    pdfResizeTimer = setTimeout(() => renderPdf(pdfCurrentFile), 300);
+    pdfResizeTimer = setTimeout(() => {
+      // Whichever viewer is on screen gets redrawn at the new width.
+      const courseHost = document.getElementById('course-pdf-pages');
+      if (coursePdfFile && courseHost){
+        renderPdfInto(coursePdfFile, courseHost, document.getElementById('course-pdf-status'));
+      } else if (pdfCurrentFile){
+        renderPdf(pdfCurrentFile);
+      }
+    }, 300);
   });
 
   // Wires the download button and the Résumé / CV switch when SHOW_CV is on.
@@ -1722,9 +1795,10 @@
     document.title = 'Saam Haghighat-Grami — Robotics Portfolio';
     detailView.innerHTML = '';        // tears down any playing video
     gal = { items: [], i: 0 };
+    coursePdfFile = null;
     detailView.classList.add('hidden');
     homeView.classList.remove('hidden');
-    if (location.hash.startsWith('#project-')) {
+    if (location.hash.startsWith('#project-') || location.hash.startsWith('#course-')) {
       history.pushState('', document.title, window.location.pathname + window.location.search);
     }
   }
@@ -1738,12 +1812,11 @@
 
   function route(){
     const hash = decodeURIComponent(location.hash);
-    const match = hash.match(/^#project-(.+)$/);
-    if (match) {
-      renderDetail(match[1]);
-    } else {
-      goHome();
-    }
+    const project = hash.match(/^#project-(.+)$/);
+    const course  = hash.match(/^#course-(.+)$/);
+    if (project)      renderDetail(project[1]);
+    else if (course)  renderCourseDetail(course[1]);
+    else              goHome();
   }
 
   window.addEventListener('hashchange', route);
