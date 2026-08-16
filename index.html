@@ -383,8 +383,9 @@
   /* Square box, `contain` not `cover` — nothing gets cropped. No border or
      fill, so a wide or tall image just sits centred on the page background. */
   .cw-media{
-    display:block; width:100%; aspect-ratio: 1/1; object-fit: contain;
-    background: transparent;
+    display:block; width:100%; aspect-ratio: 1/1;
+    object-fit: contain;                                /* for <img> */
+    background: transparent center/contain no-repeat;   /* for the <div> */
   }
   .cw-media-ph{
     display:flex; align-items:center; justify-content:center; text-align:center; padding: 10px;
