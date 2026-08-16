@@ -892,9 +892,9 @@
       image: "media/course-ml.png",
       video: "",
       points: [
-        "TODO — one line on what you built or what stuck with you."
+        "Final project: a CNN that turns a single camera frame into a steering command for a ROSbot chasing an ambulance in Gazebo. Labels were derived from three-point arc geometry rather than recorded by hand."
       ],
-      tags: ["PyTorch", "Python"]
+      tags: ["PyTorch", "TensorFlow", "CNN", "Transfer learning"]
     },
     {
       title: "Mobile Robotics",
@@ -1107,40 +1107,40 @@
     //   platform: "",
     //   power: ""
     // },
-    {
+  {
       id: "RB-07",
-      title: "PX4 / ROS2",
-      subtitle: "",
-      status: "archived",
-      year: "2023",
-      cover: "",            // e.g. "media/rb-07.jpg" — card image in the projects grid
+      title: "PX4 Flight Stack Curriculum",
+      subtitle: "Self-directed offboard control track · personal",
+      status: "progress",
+      year: "2026",
+      cover: "",            // e.g. "media/rb-07.jpg"
       media: [],            // e.g. ["media/rb-07-01.mp4", "media/rb-07-02.jpg"]
-      repo: "",    // e.g. "https://github.com/Saam-Grami/px4-ros2"
-      blurb: "TODO — one line on what this is.",
-      details: "",
-      stack: "",
-      sensors: "",
-      platform: "",
-      power: ""
+      repo: "",
+      blurb: "Working through a self-built PX4 and ROS2 syllabus, from offboard arming up to multi-drone collaborative SLAM.",
+      details: "A structured curriculum I set for myself to learn the PX4 flight stack properly rather than by copying examples. Ten core tutorials run from a first offboard node — heartbeat, arm, takeoff, hold — through waypoint navigation as a state machine, keyboard teleop, services and actions, adding a camera with its SDF and TF frames, depth and lidar height sensing, sensor fusion with robot_localization, SLAM, Nav2, and finally multi-drone collaborative mapping.\n\nEach tutorial starts with me writing the pseudocode and predicting the failure modes before touching the implementation. Tutorial 1 was largely about ordering and QoS: setpoints have to stream before arming, arming before the offboard switch, and a QoS profile mismatch with PX4 fails silently rather than erroring — which is the kind of thing you only learn by hitting it.\n\nTwo further tracks branch off the core. A custom airframe track covers sourcing and preparing a mesh, URDF, mass and inertia, rotor links, motor and propeller constants, SDF conversion, PX4 config, and first flight — then iterating on controllability, quantifying centre-of-gravity shift from a camera mount, budgeting mass for a second sensor, simulated UWB ranging, and a leader–follower pair with role swapping, ending at the transition to real hardware. A systems track covers DDS discovery, QoS diagnostics, XRCE-DDS internals, TF debugging, Linux diagnostics, and planted-bug exercises.\n\nOpen items I am carrying forward: waypoint motion is functional but not smooth, and teleop commands still resolve in the world frame rather than the body frame, so pressing forward after a yaw moves along world X instead of the drone's nose.",
+      stack: "ROS2 Humble, PX4, C++, Python, Micro XRCE-DDS, Nav2",
+      sensors: "RGB camera, depth camera, lidar, simulated UWB ranging",
+      platform: "PX4 SITL, Gazebo",
+      power: "—"
     },
     {
       id: "RB-08",
-      title: "Machine Learning Follow Ambulance",
-      subtitle: "",
+      title: "ROSbot Ambulance Follower",
+      subtitle: "CNN → angular velocity · MTRE 4820 final project",
       status: "live",
-      year: "2025",
-      cover: "media/rb-08.png",     // card image in the projects grid
-      media: [              // shown inside the project page, in this order
+      year: "2026",
+      cover: "media/rb-08.png",
+      media: [
         "media/rb-08.mp4",
         "media/rb-08.png"
       ],
-      repo: "",    // e.g. "https://github.com/Saam-Grami/follow-ambulance"
-      blurb: "TODO — one line on what this is.",
-      details: "",
-      stack: "",
-      sensors: "",
-      platform: "",
-      power: ""
+      repo: "https://github.com/Saam-Grami/ros2-rosbot-follower-machine-learning",
+      blurb: "A CNN reads the ROSbot's camera and outputs the angular velocity that curves it onto an intercept path with an ambulance.",
+      details: "A convolutional network takes a single camera frame from a ROSbot in Gazebo and outputs one number: the angular velocity that steers the robot toward an ambulance in view. Forward speed is fixed at 0.5 m/s, so ω is the only command the model has to produce. Final project for Machine Learning at Kennesaw State.\n\nThe hard part was labelling. There is no ground-truth steering command in a photograph, so I derived one geometrically. The ambulance's pixel position gives a bearing through θ = arctan((x − cx) / fx), where the focal length stands in as a synthetic depth to close the triangle the camera throws away. That angle plus the two recorded world positions defines a three-point arc: robot, ambulance, and an offset midpoint pushed perpendicular to the chord by ¼·d·sin θ — the more centred the ambulance, the flatter the arc. Intersecting the perpendicular bisectors gives the circle center, R = |P1 − C| gives the radius, and ω = v / R gives the label.\n\n200 images were captured across varying ambulance positions and headings, then tripled to 600 with brightness and contrast augmentation. The model is a pretrained CNN base with frozen weights and a regression head on top, which mattered given the dataset size. Predictions track ground truth well through the middle of the range and drift at high angular velocities — those are the rarest samples, and Gazebo capture was slow enough that collecting more was the binding constraint.\n\nIn ROS2 the exported model runs inside a node that subscribes to the camera topic and publishes to /cmd_vel in a loop. The robot approaches with the ambulance off to one side, then swings to meet it head-on as it closes. Correction rate is bounded by inference speed on the host, not by the controller.",
+      stack: "Python, TensorFlow, ROS2 Humble, OpenCV, NumPy, pandas",
+      sensors: "RGB camera (640×480, 60° HFOV), LiDAR",
+      platform: "ROSbot in Gazebo, ROS2 Humble",
+      power: "—"
     },
     // {
     //   id: "RB-09",
