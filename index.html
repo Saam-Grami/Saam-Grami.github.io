@@ -17,6 +17,7 @@
     --accent: #0EA5A4;
     --accent-dark: #0B7F7E;
     --accent-soft: #DCF3F2;
+    --accent-deep: #086261;    /* darker teal for hover on light backgrounds */
     --line: #C9D1D8;
     --line-strong: #A9B4BE;
     --dot: #BFC8D0;
@@ -228,10 +229,11 @@
     font-family: var(--display); font-size: 20px; font-weight: 600; margin: 0 0 10px;
     letter-spacing: -0.005em; transition: color .15s ease;
     display:flex; align-items:center; justify-content: space-between; gap: 12px;
+    color: var(--accent-dark);
   }
   .card h3 .arrow{ font-size: 15px; color: var(--ink-faint); opacity: 0; transform: translateX(-4px); transition: all .15s ease; }
-  .card:hover h3{ color: var(--accent-dark); }
-  .card:hover h3 .arrow{ opacity: 1; transform: translateX(0); color: var(--accent-dark); }
+  .card:hover h3{ color: var(--accent-deep); }
+  .card:hover h3 .arrow{ opacity: 1; transform: translateX(0); color: var(--accent-deep); }
   .card-sub{ font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); margin: -4px 0 12px; letter-spacing: 0.02em; }
   .card p{ font-size: 14px; color: var(--ink-soft); margin: 0 0 18px; }
 
@@ -512,7 +514,7 @@
   .back-link:hover{ color: var(--accent-dark); }
   .detail-head{ display:flex; justify-content: space-between; align-items:flex-start; gap: 20px; flex-wrap: wrap; margin-bottom: 8px; }
   .detail-id{ font-family: var(--mono); font-size: 13px; color: var(--ink-faint); letter-spacing: 0.06em; margin-bottom: 10px; }
-  .detail-title{ font-family: var(--display); font-size: clamp(28px, 4vw, 44px); font-weight: 600; margin: 0 0 8px; letter-spacing: -0.01em; max-width: 22ch; }
+  .detail-title{ font-family: var(--display); font-size: clamp(28px, 4vw, 44px); font-weight: 600; margin: 0 0 8px; letter-spacing: -0.01em; max-width: 22ch; color: var(--accent-dark); }
   .detail-sub{ font-family: var(--mono); font-size: 13px; color: var(--ink-soft); margin: 0 0 14px; }
   .detail-meta{ font-family: var(--mono); font-size: 12px; color: var(--ink-faint); margin-bottom: 32px; }
   .detail-body{ font-size: 16px; color: var(--ink-soft); max-width: 68ch; margin-bottom: 36px; }
@@ -1660,7 +1662,9 @@
       `;
       gridEl.appendChild(card);
     });
-    document.getElementById('proj-count').textContent = projects.length;
+    // Only present if the hero is showing a live count; the bare prompt doesn't.
+    const countEl = document.getElementById('proj-count');
+    if (countEl) countEl.textContent = projects.length;
   }
 
   function renderDetail(id){
