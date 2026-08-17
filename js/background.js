@@ -13,15 +13,16 @@
 
   const MAX_HEIGHT = 100000; // effectively uncapped — field now runs the full page
   const LINK_DIST  = 155;    // px — how close two nodes must be to connect
-  const DENSITY    = 7000;   // px² per node; larger = sparser (lower = denser overall)
-  const MAX_NODES  = 520;    // raised since the field now covers a much taller area
+  const DENSITY    = 5000;   // px² per node; larger = sparser (lower = denser overall)
+  const MAX_NODES  = 650;    // raised again for the higher density
   const SPEED      = 0.16;   // px per frame
-  const NODE_COLOR = '#0EA5A4';        // site accent teal/green
-  const LINE_COLOR = '14, 165, 164';   // rgb of --accent, for rgba() below
-  const ACCENT     = '#6EEAE6';        // brighter teal for occasional highlight nodes
+  const NODE_COLOR  = '#0EA5A4';        // site accent teal/green
+  const LINE_COLOR  = '14, 165, 164';   // rgb of --accent, for rgba() below
+  const ACCENT      = '#6EEAE6';        // brighter teal for occasional highlight nodes
+  const MUTED_COLOR = '#8D9DAD';        // original grayish-blue, mixed back in
 
   const TOP_BAND       = 1500; // px — roughly hero + linkbar + projects
-  const TOP_BAND_EXTRA = 130;  // extra nodes packed into that band on top of the base field
+  const TOP_BAND_EXTRA = 240;  // extra nodes packed into that band on top of the base field
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let nodes = [], w = 0, h = 0, raf = null, running = false;
@@ -45,7 +46,7 @@
       vx: (Math.random() - 0.5) * SPEED * 2,
       vy: (Math.random() - 0.5) * SPEED * 2,
       r: Math.random() < 0.12 ? 2.4 : 1.5,
-      accent: i % 11 === 0
+      kind: i % 11 === 0 ? 'accent' : (i % 3 === 0 ? 'muted' : 'node')
     }));
 
     // Extra nodes concentrated in the top band so the hero/projects area
@@ -57,7 +58,7 @@
       vx: (Math.random() - 0.5) * SPEED * 2,
       vy: (Math.random() - 0.5) * SPEED * 2,
       r: Math.random() < 0.12 ? 2.4 : 1.5,
-      accent: i % 9 === 0,
+      kind: i % 9 === 0 ? 'accent' : (i % 3 === 0 ? 'muted' : 'node'),
       yMax: bandH   // keeps this node confined to the dense top band
     }));
     nodes = nodes.concat(extra);
@@ -84,8 +85,8 @@
     }
 
     nodes.forEach(n => {
-      ctx.fillStyle = n.accent ? ACCENT : NODE_COLOR;
-      ctx.globalAlpha = n.accent ? 0.65 : 0.85;
+      ctx.fillStyle = n.kind === 'accent' ? ACCENT : n.kind === 'muted' ? MUTED_COLOR : NODE_COLOR;
+      ctx.globalAlpha = n.kind === 'accent' ? 0.65 : 0.85;
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
       ctx.fill();
