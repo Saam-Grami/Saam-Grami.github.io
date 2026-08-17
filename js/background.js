@@ -11,14 +11,14 @@
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  const MAX_HEIGHT = 2600;   // how far down the page the field extends
+  const MAX_HEIGHT = 100000; // effectively uncapped — field now runs the full page
   const LINK_DIST  = 155;    // px — how close two nodes must be to connect
   const DENSITY    = 9000;   // px² per node; larger = sparser
-  const MAX_NODES  = 240;
+  const MAX_NODES  = 420;    // raised since the field now covers a much taller area
   const SPEED      = 0.16;   // px per frame
-  const NODE_COLOR = '#8D9DAD';
-  const LINE_COLOR = '138, 154, 170';  // rgb for rgba() below
-  const ACCENT     = '#0EA5A4';
+  const NODE_COLOR = '#0EA5A4';        // site accent teal/green
+  const LINE_COLOR = '14, 165, 164';   // rgb of --accent, for rgba() below
+  const ACCENT     = '#6EEAE6';        // brighter teal for occasional highlight nodes
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let nodes = [], w = 0, h = 0, raf = null, running = false;

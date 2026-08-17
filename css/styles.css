@@ -36,8 +36,8 @@ body{
 #bg-canvas{
   position:absolute; left:0; top:0; width:100%;
   z-index:-1; pointer-events:none;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 15%, #000 55%, transparent 94%);
-  mask-image: linear-gradient(180deg, transparent 0%, #000 15%, #000 55%, transparent 94%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 8%, #000 97%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 8%, #000 97%, transparent 100%);
 }
 
 a { color: inherit; }
@@ -189,7 +189,7 @@ h1 em{ font-style: normal; color: var(--accent); }
 .linkbar a:hover .lb-value::after{ color: var(--accent-dark); }
 
 /* ---------- SECTION LABELS ---------- */
-.section{ padding: 84px 0; border-bottom: 1px solid var(--line); }
+.section{ padding: 84px 0; border-bottom: 1px solid var(--line); background: var(--bg); position: relative; z-index: 1; }
 .section:last-of-type{ border-bottom:none; }
 .section-head{ display:flex; align-items: baseline; justify-content: space-between; margin-bottom: 44px; gap: 24px; flex-wrap: wrap; }
 .section-num{ font-family: var(--mono); font-size: 12px; color: var(--ink-faint); letter-spacing: 0.08em; }
