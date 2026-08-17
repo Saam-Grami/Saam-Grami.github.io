@@ -152,7 +152,7 @@ const coursework = [
     tags: ["PyTorch", "TensorFlow", "CNN", "Transfer learning"]
   },
   {
-    title: "Mobile Robotics",
+    title: "Device Control and Simulation of Mobile Robots",
     org: "Kennesaw State University",
     when: "Fall 2025",
     image: "media/course-mobile-robots.png",
@@ -163,6 +163,7 @@ const coursework = [
     ],
     tags: ["ROS2", "SLAM"]
   },
+
   {
     title: "Robot Synthesis",
     org: "Kennesaw State University",
@@ -174,12 +175,12 @@ const coursework = [
     tags: ["Kinematics", "DH Convention"]
   },
   {
-    title: "Control Systems",
+    title: "Modeling and Feedback/Advanced Controls",
     org: "Kennesaw State University",
     when: "Spring 2025",
     image: "media/course-modeling-and-feedback.png",
     video: "",
-    doc: "",
+    doc: "media/MTRE 3610 Final Project Report.pdf",
     points: [],
     tags: ["MATLAB", "Control Theory", "PID", "Transfer Functions"]
   },
