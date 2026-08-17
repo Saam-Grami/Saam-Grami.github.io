@@ -147,9 +147,13 @@ const coursework = [
     video: "",
     doc: "",
     points: [
+      "Neural network fundamentals: perceptrons, forward pass, backpropagation, and gradient descent, with activation functions like ReLU, sigmoid, tanh, and softmax.",
+      "Convolutional neural networks (CNNs) for image feature extraction, plus transfer learning on pretrained backbones.",
+      "Unsupervised learning with k-means clustering and an introduction to reinforcement learning (RL).",
+      "Sequence modeling with LSTMs for time-series and temporal data.",
       "Final project: a CNN that turns a single camera frame into a steering command for a ROSbot chasing an ambulance in Gazebo. Labels were derived from three-point arc geometry rather than recorded by hand."
     ],
-    tags: ["PyTorch", "TensorFlow", "CNN", "Transfer learning"]
+    tags: ["PyTorch", "TensorFlow", "CNN", "LSTM", "k-means", "Reinforcement Learning", "Backpropagation", "Transfer learning"]
   },
   {
     title: "Device Control and Simulation of Mobile Robots",
@@ -159,9 +163,11 @@ const coursework = [
     video: "",
     doc: "",
     points: [
-      "TODO — one line."
+      "Wheel encoders and odometry for pose estimation, plus differential-drive kinematics relating left/right wheel velocities to the robot's linear and angular motion.",
+      "Wall-following and obstacle-avoidance behaviors driven by live sensor data.",
+      "ROS2 nodes and topics controlling the same code on a physical robot and in Gazebo simulation."
     ],
-    tags: ["ROS2", "SLAM"]
+    tags: ["ROS2", "Gazebo", "Encoders", "Odometry", "Differential Drive", "Robot Kinematics"]
   },
 
   {
@@ -171,8 +177,12 @@ const coursework = [
     image: "media/course-robot-synth.jpg",
     video: "",
     doc: "media/robot-synthesis.pdf",   // opens its own page; leave "" for no page
-    points: [],
-    tags: ["Kinematics", "DH Convention"]
+    points: [
+      "Denavit–Hartenberg (DH) convention for assigning link frames and building each joint's homogeneous transformation matrix.",
+      "Forward kinematics by chaining DH transforms down the arm; inverse kinematics for solving joint angles from a target end-effector pose.",
+      "Robot motion and trajectory planning in joint space."
+    ],
+    tags: ["Kinematics", "DH Convention", "Homogeneous Transforms", "Forward Kinematics", "Inverse Kinematics"]
   },
   {
     title: "Modeling and Feedback/Advanced Controls",
@@ -181,8 +191,14 @@ const coursework = [
     image: "media/course-modeling-and-feedback.png",
     video: "",
     doc: "media/MTRE 3610 Final Project Report.pdf",
-    points: [],
-    tags: ["MATLAB", "Control Theory", "PID", "Transfer Functions"]
+    points: [
+      "Modeled dynamic systems as transfer functions and block diagrams, simulated in MATLAB/Simulink.",
+      "Designed and tuned PID controllers, comparing open-loop vs. closed-loop response.",
+      "Stability and performance analysis with root locus and Bode plots, including gain/phase margin.",
+      "Second-order and higher-order system response: rise time, overshoot, settling time, damping ratio, natural frequency, and vibration effects.",
+      "Advanced Controls follow-on: state-space representation, controllability/observability, pole placement, and observer design."
+    ],
+    tags: ["MATLAB", "Simulink", "Control Theory", "PID", "Transfer Functions", "Root Locus", "Bode Plot", "State-Space", "Observers"]
   },
   {
     title: "Microcontrollers and PLCs",
@@ -190,9 +206,13 @@ const coursework = [
     when: "Spring 2025",
     image: "media/course-mcu.jpg",
     video: "",
-    doc: "",
-    points: [],
-    tags: ["C", "Embedded"]
+   doc: "",
+    points: [
+      "Bare-metal ATmega programming: setting I/O registers directly (DDRx, PORTx, PINx) instead of using high-level libraries.",
+      "Timers, interrupts, PWM generation, and ADC for reading sensors and driving actuators.",
+      "PLC programming in ladder logic alongside the microcontroller work."
+    ],
+    tags: ["C", "Embedded", "ATmega", "Registers", "Timers & Interrupts", "PWM", "ADC"]
   }
   // {
   //   title: "PLCs",
