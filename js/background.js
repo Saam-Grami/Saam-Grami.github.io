@@ -1,3 +1,4 @@
+
 /* ============================================================
    background.js — the drifting constellation behind the hero,
    plus the portrait placeholder check. Pure decoration: you can
@@ -11,18 +12,14 @@
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  const MAX_HEIGHT = 100000; // effectively uncapped — field now runs the full page
+  const MAX_HEIGHT = 2600;   // how far down the page the field extends
   const LINK_DIST  = 155;    // px — how close two nodes must be to connect
-  const DENSITY    = 5000;   // px² per node; larger = sparser (lower = denser overall)
-  const MAX_NODES  = 650;    // raised again for the higher density
+  const DENSITY    = 9000;   // px² per node; larger = sparser
+  const MAX_NODES  = 240;
   const SPEED      = 0.16;   // px per frame
-  const NODE_COLOR  = '#0EA5A4';        // site accent teal/green
-  const LINE_COLOR  = '14, 165, 164';   // rgb of --accent, for rgba() below
-  const ACCENT      = '#6EEAE6';        // brighter teal for occasional highlight nodes
-  const MUTED_COLOR = '#8D9DAD';        // original grayish-blue, mixed back in
-
-  const TOP_BAND       = 1500; // px — roughly hero + linkbar + projects
-  const TOP_BAND_EXTRA = 240;  // extra nodes packed into that band on top of the base field
+  const NODE_COLOR = '#8D9DAD';
+  const LINE_COLOR = '138, 154, 170';  // rgb for rgba() below
+  const ACCENT     = '#0EA5A4';
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let nodes = [], w = 0, h = 0, raf = null, running = false;
@@ -46,22 +43,8 @@
       vx: (Math.random() - 0.5) * SPEED * 2,
       vy: (Math.random() - 0.5) * SPEED * 2,
       r: Math.random() < 0.12 ? 2.4 : 1.5,
-      kind: i % 11 === 0 ? 'accent' : (i % 3 === 0 ? 'muted' : 'node')
+      accent: i % 11 === 0
     }));
-
-    // Extra nodes concentrated in the top band so the hero/projects area
-    // reads noticeably denser than the rest of the page.
-    const bandH = Math.min(TOP_BAND, h);
-    const extra = Array.from({ length: TOP_BAND_EXTRA }, (_, i) => ({
-      x: Math.random() * w,
-      y: Math.random() * bandH,
-      vx: (Math.random() - 0.5) * SPEED * 2,
-      vy: (Math.random() - 0.5) * SPEED * 2,
-      r: Math.random() < 0.12 ? 2.4 : 1.5,
-      kind: i % 9 === 0 ? 'accent' : (i % 3 === 0 ? 'muted' : 'node'),
-      yMax: bandH   // keeps this node confined to the dense top band
-    }));
-    nodes = nodes.concat(extra);
   }
 
   function draw(){
@@ -85,8 +68,8 @@
     }
 
     nodes.forEach(n => {
-      ctx.fillStyle = n.kind === 'accent' ? ACCENT : n.kind === 'muted' ? MUTED_COLOR : NODE_COLOR;
-      ctx.globalAlpha = n.kind === 'accent' ? 0.65 : 0.85;
+      ctx.fillStyle = n.accent ? ACCENT : NODE_COLOR;
+      ctx.globalAlpha = n.accent ? 0.65 : 0.85;
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
       ctx.fill();
@@ -97,9 +80,8 @@
   function step(){
     nodes.forEach(n => {
       n.x += n.vx; n.y += n.vy;
-      const bottom = n.yMax || h;
       if (n.x < 0 || n.x > w) n.vx *= -1;
-      if (n.y < 0 || n.y > bottom) n.vy *= -1;
+      if (n.y < 0 || n.y > h) n.vy *= -1;
     });
     draw();
     raf = requestAnimationFrame(step);
