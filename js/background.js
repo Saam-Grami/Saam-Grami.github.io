@@ -16,7 +16,7 @@
   const DENSITY    = 9000;   // px² per node; larger = sparser
   const MAX_NODES  = 240;
   const SPEED      = 0.16;   // px per frame
-  const NODE_COLOR = '#0EA5A4' //'#8D9DAD';
+  const NODE_COLOR = '#8D9DAD';
   const LINE_COLOR = '138, 154, 170';  // rgb for rgba() below
   const ACCENT     = '#0EA5A4';
 
