@@ -384,6 +384,7 @@ const projects = [
     sensors: "RGB camera, depth camera, lidar, simulated UWB ranging",
     platform: "PX4 SITL, Gazebo",
     power: "—"
+    
   },
   {
     id: "RB-08",
