@@ -4,30 +4,39 @@
    delete this file and its <script> tag and the site still works.
    ============================================================ */
 
-// Nodes drift slowly; a line is drawn between any two that come within
-// LINK_DIST of each other, fading as they separate. Tunables are all here.
+// Nodes drift slowly within a tile of TILE_HEIGHT; a line is drawn between
+// any two that come within LINK_DIST of each other, fading as they separate.
+// The tile is then repeated (translated + redrawn) down the full page height,
+// so the same field of stars appears to tile as you scroll. Tunables are all here.
 (function constellation(){
   const canvas = document.getElementById('bg-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  const MAX_HEIGHT = 2600;   // how far down the page the field extends
-  const LINK_DIST  = 155;    // px — how close two nodes must be to connect
-  const DENSITY    = 9000;   // px² per node; larger = sparser
-  const MAX_NODES  = 240;
-  const SPEED      = 0.16;   // px per frame
-  const NODE_COLOR = '#8D9DAD';
-  const LINE_COLOR = '138, 154, 170';  // rgb for rgba() below
-  const ACCENT     = '#0EA5A4';
+  const MAX_HEIGHT  = 6000;   // how far down the page the field extends
+  const TILE_HEIGHT = 1400;   // px — height of one repeating tile of nodes
+  const LINK_DIST   = 155;    // px — how close two nodes must be to connect
+  const DENSITY     = 9000;   // px² per node (within one tile); larger = sparser
+  const MAX_NODES   = 240;    // per tile
+  const SPEED       = 0.16;   // px per frame
+  const NODE_COLOR  = '#22C55E';        // green
+  const LINE_COLOR  = '34, 197, 94';    // rgb for rgba() below — same green
+  const ACCENT      = '#16A34A';        // slightly darker green accent
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let nodes = [], w = 0, h = 0, raf = null, running = false;
+  let nodes = [], w = 0, h = 0, tileH = TILE_HEIGHT, tileCount = 1, raf = null, running = false;
 
   function build(){
     const host = document.getElementById('home-view');
     w = host.clientWidth;
-    h = Math.min(host.scrollHeight, MAX_HEIGHT);
+
+    // Extend down the full page (or document), capped at MAX_HEIGHT
+    const fullHeight = Math.max(host.scrollHeight, document.documentElement.scrollHeight);
+    h = Math.min(fullHeight, MAX_HEIGHT);
     if (!w || !h) return;
+
+    tileH = Math.min(TILE_HEIGHT, h);
+    tileCount = Math.ceil(h / tileH);
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.style.height = h + 'px';
@@ -35,10 +44,11 @@
     canvas.height = Math.round(h * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    const count = Math.min(Math.round((w * h) / DENSITY), MAX_NODES);
+    // Nodes are generated once per tile, then that tile is repeated down the page
+    const count = Math.min(Math.round((w * tileH) / DENSITY), MAX_NODES);
     nodes = Array.from({ length: count }, (_, i) => ({
       x: Math.random() * w,
-      y: Math.random() * h,
+      y: Math.random() * tileH,
       vx: (Math.random() - 0.5) * SPEED * 2,
       vy: (Math.random() - 0.5) * SPEED * 2,
       r: Math.random() < 0.12 ? 2.4 : 1.5,
@@ -46,9 +56,7 @@
     }));
   }
 
-  function draw(){
-    ctx.clearRect(0, 0, w, h);
-
+  function drawTile(){
     for (let i = 0; i < nodes.length; i++){
       const a = nodes[i];
       for (let j = i + 1; j < nodes.length; j++){
@@ -76,11 +84,22 @@
     ctx.globalAlpha = 1;
   }
 
+  function draw(){
+    ctx.clearRect(0, 0, w, h);
+    // Repeat the same tile of nodes down the full extended height
+    for (let t = 0; t < tileCount; t++){
+      ctx.save();
+      ctx.translate(0, t * tileH);
+      drawTile();
+      ctx.restore();
+    }
+  }
+
   function step(){
     nodes.forEach(n => {
       n.x += n.vx; n.y += n.vy;
       if (n.x < 0 || n.x > w) n.vx *= -1;
-      if (n.y < 0 || n.y > h) n.vy *= -1;
+      if (n.y < 0 || n.y > tileH) n.vy *= -1;
     });
     draw();
     raf = requestAnimationFrame(step);
