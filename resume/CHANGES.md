@@ -4,8 +4,8 @@ Check off as done. Source: `resume.tex` in this folder.
 
 ## Layout / formatting
 - [x] KSU line: "December 2026" wrapping to its own line — fixed by giving each row of `\resumeSubheading` its own `tabularx` so column widths aren't shared with the long date range above it.
-- [ ] Convert remaining dash-style bullets to real bullets
-- [ ] Keep resume to one page by moving/resizing lines, not cutting content, where possible
+- [x] Convert remaining dash-style bullets to real bullets — root cause was `\labelitemii` (nested-list marker) never getting the bullet override that `\labelitemi` got, so sub-bullets fell back to LaTeX's default en-dash. Fixed both levels.
+- [x] Body font set to 10pt, spacing rescaled to match, compiled and visually confirmed one page with no big gaps and no overfull/underfull warnings.
 - [ ] Add QR code linking to portfolio
 
 ## Content — SoilBus
