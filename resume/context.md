@@ -9,6 +9,10 @@ Autonomous systems: UAV/UGV, ROS 2, SLAM, sensor fusion, CNN/LSTM perception. Bu
 hardware himself (DARB), leads small research teams (MEAP, SoilBus), and is a published/funded
 undergrad researcher. Full-stack on projects — hardware, embedded, and the ML/software layer.
 
+## What he wants to do
+Autonomy engineering — ROS2, simulation (Gazebo), PX4. That's the throughline for what stays
+prioritized/expanded in future edits, and what any GTRI-fit check should weigh most.
+
 ## Current target: GTRI, entry-level
 Read as a GTRI engineer screening entry-level applicants: they want signal that this person can own a
 piece of a real system, not a hardware-parts list. Lean into autonomy software + research output;
