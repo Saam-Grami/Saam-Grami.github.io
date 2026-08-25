@@ -37,7 +37,8 @@ const experience = [
     points: [
       "Developed a real-time, edge-deployed system that detects, tracks, and predicts the trajectories of floating river debris.",
       "Used neural networks to address the deficiency of linear Kalman-filter motion predictors in turbulent riverine conditions.",
-      "Implemented a class-conditioned LSPIV–LSTM–DNN architecture with a Gaussian uncertainty head for calibrated multi-step forecasts."
+      "Implemented a class-conditioned LSPIV–LSTM–DNN architecture with a Gaussian uncertainty head for calibrated multi-step forecasts.",
+      "First-author manuscript in submitted to peer reviewed computer vision conference."
     ],
     tags: ["PyTorch", "YOLO", "ByteTrack", "LSTM-DNN", "Jetson Orin Nano", "TensorRT"]
   },
@@ -50,7 +51,8 @@ const experience = [
     points: [
       "Designing a UGV–UAV collaborative search-and-rescue system: the UAV surveys the environment while the UGV clears obstacles blocking access to points of interest.",
       "Leading the machine learning and computer vision pipeline that estimates obstacle mass from sensor-fused SLAM point clouds.",
-      "Mass estimates determine which obstacles the UGV's manipulator can safely move."
+      "Mass estimates determine which obstacles the UGV's manipulator can safely move.",
+      "First-author manuscript in preparation to peer reviewed IROS conference."
     ],
     tags: ["ROS2", "NAV2", "SLAM", "OpenCV", "Segmentation", "Map Stitching"]
   },
