@@ -1,0 +1,289 @@
+%Changes: one-page version for GTRI application. Publications trimmed to a
+%pointer line; "Upcoming/In-Progress Projects" section cut and folded into
+%the portfolio callout; bullets rewritten as plain sentences (no bold-label
+%colons) for a more natural voice. DARB and Trajectory Forecasting bullets
+%reflect real current status -- add the trajectory forecast accuracy number
+%once you have it tonight.
+%
+% Font note: Arev font (via \usepackage{arev}) is now the active document
+% font. The \renewcommand{\familydefault}{\sfdefault} override that was
+% fighting it has been removed so Arev applies consistently throughout.
+%-------------------------
+% Resume in Latex
+% Author
+% License : MIT
+%------------------------
+%---- Required Packages and Functions ----
+\documentclass[a4paper,11pt]{article}
+\usepackage{latexsym}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{ragged2e}
+\usepackage[empty]{fullpage}
+\usepackage{wrapfig}
+\usepackage{lipsum}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{geometry}
+\usepackage{marvosym}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{arev}
+\usepackage{etoolbox}
+
+\setlength{\footskip}{4.08003pt}
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\geometry{left=1.2cm, top=0.9cm, right=1.2cm, bottom=0.9cm}
+\usepackage[most]{tcolorbox}
+
+% ---- Color scheme ----
+\definecolor{nodecolor}{HTML}{8D9DAD}
+\definecolor{accent}{HTML}{398787}%Save1{408787}%{0EA5A4}
+
+\tcbset{
+  frame code={},
+  center title,
+  left=0pt,
+  right=0pt,
+  top=0pt,
+  bottom=0pt,
+  colback=gray!20,
+  colframe=white,
+  width=\dimexpr\textwidth\relax,
+  enlarge left by=-2mm,
+  boxsep=4pt,
+  arc=0pt,outer arc=0pt,
+}
+
+\urlstyle{same}
+
+\raggedright
+\linespread{0.98}\selectfont
+\setlength{\footskip}{4.08003pt}
+
+% Sections formatting -- bold uppercase headers with a light rule underneath,
+% matching the "RELEVANT WORK EXPERIENCE" style reference.
+\titleformat{\section}{
+  \vspace{-3pt}\bfseries\raggedright\normalsize\color{accent}
+}{}{0em}{}[\color{black!25}\titlerule \vspace{-6pt}]
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[2]{
+  \item{
+    \textbf{#1}{\hspace{0.5mm}#2 \vspace{-0.5mm}}
+  }
+}
+
+\newcommand{\resumePOR}[3]{
+  \vspace{0.5mm}\item
+  \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{#1}\hspace{0.3mm}#2 & \textit{\small{#3}}
+  \end{tabular*}
+  \vspace{-2mm}
+}
+
+% --- Headings: each row of the entry gets its own tabularx so LaTeX sizes
+% --- the left column independently per row, instead of one wide date range
+% --- (row 1) squeezing a long degree/date line (row 2) onto two lines.
+\newcommand{\resumeSubheading}[4]{%
+  \vspace{0.5mm}\item
+  \begin{tabularx}{0.98\textwidth}[t]{Lr}
+    \textbf{#1} & \textit{\footnotesize{#4}} \\
+  \end{tabularx}\\[-.8mm]
+  \begin{tabularx}{0.98\textwidth}[t]{Lr}
+    \textit{\footnotesize{#3}} & \footnotesize{#2} \\
+  \end{tabularx}
+  \vspace{-1.5mm}
+}
+
+\newcommand{\resumeSubheadingThree}[4]{%
+  \resumeSubheading{#1}{#2}{#3}{#4}%
+}
+
+\newcommand{\resumeSubheadingTwo}[2]{
+  \vspace{0.5mm}\item
+  \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{#1} & \textit{\footnotesize{#2}} \\
+  \end{tabular*}
+  \vspace{-2.4mm}
+}
+
+\newcommand{\resumeProject}[3]{%
+  \vspace{0.5mm}\item
+  \begin{tabularx}{0.98\textwidth}[t]{Lr}
+    \textbf{#1} & \textit{\footnotesize{#3}} \\[-.5mm]
+    \multicolumn{2}{@{}l@{}}{\footnotesize{\textit{#2}}} \\
+  \end{tabularx}
+  \vspace{-2.5mm}
+}
+
+\newcommand{\resumeProjectTwo}[2]{
+  \vspace{0.5mm}\item
+  \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{#1} & \textit{\footnotesize{#2}}
+  \end{tabular*}
+  \vspace{-2.4mm}
+}
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+
+\newcommand{\resumePub}[3]{%
+  \item \textit{#1.} #2%
+  \ifblank{#3}{}{\\[0.3mm] \footnotesize\textcolor{black!55}{#3}}%
+}
+
+\renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*,labelsep=0mm]}
+\newcommand{\resumeHeadingSkillStart}{\begin{itemize}[leftmargin=*,itemsep=1.7mm, rightmargin=2ex]}
+\newcommand{\resumeItemListStart}{\vspace{-1.2mm}\begin{justify}\begin{itemize}[leftmargin=3ex, rightmargin=2ex, noitemsep,labelsep=1.2mm,itemsep=0mm]\small}
+
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{1mm}}
+\newcommand{\resumeHeadingSkillEnd}{\end{itemize}\vspace{-2mm}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\end{justify}\vspace{-2mm}}
+\newcommand{\cvsection}[1]{%
+  \vspace{2mm}
+  \begin{tcolorbox}
+    \textbf{\large #1}
+  \end{tcolorbox}
+  \vspace{-4mm}
+}
+
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}%
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}%
+\newcolumntype{C}{>{\centering\arraybackslash}X}%
+%---- End of Packages and Functions ------
+
+\newcommand{\name}{Saam Haghighat-Grami}
+\newcommand{\course}{ Your Program}
+\newcommand{\phone}{770-625-6755}
+\newcommand{\roll}{770-625-6755}
+\newcommand{\emaila}{saam.haghighat.grami@gmail.com}
+\newcommand{\emailb}{officialemail@sliet.ac.in}
+
+\begin{document}
+
+\parbox{\dimexpr\linewidth\relax}{
+\begin{tabularx}{\linewidth}{L r}
+\textbf{\Large \textcolor{accent}{\name}} & {\raisebox{0.0\height}{\footnotesize \faGraduationCap}\ {Graduating December 2026}}\\
+{\footnotesize \faPhone}{+\phone} & \href{https://www.linkedin.com/in/saam-haghighat-grami}{\raisebox{0.0\height}{\footnotesize \faLinkedin}\ {LinkedIn -- saam-haghighat-grami}} \\
+{\footnotesize \faEnvelope} \emaila & \href{https://github.com/Saam-Grami}{\raisebox{0.0\height}{\footnotesize \faGithub}\ {GitHub -- Saam-Grami}}\\
+{\footnotesize \faMapMarker*}{ Roswell, GA} & \href{https://saam-grami.github.io/}{\raisebox{0.0\height}{\footnotesize \faGlobe}\ {Portfolio -- saam-grami.github.io}} \\
+{\footnotesize \hspace{-0.5mm}\faRobot}{\hspace{1.1mm}Interests -- Autonomous, Mobile, Collaborative Robotics} & {\raisebox{0.0\height}{\footnotesize \textcolor{accent}{\faLock}}\ \textcolor{accent}{Active Military Secret Security Clearance}} \\
+\end{tabularx}
+}
+
+\vspace{-3mm}
+\section{\textbf{Education}}
+\resumeSubHeadingListStart
+  \resumeSubheading
+    {Kennesaw State University}{CGPA: 4.00}
+    {Mechatronics Engineering, B.S. \textendash{} Graduation December 2026}
+    {January 2022 – May 2022, January 2024 – Present}
+  \vspace{-2mm}
+  \resumeSubheadingThree{Marine Corps Communication Electronics School}{CGPA: 4.00}
+    {Ground Electronics Transmission Systems Maintainer}
+    {August 2022 – October 2023}
+
+\resumeSubHeadingListEnd
+
+\vspace{-8mm}
+\section{\textbf{Technical Skills}}
+\begin{itemize}[leftmargin=0.1in, label={}]
+  \small{\item{
+   \textbf{Autonomy \& Robotics}{: ROS 2, Gazebo, Nav2, ArduPilot, PX4, Mission Planner, UAV/UGV integration, RTAB Map} \\
+   \textbf{Embedded \& Hardware}{: ESP32, Arduino, Raspberry Pi 5, Jetson Orin Nano, OpenMV, LiDAR, RGB-D cameras, IMUs, ad hoc networking, MentorPi, Tello Control Theory} \\
+   \textbf{Languages \& Tools}{: C++, Python, MATLAB, LaTeX, Linux/WSL2, Git, VS Code, SolidWorks, Onshape} \\
+   \textbf{Perception \& ML}{: PyTorch, TensorFlow, YOLO, CNNs, LSTMs, OpenCV, ORB-SLAM3, sensor fusion} \\
+   \textbf{Manipulators \& Automation}{: Denavit-Hartenberg parameters, forward and inverse kinematics, trajectory planning, Ladder Logic, TIA Portal, PLCs, HMI development} \\
+
+}}
+\end{itemize}
+\vspace{-4mm}
+
+\begin{tcolorbox}[colback=accent!10, colframe=accent, boxrule=0.8pt, arc=1pt, left=6pt, right=6pt, top=3pt, bottom=3pt]
+\small \textbf{\textcolor{accent}{\faGlobe\ Portfolio}} --- \href{https://saam-grami.github.io/}{\textbf{saam-grami.github.io} --- Full publication list, in-progress projects (multi-drone swarm sim, GPS-denied UAV--UGV localization), and additional technical detail.}
+\end{tcolorbox}
+\vspace{-5mm}
+\section{\textbf{Research \& Engineering Experience}}
+\resumeSubHeadingListStart
+\vspace{-1mm}
+
+  \resumeProject
+    {MEAP \textendash{} Mass Estimation Autonomous Pathfinding}
+    {Robotics Software Architect \& Project Coordinator \textendash{} AgriSys Lab, Dr. Muhammad Hassan Tanveer}
+    {November 2025 - Present}
+    \resumeItemListStart
+      \item {Architected a UAV\textendash{}UGV collaborative search-and-rescue system, fusing aerial map stitching with SLAM-based ground navigation to estimate obstacle mass and volume in real time.}
+      \item {Led a 5-person team building the UAV autonomy stack, validated on a 2 m\textsuperscript{2} area and scaling to 25 m\textsuperscript{2}; leading the mass-estimation ML pipeline, targeting 85\% mission success on obstacles up to 0.5 kg.}
+  \resumeItemListEnd
+  \vspace{-3.1mm}
+
+  \resumeProject
+    {DARB \textendash{} Drone Arm Robotic Backpack (Personal Project)}
+    {Sole Designer and Builder}
+    {May 2025 - Present}
+    \resumeItemListStart
+      \item {Designed a backpack-mounted robotic arm that autonomously captures, stows, and relaunches a drone mid-flight, targeting a 30-second capture-to-relaunch cycle.}
+      \item {Built and flight-tested the full system solo \textendash{} custom airframe, ArduPilot capture arm (Matek H743, NEMA 23 steppers), and AprilTag vision alignment \textendash{} across repeated live test flights.}
+  \resumeItemListEnd
+  \vspace{-3.1mm}
+
+  \resumeProject
+    {Trajectory Forecasting for Floating Debris in Waterways}
+    {Funded Undergraduate Researcher \textendash{} Summer Undergraduate Research Program, Dr. Matt Marshall}
+    {June 2026 - August 2026}
+    \resumeItemListStart
+      \item {Built a real-time vision system that detects, tracks, and forecasts floating river debris trajectories from riverbank video to direct a collection platform toward interception.}
+      \item {Developed a CNN + LSTM forecaster combining optical-flow surface velocimetry with YOLO26 detections, producing calibrated multi-step trajectory forecasts with track re-identification.}
+  \resumeItemListEnd
+  \vspace{-3.1mm}
+
+  \resumeProject
+    {SoilBus \textendash{} Soil Monitoring Probe Network}
+    {Lead Software Developer \textendash{} AgriSys Lab, Dr. Muhammad Hassan Tanveer}
+    {August 2025 - December 2025}
+    \resumeItemListStart
+      \item {Designed a hub-less soil-monitoring mesh network with auto-discovering probes, letting any single node offload the entire network's data.}
+      \item {Achieved full mesh connectivity in 15s and $\sim$5s per-node data offload; validated BFS-based routing on 5 physical nodes, scaling to 26 simulated.}
+  \resumeItemListEnd
+  \vspace{-2.4mm}
+
+\resumeSubHeadingListEnd
+\vspace{-7mm}
+\section{\textbf{Publications}}
+\small Author on 3 works in autonomous systems research \textendash{} 1 published (IEEE SoutheastCon 2026, IEEE Xplore), 2 first-author manuscripts in preparation for peer reviewed computer vision venue and IROS 2027. \textit{Full citations and DOIs at portfolio above.}
+\vspace{-4mm}
+
+\section{\textbf{Industry \& Military Experience}}
+\resumeSubHeadingListStart
+  \resumeSubheading
+    {EOSYS Industrial and Manufacturing System Integrator}{Marietta GA}
+    {COOP}{May 2025 – August 2025}
+    \resumeItemListStart
+      \item {Built an HMI display generator that produced 40+ P\&ID screens for plant operators.}
+      \item {Reviewed and modified PLC programs across two production shops plus the PLC trainer system.}
+  \resumeItemListEnd
+  \vspace{-1.0mm}
+
+  \resumeSubheading
+    {United States Marine Corps Reserve}{Marietta GA}
+    {Ground Radio Repair Specialist}{August 2022 - Present}
+    \resumeItemListStart
+  \item {Troubleshoot, maintain, and operate USMC radio systems in time-sensitive conditions; active Secret clearance.}
+  \item {Lead a squad of 8 Marines in the 4th Combat Readiness Regiment, responsible for training, accountability, and readiness.}
+  \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+\end{document}
