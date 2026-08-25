@@ -14,7 +14,7 @@
 % License : MIT
 %------------------------
 %---- Required Packages and Functions ----
-\documentclass[a4paper,11pt]{article}
+\documentclass[a4paper,10pt]{article}
 \usepackage{latexsym}
 \usepackage{xcolor}
 \usepackage{float}
@@ -74,8 +74,8 @@
 % Sections formatting -- bold uppercase headers with a light rule underneath,
 % matching the "RELEVANT WORK EXPERIENCE" style reference.
 \titleformat{\section}{
-  \vspace{-3pt}\bfseries\raggedright\normalsize\color{accent}
-}{}{0em}{}[\color{black!25}\titlerule \vspace{-6pt}]
+  \vspace{-2.7pt}\bfseries\raggedright\normalsize\color{accent}
+}{}{0em}{}[\color{black!25}\titlerule \vspace{-5.5pt}]
 
 %-------------------------
 % Custom commands
@@ -90,7 +90,7 @@
   \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
     \textbf{#1}\hspace{0.3mm}#2 & \textit{\small{#3}}
   \end{tabular*}
-  \vspace{-2mm}
+  \vspace{-1.8mm}
 }
 
 % --- Headings: each row of the entry gets its own tabularx so LaTeX sizes
@@ -104,7 +104,7 @@
   \begin{tabularx}{0.98\textwidth}[t]{Lr}
     \textit{\footnotesize{#3}} & \footnotesize{#2} \\
   \end{tabularx}
-  \vspace{-1.5mm}
+  \vspace{-1.4mm}
 }
 
 \newcommand{\resumeSubheadingThree}[4]{%
@@ -116,7 +116,7 @@
   \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
     \textbf{#1} & \textit{\footnotesize{#2}} \\
   \end{tabular*}
-  \vspace{-2.4mm}
+  \vspace{-2.2mm}
 }
 
 \newcommand{\resumeProject}[3]{%
@@ -125,7 +125,7 @@
     \textbf{#1} & \textit{\footnotesize{#3}} \\[-.5mm]
     \multicolumn{2}{@{}l@{}}{\footnotesize{\textit{#2}}} \\
   \end{tabularx}
-  \vspace{-2.5mm}
+  \vspace{-2.3mm}
 }
 
 \newcommand{\resumeProjectTwo}[2]{
@@ -133,10 +133,10 @@
   \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
     \textbf{#1} & \textit{\footnotesize{#2}}
   \end{tabular*}
-  \vspace{-2.4mm}
+  \vspace{-2.2mm}
 }
 
-\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-3.6pt}}
 
 \newcommand{\resumePub}[3]{%
   \item \textit{#1.} #2%
@@ -147,17 +147,17 @@
 
 \newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*,labelsep=0mm]}
 \newcommand{\resumeHeadingSkillStart}{\begin{itemize}[leftmargin=*,itemsep=1.7mm, rightmargin=2ex]}
-\newcommand{\resumeItemListStart}{\vspace{-1.2mm}\begin{justify}\begin{itemize}[leftmargin=3ex, rightmargin=2ex, noitemsep,labelsep=1.2mm,itemsep=0mm]\small}
+\newcommand{\resumeItemListStart}{\vspace{-1.1mm}\begin{justify}\begin{itemize}[leftmargin=3ex, rightmargin=2ex, noitemsep,labelsep=1.2mm,itemsep=0mm]\small}
 
-\newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{1mm}}
-\newcommand{\resumeHeadingSkillEnd}{\end{itemize}\vspace{-2mm}}
-\newcommand{\resumeItemListEnd}{\end{itemize}\end{justify}\vspace{-2mm}}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{0.9mm}}
+\newcommand{\resumeHeadingSkillEnd}{\end{itemize}\vspace{-1.8mm}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\end{justify}\vspace{-1.8mm}}
 \newcommand{\cvsection}[1]{%
-  \vspace{2mm}
+  \vspace{1.8mm}
   \begin{tcolorbox}
     \textbf{\large #1}
   \end{tcolorbox}
-  \vspace{-4mm}
+  \vspace{-3.6mm}
 }
 
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}%
@@ -184,21 +184,21 @@
 \end{tabularx}
 }
 
-\vspace{-3mm}
+\vspace{-2.7mm}
 \section{\textbf{Education}}
 \resumeSubHeadingListStart
   \resumeSubheading
     {Kennesaw State University}{CGPA: 4.00}
     {Mechatronics Engineering, B.S. \textendash{} Graduation December 2026}
     {January 2022 – May 2022, January 2024 – Present}
-  \vspace{-2mm}
+  \vspace{-1.8mm}
   \resumeSubheadingThree{Marine Corps Communication Electronics School}{CGPA: 4.00}
     {Ground Electronics Transmission Systems Maintainer}
     {August 2022 – October 2023}
 
 \resumeSubHeadingListEnd
 
-\vspace{-8mm}
+\vspace{-7.3mm}
 \section{\textbf{Technical Skills}}
 \begin{itemize}[leftmargin=0.1in, label={}]
   \small{\item{
@@ -210,15 +210,15 @@
 
 }}
 \end{itemize}
-\vspace{-4mm}
+\vspace{-3.6mm}
 
 \begin{tcolorbox}[colback=accent!10, colframe=accent, boxrule=0.8pt, arc=1pt, left=6pt, right=6pt, top=3pt, bottom=3pt]
 \small \textbf{\textcolor{accent}{\faGlobe\ Portfolio}} --- \href{https://saam-grami.github.io/}{\textbf{saam-grami.github.io} --- Full publication list, in-progress projects (multi-drone swarm sim, GPS-denied UAV--UGV localization), and additional technical detail.}
 \end{tcolorbox}
-\vspace{-5mm}
+\vspace{-4.5mm}
 \section{\textbf{Research \& Engineering Experience}}
 \resumeSubHeadingListStart
-\vspace{-1mm}
+\vspace{-0.9mm}
 
   \resumeProject
     {MEAP \textendash{} Mass Estimation Autonomous Pathfinding}
@@ -228,7 +228,7 @@
       \item {Architected a UAV\textendash{}UGV collaborative search-and-rescue system, fusing aerial map stitching with SLAM-based ground navigation to estimate obstacle mass and volume in real time.}
       \item {Led a 5-person team building the UAV autonomy stack, validated on a 2 m\textsuperscript{2} area and scaling to 25 m\textsuperscript{2}; leading the mass-estimation ML pipeline, targeting 85\% mission success on obstacles up to 0.5 kg.}
   \resumeItemListEnd
-  \vspace{-3.1mm}
+  \vspace{-2.8mm}
 
   \resumeProject
     {DARB \textendash{} Drone Arm Robotic Backpack (Personal Project)}
@@ -238,7 +238,7 @@
       \item {Designed a backpack-mounted robotic arm that autonomously captures, stows, and relaunches a drone mid-flight, targeting a 30-second capture-to-relaunch cycle.}
       \item {Built and flight-tested the full system solo \textendash{} custom airframe, ArduPilot capture arm (Matek H743, NEMA 23 steppers), and AprilTag vision alignment \textendash{} across repeated live test flights.}
   \resumeItemListEnd
-  \vspace{-3.1mm}
+  \vspace{-2.8mm}
 
   \resumeProject
     {Trajectory Forecasting for Floating Debris in Waterways}
@@ -248,7 +248,7 @@
       \item {Built a real-time vision system that detects, tracks, and forecasts floating river debris trajectories from riverbank video to direct a collection platform toward interception.}
       \item {Developed a CNN + LSTM forecaster combining optical-flow surface velocimetry with YOLO26 detections, producing calibrated multi-step trajectory forecasts with track re-identification.}
   \resumeItemListEnd
-  \vspace{-3.1mm}
+  \vspace{-2.8mm}
 
   \resumeProject
     {SoilBus \textendash{} Soil Monitoring Probe Network}
@@ -258,13 +258,13 @@
       \item {Designed a hub-less soil-monitoring mesh network with auto-discovering probes, letting any single node offload the entire network's data.}
       \item {Achieved full mesh connectivity in 15s and $\sim$5s per-node data offload; validated BFS-based routing on 5 physical nodes, scaling to 26 simulated.}
   \resumeItemListEnd
-  \vspace{-2.4mm}
+  \vspace{-2.2mm}
 
 \resumeSubHeadingListEnd
-\vspace{-7mm}
+\vspace{-6.4mm}
 \section{\textbf{Publications}}
 \small Author on 3 works in autonomous systems research \textendash{} 1 published (IEEE SoutheastCon 2026, IEEE Xplore), 2 first-author manuscripts in preparation for peer reviewed computer vision venue and IROS 2027. \textit{Full citations and DOIs at portfolio above.}
-\vspace{-4mm}
+\vspace{-3.6mm}
 
 \section{\textbf{Industry \& Military Experience}}
 \resumeSubHeadingListStart
@@ -275,7 +275,7 @@
       \item {Built an HMI display generator that produced 40+ P\&ID screens for plant operators.}
       \item {Reviewed and modified PLC programs across two production shops plus the PLC trainer system.}
   \resumeItemListEnd
-  \vspace{-1.0mm}
+  \vspace{-0.9mm}
 
   \resumeSubheading
     {United States Marine Corps Reserve}{Marietta GA}
