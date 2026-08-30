@@ -366,9 +366,9 @@ h1 em{ font-style: normal; color: var(--accent); }
 
 .linkbar a:hover{ background: var(--bg-alt); }
 
-.lb-label{ font-family: var(--mono); font-size: 10px; color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; }
+.lb-label{ font-family: var(--mono); font-size: 20px; color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; display:flex; align-items:center; gap:6px; }
 
-.lb-value{ font-family: var(--mono); font-size: 13.5px; color: var(--ink); display:flex; align-items:center; gap:6px; transition: color .15s ease; }
+.lb-value{ font-family: var(--mono); font-size: 13.5px; color: var(--ink); display:flex; align-items:center; gap:6px; min-width:0; overflow-wrap: anywhere; transition: color .15s ease; }
 
 .lb-icon{ flex-shrink:0; }
 

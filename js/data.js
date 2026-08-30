@@ -149,7 +149,6 @@ const education = [
 // demo:  "media/clip.mp4"   — gives the class its own page with this video
 //                             playing (controls, not autoplay). Leave "" for
 //                             no page. If both doc and demo are set, doc wins.
-//
 const coursework = [
   {
     title: "Machine Learning",
@@ -163,7 +162,8 @@ const coursework = [
       "Convolutional neural networks (CNNs) for image feature extraction, plus transfer learning on pretrained backbones.",
       "Unsupervised learning with k-means clustering and an introduction to reinforcement learning (RL).",
       "Sequence modeling with LSTMs for time-series and temporal data.",
-      "Final project: a CNN that turns a single camera frame into a steering command for a ROSbot chasing an ambulance in Gazebo. Labels were derived from three-point arc geometry rather than recorded by hand."
+      "Final project: a CNN that turns a single camera frame into a steering command for a ROSbot chasing an ambulance in Gazebo. Labels were derived from three-point arc geometry rather than recorded by hand.",
+      "<a href=\"#project-RB-08\">Full project write-up →</a>"
     ],
     tags: ["PyTorch", "TensorFlow", "CNN", "LSTM", "k-means", "Reinforcement Learning", "Backpropagation", "Transfer learning"]
   },
