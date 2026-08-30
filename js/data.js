@@ -110,9 +110,9 @@ const education = [
     points: [
       "CGPA: 4.00",
       "President's List every semester enrolled — awarded for a 4.00 term GPA.",
-      "AgriSys Lab, Muhammed Hassan Tanveer",
-      "Student Undergraduate Research Program",
-      "Robotics and Mechatronics Lab, Matthew Marshall"
+      "Undergraduate Researcher, AgriSys Lab — Dr. Muhammad Hassan Tanveer",
+      "Undergraduate Researcher, Robotics and Mechatronics Lab — Dr. Matt Marshall",
+      "Summer Undergraduate Research Program (SURP), 2026"
     ],
     tags: ["Spring 2022", "Spring 2024", "Fall 2024", "Spring 2025", "Fall 2025", "Spring 2026"]
   },
