@@ -54,15 +54,16 @@ function renderTimeline(list, elId){
 // Left column media: video wins, then a still image, then the placeholder.
 // muted + playsinline are required or mobile browsers refuse to autoplay.
 function courseMedia(c){
+  const cap = c.caption ? `<div class="cw-media-cap">${c.caption}</div>` : '';
   if (c.video){
     const ext  = (c.video.split('.').pop() || 'mp4').toLowerCase();
     const type = ext === 'webm' ? 'video/webm' : ext === 'ogv' ? 'video/ogg' : 'video/mp4';
     return `<video class="cw-media" autoplay loop muted playsinline preload="metadata"${c.image ? ` poster="${c.image}"` : ''}>
       <source src="${c.video}" type="${type}">
-    </video>`;
+    </video>${cap}`;
   }
-  if (c.image) return `<div class="cw-media" style="background-image:url('${c.image}')"></div>`;
-  return `<div class="cw-media cw-media-ph">PHOTO PLACEHOLDER</div>`;
+  if (c.image) return `<div class="cw-media" style="background-image:url('${c.image}')"></div>${cap}`;
+  return `<div class="cw-media cw-media-ph">PHOTO PLACEHOLDER</div>${cap}`;
 }
 
 // A stable URL fragment from the title, so #course-robot-synthesis is
@@ -86,10 +87,10 @@ function renderCoursework(){
         ${c.org ? `<div class="tl-org">${c.org}</div>` : ''}
         ${c.points && c.points.length ? `<ul class="tl-points">${c.points.map(p => `<li>${p}</li>`).join('')}</ul>` : ''}
         ${c.tags && c.tags.length ? `<div class="tl-tags">${c.tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}
-        ${c.doc ? `<div class="cw-doc">Read the report →</div>` : ''}
+        ${c.doc ? `<div class="cw-doc">Read the report →</div>` : c.demo ? `<div class="cw-doc">Watch the video →</div>` : ''}
       </div>`;
-    // Only classes with a document get their own page.
-    return c.doc
+    // A class with a document or a demo video gets its own page.
+    return (c.doc || c.demo)
       ? `<a class="cw-item" href="#course-${courseSlug(c.title)}">${body}</a>`
       : `<div class="cw-item">${body}</div>`;
   }).join('');
@@ -99,7 +100,18 @@ function renderCoursework(){
 // PDF rendered inline instead of a media gallery.
 function renderCourseDetail(slug){
   const c = coursework.find(x => courseSlug(x.title) === slug);
-  if (!c || !c.doc){ goHome(); return; }
+  if (!c || (!c.doc && !c.demo)){ goHome(); return; }
+
+  // Doc wins if a class somehow has both — same rule as the coursework list link text.
+  const media = c.doc
+    ? `<a class="detail-repo" href="${encodeURI(c.doc)}" target="_blank" rel="noopener" download>↓ Download PDF</a>
+       <div class="resume-doc" style="margin-top:0;">
+         <div class="pdf-pages" id="course-pdf-pages"></div>
+         <div class="pdf-status" id="course-pdf-status">Loading document…</div>
+       </div>`
+    : `<video class="thumb-media" controls preload="metadata"${c.image ? ` poster="${c.image}"` : ''} onerror="galMissing(this)">
+         <source src="${encodeURI(c.demo)}">
+       </video>`;
 
   document.title = `${c.title} — Saam Haghighat-Grami`;
   detailView.innerHTML = `
@@ -112,19 +124,19 @@ function renderCourseDetail(slug){
       ? `<div class="detail-body"><ul class="tl-points">${c.points.map(p => `<li>${p}</li>`).join('')}</ul></div>` : ''}
     ${c.tags && c.tags.length
       ? `<div class="tl-tags" style="margin-bottom:28px;">${c.tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}
-    <a class="detail-repo" href="${encodeURI(c.doc)}" target="_blank" rel="noopener" download>↓ Download PDF</a>
-    <div class="resume-doc" style="margin-top:0;">
-      <div class="pdf-pages" id="course-pdf-pages"></div>
-      <div class="pdf-status" id="course-pdf-status">Loading document…</div>
-    </div>
+    ${media}
   `;
 
   homeView.classList.add('hidden');
   detailView.classList.remove('hidden');
   window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
 
-  coursePdfFile = c.doc;
-  renderPdfInto(c.doc, document.getElementById('course-pdf-pages'), document.getElementById('course-pdf-status'));
+  if (c.doc){
+    coursePdfFile = c.doc;
+    renderPdfInto(c.doc, document.getElementById('course-pdf-pages'), document.getElementById('course-pdf-status'));
+  } else {
+    coursePdfFile = null;
+  }
 }
 
 /* ---------- SKILLS / PUBLICATIONS / BLOG ---------- */
@@ -211,7 +223,8 @@ function mediaItems(p){
     out.push({
       src,
       type: VIDEO_EXT.includes(ext) ? 'video' : 'image',
-      poster: (typeof m === 'object' && m.poster) || ''
+      poster: (typeof m === 'object' && m.poster) || '',
+      caption: (typeof m === 'object' && m.caption) || ''
     });
   };
   (p.media || []).forEach(add);
@@ -272,7 +285,7 @@ function galHTML(items){
           <div class="gal-count" id="gal-count"></div>` : ''}
       </div>
       ${multi ? `<div class="gal-thumbs">${thumbs}</div>` : ''}
-      ${multi ? `<div class="gal-caption">Click the arrows, the thumbnails, or use ← →</div>` : ''}
+      <div class="gal-caption" id="gal-caption"></div>
     </div>`;
 }
 
@@ -291,6 +304,13 @@ function galShow(i){
   const count = document.getElementById('gal-count');
   if (count) count.textContent = `${gal.i + 1} / ${items.length}`;
   document.querySelectorAll('.gal-thumb').forEach((t, n) => t.classList.toggle('active', n === gal.i));
+
+  const caption = document.getElementById('gal-caption');
+  if (caption){
+    const text = m.caption || (items.length > 1 ? 'Click the arrows, the thumbnails, or use ← →' : '');
+    caption.textContent = text;
+    caption.classList.toggle('hidden', !text);
+  }
 }
 
 function galStep(d){ galShow(gal.i + d); }

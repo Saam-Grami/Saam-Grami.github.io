@@ -8,7 +8,7 @@
 
   --ink-soft: #52606B;
 
-  --ink-faint: #8A97A3;
+  --ink-faint: #5E6B77;
 
   --accent: #0EA5A4;
 
@@ -370,6 +370,8 @@ h1 em{ font-style: normal; color: var(--accent); }
 
 .lb-value{ font-family: var(--mono); font-size: 13.5px; color: var(--ink); display:flex; align-items:center; gap:6px; transition: color .15s ease; }
 
+.lb-icon{ flex-shrink:0; }
+
 .linkbar a:hover .lb-value{ color: var(--accent-dark); }
 
 .lb-value::after{ content:"↗"; font-size: 11px; color: var(--ink-faint); transition: color .15s ease; }
@@ -450,7 +452,7 @@ h2{ font-family: var(--display); font-size: clamp(26px, 3vw, 34px); font-weight:
 
 .card:hover h3 .arrow{ opacity: 1; transform: translateX(0); color: var(--accent-deep); }
 
-.card-sub{ font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); margin: -4px 0 12px; letter-spacing: 0.02em; }
+.card-sub{ font-family: var(--mono); font-size: 11.5px; color: var(--accent-dark); margin: -4px 0 12px; letter-spacing: 0.02em; }
 
 .card p{ font-size: 14px; color: var(--ink-soft); margin: 0 0 18px; }
 
@@ -718,6 +720,10 @@ video.thumb-media{
 
 .tl-points li{ margin-bottom: 6px; }
 
+.tl-points a{ color: var(--accent-dark); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .15s ease; }
+
+.tl-points a:hover{ border-bottom-color: var(--accent-dark); }
+
 .tl-tags{ display:flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
 
 .tl-tags span{ font-family: var(--mono); font-size: 10.5px; padding: 4px 8px; border: 1px solid var(--line-strong); border-radius: var(--radius); color: var(--ink-faint); }
@@ -771,6 +777,8 @@ video.thumb-media{
 }
 
 .cw-when{ font-family: var(--mono); font-size: 11px; color: var(--ink-faint); margin-top: 8px; letter-spacing: 0.04em; }
+
+.cw-media-cap{ font-family: var(--mono); font-size: 10.5px; color: var(--ink-faint); margin-top: 8px; line-height: 1.45; }
 
   
 
@@ -1009,6 +1017,8 @@ a.cw-item:hover .cw-doc{ border-color: var(--accent); color: var(--accent-dark);
   transition: all .15s ease;
 
 }
+
+.contact-link svg{ flex-shrink:0; }
 
 .contact-link:hover{ border-color: var(--accent); color: var(--accent-dark); }
 
