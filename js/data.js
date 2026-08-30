@@ -149,6 +149,7 @@ const education = [
 // demo:  "media/clip.mp4"   — gives the class its own page with this video
 //                             playing (controls, not autoplay). Leave "" for
 //                             no page. If both doc and demo are set, doc wins.
+//
 const coursework = [
   {
     title: "Machine Learning",
