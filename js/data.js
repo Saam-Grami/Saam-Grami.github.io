@@ -103,13 +103,16 @@ const experience = [
 const education = [
   {
     when: "Jan 2022 — May 2022,\nJan 2024 — Present",
-    role: "B.S. Mechatronics Engineering",
+    role: "Bachelor of Science Mechatronics Engineering",
     org: "Kennesaw State University",
     image: "media/edu-ksu.jpg",   // save your photo with this exact name
     caption: "", // optional one-line caption under the photo
     points: [
       "CGPA: 4.00",
-      "President's List every semester enrolled — awarded for a 4.00 term GPA."
+      "President's List every semester enrolled — awarded for a 4.00 term GPA.",
+      "AgriSys Lab, Muhammed Hassan Tanveer",
+      "Student Undergraduate Research Program",
+      "Robotics and Mechatronics Lab, Matthew Marshall"
     ],
     tags: ["Spring 2022", "Spring 2024", "Fall 2024", "Spring 2025", "Fall 2025", "Spring 2026"]
   },
