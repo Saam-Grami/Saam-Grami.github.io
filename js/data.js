@@ -149,6 +149,7 @@ const education = [
 // demo:  "media/clip.mp4"   — gives the class its own page with this video
 //                             playing (controls, not autoplay). Leave "" for
 //                             no page. If both doc and demo are set, doc wins.
+//  
 const coursework = [
   {
     title: "Machine Learning",
@@ -162,8 +163,7 @@ const coursework = [
       "Convolutional neural networks (CNNs) for image feature extraction, plus transfer learning on pretrained backbones.",
       "Unsupervised learning with k-means clustering and an introduction to reinforcement learning (RL).",
       "Sequence modeling with LSTMs for time-series and temporal data.",
-      "Final project: a CNN that turns a single camera frame into a steering command for a ROSbot chasing an ambulance in Gazebo. Labels were derived from three-point arc geometry rather than recorded by hand.",
-      "<a href=\"#project-RB-08\">Full project write-up →</a>"
+      "Final project: a CNN that turns a single camera frame into a steering command for a ROSbot chasing an ambulance in Gazebo. Labels were derived from three-point arc geometry rather than recorded by hand."
     ],
     tags: ["PyTorch", "TensorFlow", "CNN", "LSTM", "k-means", "Reinforcement Learning", "Backpropagation", "Transfer learning"]
   },
@@ -183,6 +183,23 @@ const coursework = [
     tags: ["ROS2", "Gazebo", "Encoders", "Odometry", "Differential Drive", "Robot Kinematics"]
   },
 
+
+  {
+    title: "Modeling and Feedback/Advanced Controls",
+    org: "Kennesaw State University",
+    when: "Spring 2025",
+    image: "media/advanced_controls.png",
+    video: "",
+    doc: "media/MTRE 3610 Final Project Report.pdf",
+    points: [
+      "Modeled dynamic systems as transfer functions and block diagrams, simulated in MATLAB/Simulink.",
+      "Designed and tuned PID controllers, comparing open-loop vs. closed-loop response.",
+      "Stability and performance analysis with root locus and Bode plots, including gain/phase margin.",
+      "Second-order and higher-order system response: rise time, overshoot, settling time, damping ratio, natural frequency, and vibration effects.",
+      "Advanced Controls follow-on: state-space representation, controllability/observability, pole placement, and observer design."
+    ],
+    tags: ["MATLAB", "Simulink", "Control Theory", "PID", "Transfer Functions", "Root Locus", "Bode Plot", "State-Space", "Observers"]
+  },
   {
     title: "Robot Synthesis",
     org: "Kennesaw State University",
@@ -196,22 +213,6 @@ const coursework = [
       "Robot motion and trajectory planning in joint space."
     ],
     tags: ["Kinematics", "DH Convention", "Homogeneous Transforms", "Forward Kinematics", "Inverse Kinematics"]
-  },
-  {
-    title: "Modeling and Feedback/Advanced Controls",
-    org: "Kennesaw State University",
-    when: "Spring 2025",
-    image: "media/course-modeling-and-feedback.png",
-    video: "",
-    doc: "media/MTRE 3610 Final Project Report.pdf",
-    points: [
-      "Modeled dynamic systems as transfer functions and block diagrams, simulated in MATLAB/Simulink.",
-      "Designed and tuned PID controllers, comparing open-loop vs. closed-loop response.",
-      "Stability and performance analysis with root locus and Bode plots, including gain/phase margin.",
-      "Second-order and higher-order system response: rise time, overshoot, settling time, damping ratio, natural frequency, and vibration effects.",
-      "Advanced Controls follow-on: state-space representation, controllability/observability, pole placement, and observer design."
-    ],
-    tags: ["MATLAB", "Simulink", "Control Theory", "PID", "Transfer Functions", "Root Locus", "Bode Plot", "State-Space", "Observers"]
   },
   {
     title: "Microcontrollers and PLCs",
@@ -242,12 +243,12 @@ const coursework = [
 
 // ---- EDIT YOUR SKILLS HERE ----
 const skills = [
-  { group: "Languages",       items: ["C++", "Python", "MATLAB", "Ladder Logic", "LaTeX", "Lua"] },
+  { group: "Languages",       items: ["C++", "Python", "MATLAB", "Ladder Logic", "LaTeX", "Lua", "Bash"] },
   { group: "Frameworks",      items: ["ROS2", "NAV2", "Gazebo", "PX4", "TensorFlow", "PyTorch", "OpenCV", "ESPNOW", "MAVLink2"] },
   { group: "Perception & ML", items: ["LSTM-DNN", "CNNs", "YOLO", "ByteTrack", "Segmentation", "LSPIV", "Optical Flow", "Gaussian NLL", "ORB-SLAM3", "Sensor Fusion"] },
   { group: "Embedded",        items: ["ESP32", "Arduino", "Jetson Orin Nano", "Raspberry Pi 5", "OpenMV", "TensorRT", "Matek H743", "Nema 23 Stepper", "N20 Motors", "MentorPi", "Tello"] },
   { group: "CAD",             items: ["SolidWorks", "Onshape", "3D Printing"] },
-  { group: "Developer Tools", items: ["Arduino IDE", "VS Code", "Git", "Linux / WSL2", "TIA Portal", "Mission Planner"] },
+  { group: "Developer Tools", items: ["Arduino IDE", "GitHub","VS Code", "Git", "Linux / WSL2", "TIA Portal", "Mission Planner", "Docker"] },
   { group: "Robotics",        items: ["SLAM", "ArduPilot", "UAV–UGV Coordination", "RTAB Map", "Control Theory", "DH Parameters & Kinematics", "April Tags", "Ad Hoc Networking", "HMI Development"] }
 ];
 
@@ -342,10 +343,15 @@ const projects = [
     media: [              // shown inside the project page, in this order
       "media/rb-04.mp4",
       "media/rb-04.png",
+      "media/rb-04-02.png",
+      "media/rb-04-03.png",
+      "media/rb-04-04.png",
+      "media/rb-04-05.png",
+      "media/rb-04-06.png",
+      "media/rb-04-07.png",
       "media/rb-04-02.jpg",
       "media/rb-04-03.jpg",
-      "media/rb-04-04.jpg",
-      "media/rb-04-05.jpg"
+      
     ],
     repo: "",    // e.g. "https://github.com/Saam-Grami/river-debris"
     blurb: "A real-time edge system that detects, tracks, and forecasts the paths of floating river debris with calibrated uncertainty.",
