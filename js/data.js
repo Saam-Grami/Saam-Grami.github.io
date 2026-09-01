@@ -42,7 +42,7 @@ const experience = [
       "<a href=\"https://www.kennesaw.edu/news/stories/2026/mechatronics-engineering-student-ai-powered-system-waterways.php\" target=\"_blank\" rel=\"noopener\">KSU article →</a>",
       "<a href=\"#project-RB-03\">Full project write-up →</a>"
     ],
-    tags: ["PyTorch", "YOLO", "ByteTrack", "LSTM-DNN", "Jetson Orin Nano", "TensorRT"]
+    tags: ["PyTorch", "YOLO", "ByteTrack", "LSTM-DNN", "TensorRT"] // "Jetson Orin Nano",
   },
   {
     when: "Jan 2026 — Present",
@@ -249,7 +249,7 @@ const skills = [
   { group: "Languages",       items: ["C++", "Python", "MATLAB", "Ladder Logic", "LaTeX", "Lua", "Bash"] },
   { group: "Frameworks",      items: ["ROS2", "NAV2", "Gazebo", "PX4", "TensorFlow", "PyTorch", "OpenCV", "ESPNOW", "MAVLink2"] },
   { group: "Perception & ML", items: ["LSTM-DNN", "CNNs", "YOLO", "ByteTrack", "Segmentation", "LSPIV", "Optical Flow", "Gaussian NLL", "ORB-SLAM3", "Sensor Fusion"] },
-  { group: "Embedded",        items: ["ESP32", "Arduino", "Jetson Orin Nano", "Raspberry Pi 5", "OpenMV", "TensorRT", "Matek H743", "Nema 23 Stepper", "N20 Motors", "MentorPi", "Tello"] },
+  { group: "Embedded",        items: ["ESP32", "Arduino", "Raspberry Pi 5", "OpenMV", "TensorRT", "Matek H743", "Nema 23 Stepper", "N20 Motors", "MentorPi", "Tello"] }, //"Jetson Orin Nano",
   { group: "CAD",             items: ["SolidWorks", "Onshape", "3D Printing"] },
   { group: "Developer Tools", items: ["Arduino IDE", "GitHub","VS Code", "Git", "Linux / WSL2", "TIA Portal", "Mission Planner", "Docker"] },
   { group: "Robotics",        items: ["SLAM", "ArduPilot", "UAV–UGV Coordination", "RTAB Map", "Control Theory", "DH Parameters & Kinematics", "April Tags", "Ad Hoc Networking", "HMI Development"] }
@@ -358,7 +358,7 @@ const projects = [
     ],
     repo: "",    // e.g. "https://github.com/Saam-Grami/river-debris"
     blurb: "A real-time edge system that detects, tracks, and forecasts the paths of floating river debris with calibrated uncertainty.",
-    details: "I developed a real-time, edge-deployed system that detects, tracks, and predicts the trajectories of floating river debris.\n\nLinear Kalman-filter motion predictors break down in turbulent riverine conditions, so I used neural networks instead: a class-conditioned LSPIV–LSTM–DNN architecture with a Gaussian uncertainty head, producing calibrated multi-step trajectory forecasts over YOLO and ByteTrack detections. The point is that the system reports how confident it is, rather than committing to a single prediction it cannot justify.\n\nThe full pipeline runs on an NVIDIA Jetson Orin Nano. Conducted as SURP research under Dr. Matt Marshall.",
+    details: "I developed a real-time, edge-deployed system that detects, tracks, and predicts the trajectories of floating river debris.\n\nLinear Kalman-filter motion predictors break down in turbulent riverine conditions, so I used neural networks instead: a class-conditioned LSPIV–LSTM–DNN architecture with a Gaussian uncertainty head, producing calibrated multi-step trajectory forecasts over YOLO and ByteTrack detections. The point is that the system reports how confident it is, rather than committing to a single prediction it cannot justify.\n\nThe full pipeline will run on an NVIDIA Jetson Orin Nano. Conducted as SURP research under Dr. Matt Marshall.",
     stack: "PyTorch, Python, TensorRT, OpenCV",
     sensors: "RGB camera",
     platform: "Raspberry Pi 5",
