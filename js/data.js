@@ -301,11 +301,15 @@ const projects = [
     subtitle: "Drone Arm Robotic Backpack · personal project",
     status: "progress",
     year: "2025–26",
-    cover: "media/rb-01.jpg",     // card image in the projects grid
+    cover: "media/rb-01-03.jpg",     // card image in the projects grid
     media: [              // shown inside the project page, in this order
       
       "media/rb-01.mp4",
-      "media/rb-01.jpg"
+      "media/rb-01-03.jpg",
+      "media/rb-01-04.jpg",
+      "media/rb-01-05.jpg",
+      "media/rb-01-02.jpg",
+      "media/rb-01.jpg",
     ],
     repo: "",    // e.g. "https://github.com/Saam-Grami/darb"
     blurb: "A wearable robotic arm that retrieves a drone in flight, with the drone aligning itself using computer vision.",
@@ -326,7 +330,8 @@ const projects = [
       "media/rb-02-01.jpg",
       "media/rb-02.mp4",
       "media/rb-02-02.jpg",
-      "media/rb-02-03.jpg"
+      "media/rb-02-03.jpg",
+      
     ],
     repo: "",    // e.g. "https://github.com/Saam-Grami/a2g"
     blurb: "Collaborative UGV–UAV system that estimates object masses and relocates movable objects to shorten paths.",
