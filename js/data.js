@@ -377,9 +377,11 @@ const projects = [
     year: "2025",
     cover: "media/rb-03-01.jpg",   // card image in the projects grid
     media: [              // shown inside the project page, in this order
-      "media/rb-03-02.jpg",
+      "media/rb-03-01.jpg",
       "media/rb-03-03.jpg",
-      "media/rb-03-04.jpg"
+      "media/rb-03-04.jpg",
+      "media/rb-03-04.png",
+      "media/rb-03-05.png"
     ],
     repo: "",    // e.g. "https://github.com/Saam-Grami/soilbus"
     blurb: "A self-offloading mesh network where probes auto-discover neighbors and relay data to any node, with no central hub.",
