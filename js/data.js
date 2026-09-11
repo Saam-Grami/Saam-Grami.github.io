@@ -383,13 +383,14 @@ const projects = [
     media: [              // shown inside the project page, in this order
       "media/rb-03-01.jpg",
       "media/rb-03-03.jpg",
+      "media/rb-03-06.png",
       "media/rb-03-04.jpg",
       "media/rb-03-04.png",
       "media/rb-03-05.png"
     ],
     repo: "",    // e.g. "https://github.com/Saam-Grami/soilbus"
     blurb: "A self-offloading mesh network where probes auto-discover neighbors and relay data to any node, with no central hub.",
-    details: "SoilBus is a self-offloading soil-monitoring mesh network built for farmers. Probes auto-discover neighboring nodes and relay sensor data to any node, so there is no central hub to install or maintain.\n\nAn LSTM processes incoming NPK, EC, pH, temperature, and moisture readings alongside light-level data across the network.\n\nI validated communication and routing across 5 physical nodes, with performance holding up to a simulated 26 nodes before degradation. Self-healing is not yet implemented.",
+    details: "SoilBus is a self-offloading soil-monitoring mesh network built for farmers. Probes auto-discover neighboring nodes and relay sensor data to any node, so there is no central hub to install or maintain.\n\nAn LSTM processes incoming NPK, EC, pH, temperature, and moisture readings alongside light-level data across the network.\n\nI validated communication and routing across 5 physical nodes, with performance holding up to a simulated 26 nodes before degradation. Self-healing is not yet implemented. \n\n Published at SoutheastCon 2026, DOI 10.1109/SoutheastCon63549.2026.11476560, Link: https://ieeexplore.ieee.org/document/11476560 ",
     stack: "C++, Arduino IDE, ad hoc networking, LSTM, ESPNOW protocol",
     sensors: "7-in-1 soil sensor, DHT-22, lux sensor, voltage sensor",
     platform: "ESP32",
