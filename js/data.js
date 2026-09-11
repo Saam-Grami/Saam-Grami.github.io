@@ -334,7 +334,7 @@ const projects = [
       "media/rb-02-01.jpg",
       "media/rb-02.mp4",
       "media/rb-02-02.jpg",
-      "media/rb-02-03.jpg",
+      "media/rb-02-03.jpg", 
       
     ],
     repo: "",    // e.g. "https://github.com/Saam-Grami/a2g"
@@ -367,9 +367,9 @@ const projects = [
     ],
     repo: "",    // e.g. "https://github.com/Saam-Grami/river-debris"
     blurb: "A real-time edge system that detects, tracks, and forecasts the paths of floating river debris with calibrated uncertainty.",
-    details: "I developed a real-time, edge-deployed system that detects, tracks, and predicts the trajectories of floating river debris.\n\nLinear Kalman-filter motion predictors break down in turbulent riverine conditions, so I used neural networks instead: a class-conditioned LSPIV–LSTM–DNN architecture with a Gaussian uncertainty head, producing calibrated multi-step trajectory forecasts over YOLO and ByteTrack detections. The point is that the system reports how confident it is, rather than committing to a single prediction it cannot justify.\n\nThe full pipeline will run on an NVIDIA Jetson Orin Nano. Conducted as SURP research under Dr. Matt Marshall.",
-    stack: "PyTorch, Python, TensorRT, OpenCV",
-    sensors: "RGB camera",
+    details: "I developed a real-time, edge-deployed system that detects, tracks, and predicts the trajectories of floating river debris.\n\nLinear Kalman-filter motion predictors break down in turbulent riverine conditions, so I used neural networks instead: a class-conditioned LSPIV–LSTM–DNN architecture with a Gaussian uncertainty head, producing calibrated multi-step trajectory forecasts over YOLO and ByteTrack detections. The point is that the system reports how confident it is, rather than committing to a single prediction it cannot justify.\n\nThe full pipeline will run on an NVIDIA Jetson Orin Nano. Conducted as SURP research under Dr. Matt Marshall. \n\n First author / sole ML developer — Funded Undergraduate Researcher (SURP), advised by Dr. Matt Marshall \n\n 6 model variants crossing appearance (RGB CNN), motion (LSPIV optical flow), and fused inputs across scene-wide vs. object-centric views; CNN \u2192 LSTM \u2192 MLP head with a masked Gaussian NLL loss for calibrated 10s forecasts from 1s of history \n\n The dataset was 50 annotated debris tracks (23 train / 9 val / 12 test) from real storm-elevated river footage, two camera angles, 1920\u00d71080 @ 30fps. \n\n Constant-velocity, average-velocity, Kalman filter, and flow-field advection (with/without slip correction). \n\n ~75px mean error (4% of frame width); ~55% lower error than the strongest physics baseline; validated across a 5-seed sweep with paired Wilcoxon significance testing. \n\n",
+    stack: "PyTorch, Python, TensorRT, OpenCV, YOLOv26, WildLive, SciPy, NumPy",
+    sensors: "USB camera, dual-angle capture",
     platform: "Raspberry Pi 5",
     power: "Two 12.8V 1000AH LiFePO4 Batteries"
   },
