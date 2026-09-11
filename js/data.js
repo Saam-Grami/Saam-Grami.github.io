@@ -361,7 +361,7 @@ const projects = [
       "media/rb-04-05.png",
       "media/rb-04-06.png",
       "media/rb-04-07.png",
-      "media/rb-04-02.jpg",
+      "media/rb-04-02.jpg",//
       "media/rb-04-03.jpg",
       
     ],
