@@ -221,8 +221,8 @@ const coursework = [
     title: "Microcontrollers and PLCs",
     org: "Kennesaw State University",
     when: "Spring 2025",
-    image: "media/micrcontrollers_project.mp4",
-    video: "",
+    image: "course-mcu.jpg",
+    video: "media/micrcontrollers_project.mp4",
     doc: "",
     demo: "media/course-mcu.mp4",   // opens its own page with a video player, same idea as "doc" for PDFs
     points: [
