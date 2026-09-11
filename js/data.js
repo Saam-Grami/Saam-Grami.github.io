@@ -306,10 +306,14 @@ const projects = [
       
       "media/rb-01.mp4",
       "media/rb-01-03.jpg",
+      "media/rb-01-08.mp4",
+      "media/rb-01-09.mp4",
       "media/rb-01-04.jpg",
       "media/rb-01-05.jpg",
       "media/rb-01-02.jpg",
       "media/rb-01.jpg",
+      "media/rb-01-07.jpg",
+      "media/rb-01-06.png"
     ],
     repo: "",    // e.g. "https://github.com/Saam-Grami/darb"
     blurb: "A wearable robotic arm that retrieves a drone in flight, with the drone aligning itself using computer vision.",
