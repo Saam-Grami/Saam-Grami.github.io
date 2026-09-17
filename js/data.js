@@ -345,6 +345,25 @@ const projects = [
     platform: "Raspberry Pi 5, MentorPi, Tello",//Add linux?Maybe?
     power: "—"
   },
+  // {
+  //   id: "RB-09",
+  //   title: "UWBP2P",
+  //   subtitle: "Ultra Wide Bandwidth Peer to Peer",
+  //   status: "progress",
+  //   year: "2025–26",
+  //   cover: "",     // card image in the projects grid
+  //   media: [              // shown inside the project page, in this order
+      
+  //     "",
+  //   ],
+  //   repo: "",    // e.g. "https://github.com/Saam-Grami/darb"
+  //   blurb: "",
+  //   details: "DARB is a drone docking system built around a robotic arm attached to a mobile, human-wearable platform. I invented and built it independently.\n\nThe custom drone uses computer vision to align with IR LEDs mounted on the wearable platform, and the arm retrieves it mid-flight. The drone will also be able to launch and release from the arm. The whole sequence is autonomously operated.\n\nThe project runs across mechanical design, embedded systems, and flight control at once, since the arm and the aircraft have to agree on where they are relative to each other before a capture is possible.",
+  //   stack: "ArduPilot, Arduino IDE, TensorFlow, computer vision, Open MV IDE, Mission Planner, Ender 3, Onshape, MAVLink2",
+  //   sensors: "IR LED array, stepper encoders, IMU, UWB, Barometer",
+  //   platform: "ESP32, Matek H743 WLITE, Open MV H7+, PS5 controller",
+  //   power: "4S LiPo"
+  // },
   {
     id: "RB-03",
     title: "Trajectory Forecasting for Floating Debris in Waterways",
