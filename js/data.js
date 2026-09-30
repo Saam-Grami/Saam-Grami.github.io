@@ -482,7 +482,7 @@ const projects = [
     sensors: "RGB camera (640×480, 60° HFOV), LiDAR",
     platform: "ROSbot in Gazebo",
     power: "—"
-  }
+  },
   {
     id: "RB-09",
     title: "UWB Peer-to-Peer Localization",
