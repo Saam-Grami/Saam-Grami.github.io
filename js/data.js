@@ -339,7 +339,7 @@ const projects = [
     ],
     repo: "",    // e.g. "https://github.com/Saam-Grami/a2g"
     blurb: "Collaborative UGV–UAV system that estimates object masses and relocates movable objects to shorten paths.",
-    details: "A2G is a UGV–UAV collaborative search-and-rescue system. The UAV surveys the environment while the UGV clears obstacles blocking access to points of interest using an onboard manipulator.\n\nI lead the machine learning and computer vision pipeline that estimates obstacle mass from sensor-fused SLAM point clouds. That estimate determines which obstacles the manipulator can safely move, and it runs alongside the UAV's flight motion rather than after it.\n\nThe interesting problem is not navigation on its own — it is deciding what is worth moving, and committing to that decision with incomplete information.",
+    details: "A2G is a UGV–UAV collaborative search-and-rescue system. The UAV surveys the environment while the UGV clears obstacles blocking access to points of interest using an onboard manipulator.\n\nI lead the machine learning and computer vision pipeline that estimates obstacle mass from sensor-fused SLAM point clouds. That estimate determines which obstacles the manipulator can safely move, and it runs alongside the UAV's flight motion rather than after it.",
     stack: "ROS2 Humble, NAV2, Gazebo, OpenCV, ORBSLAM3, segmentation, Open3D, map stitching, RTAB map",
     sensors: "RGB camera, LiDAR, depth camera, Optical flow, Time of Flight sensor, Encoders, IMU",
     platform: "Raspberry Pi 5, MentorPi, Tello",//Add linux?Maybe?
