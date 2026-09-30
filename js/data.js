@@ -393,6 +393,25 @@ const projects = [
     power: "Two 12.8V 1000AH LiFePO4 Batteries"
   },
   {
+    id: "RB-09",
+    title: "UWB Peer-to-Peer Localization",
+    subtitle: "UAV-supplied GPS for a UGV · research lab",
+    status: "progress",
+    year: "2026",
+    cover: "media/rb-09-02.jpg",     // card image in the projects grid
+    media: [              // shown inside the project page, in this order
+      "media/rb-09-01.PNG",
+      "media/rb-09-02.jpg",
+    ],
+    repo: "",
+    blurb: "A UWB link that lets a GPS equipped UAV supply position corrections to a ground vehicle while both are in motion.",
+    details: "This is a peer-to-peer localization system where a UAV with a GPS lock supplies position to a ground vehicle through the relative transform between them. Ultra-wideband nodes on both vehicles range against each other, and that gives the pose of one vehicle in the frame of the other.\n\nI am second-in-command of the research group and help lead development. The goal is to improve the UGV's pose estimation during GNSS-denied intervals, supplementing its onboard SLAM through pose graph optimization rather than replacing it.\n\nThe project is in its early stages. The first step is the UWB node arrangement on both vehicles and an RTK-GNSS ground truth to measure the UWB-based estimate against.\n\nThe interesting problem is not ranging on its own — it is deciding how much to trust a correction that comes from a platform that is also moving.",
+    stack: "UWB ranging, pose graph optimization, SLAM",
+    sensors: "UWB nodes, RTK-GNSS, IMU",
+    platform: "UAV, UGV",
+    power: "—"
+  },
+  {
     id: "RB-04",
     title: "SoilBus",
     subtitle: "Soil monitoring probe network",
@@ -483,23 +502,5 @@ const projects = [
     platform: "ROSbot in Gazebo",
     power: "—"
   },
-  {
-    id: "RB-09",
-    title: "UWB Peer-to-Peer Localization",
-    subtitle: "UAV-supplied GPS for a UGV · research lab",
-    status: "progress",
-    year: "2026",
-    cover: "media/rb-09-02.jpg",     // card image in the projects grid
-    media: [              // shown inside the project page, in this order
-      "media/rb-09-01.PNG",
-      "media/rb-09-02.jpg",
-    ],
-    repo: "",
-    blurb: "A UWB link that lets a GPS equipped UAV supply position corrections to a ground vehicle while both are in motion.",
-    details: "This is a peer-to-peer localization system where a UAV with a GPS lock supplies position to a ground vehicle through the relative transform between them. Ultra-wideband nodes on both vehicles range against each other, and that gives the pose of one vehicle in the frame of the other.\n\nI am second-in-command of the research group and help lead development. The goal is to improve the UGV's pose estimation during GNSS-denied intervals, supplementing its onboard SLAM through pose graph optimization rather than replacing it.\n\nThe project is in its early stages. The first step is the UWB node arrangement on both vehicles and an RTK-GNSS ground truth to measure the UWB-based estimate against.\n\nThe interesting problem is not ranging on its own — it is deciding how much to trust a correction that comes from a platform that is also moving.",
-    stack: "UWB ranging, pose graph optimization, SLAM",
-    sensors: "UWB nodes, RTK-GNSS, IMU",
-    platform: "UAV, UGV",
-    power: "—"
-  },
+  
 ];
